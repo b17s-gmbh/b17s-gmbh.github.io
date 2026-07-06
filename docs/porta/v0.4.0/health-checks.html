@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Health Checks | b17s</title>
+<meta name="description" content="Opt-in health checks in b17s.Porta for the IdP, the distributed cache backing sessions, and the Data Protection key ring, via AddPortaHealthChecks.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.4.0/health-checks.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Health Checks">
+<meta property="og:description" content="Opt-in health checks in b17s.Porta for the IdP, the distributed cache backing sessions, and the Data Protection key ring, via AddPortaHealthChecks.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.4.0/health-checks.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Health Checks">
+<meta name="twitter:description" content="Opt-in health checks in b17s.Porta for the IdP, the distributed cache backing sessions, and the Data Protection key ring, via AddPortaHealthChecks.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.4.0/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="health-checks" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0" selected>v0.4.0 (latest)</option><option value="v0.3.1-rc6">v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/telemetry.html">Telemetry</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.4.0/health-checks.html" aria-current="page">Health Checks</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Health Checks</h1>
+                <p class="docs-subtitle">Readiness checks for the IdP, distributed cache, and Data Protection</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p><code>AddPortaHealthChecks()</code> registers opt-in health checks for the dependencies only Porta can check correctly: the IdP (authority auto-resolved from Porta's auth options), the distributed cache backing sessions/locks/revocation, and the Data Protection key ring + key store. It uses the standard <code>Microsoft.Extensions.Diagnostics.HealthChecks</code> framework from the shared framework - no extra packages.</p>
+<p><strong>Registration only.</strong> The library never calls <code>MapHealthChecks()</code> and adds no middleware: you decide whether and where to expose health endpoints. Every check auto-skips (reports Healthy with a "skipped" description) when its dependency isn't configured, so the one-liner is safe in every deployment shape.</p>
+<h2>Quick start</h2>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaHealthChecks();
+
+var app = builder.Build();
+
+app.MapHealthChecks(&quot;/healthz/ready&quot;, new HealthCheckOptions
+{
+    // Filter on &quot;ready&quot; so any other ready-tagged checks the host registers are included too.
+    // Use &quot;porta&quot; instead to scope the endpoint to Porta's checks only.
+    Predicate = r =&gt; r.Tags.Contains(&quot;ready&quot;),
+});
+app.MapHealthChecks(&quot;/healthz/live&quot;, new HealthCheckOptions
+{
+    Predicate = _ =&gt; false,   // liveness = process is up; no dependency checks (see below)
+});</code></pre>
+<p><code>AddPortaHealthChecks</code> returns the <code>IHealthChecksBuilder</code>, so you can chain your own checks. Call it once; a second call throws.</p>
+<h2>The checks</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Name</th><th>What it probes</th><th>Default failure status</th><th></th></tr></thead><tbody><tr><td></td><td><code>porta:idp-discovery</code></td><td><code>{authority}/.well-known/openid-configuration</code> for every distinct authority on <code>SessionAuthenticationConfiguration</code> and <code>ReferenceTokenAuthOptions</code>, over the network</td><td><code>Degraded</code></td><td></td></tr><tr><td></td><td><code>porta:store:distributed-cache</code></td><td>Set/get/remove round-trip on the registered <code>IDistributedCache</code> (sessions, refresh locks, revocation, HybridCache L2)</td><td><code>Unhealthy</code></td><td></td></tr><tr><td></td><td><code>porta:store:data-protection</code></td><td><code>Protect</code>/<code>Unprotect</code> round-trip on the key ring; plus <code>CanConnect</code> on the key database when Porta's EF key store is registered</td><td><code>Degraded</code></td><td></td></tr></tbody></table></div>
+<p>All checks are tagged <code>[&quot;porta&quot;, &quot;ready&quot;]</code>.</p>
+<p>Why the IdP probe goes over the network instead of asking <code>IDiscoveryService</code>: the discovery document is cached by <code>ConfigurationManager</code>, so the cached copy stays green throughout an IdP outage. The probe requires a direct 2xx; redirects fail the check (and name the redirect target) because a redirecting authority breaks the OIDC handshake even when the target answers 200.</p>
+<h2>Configuration</h2>
+<p>Defaults need no options. To override:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaHealthChecks(o =&gt;
+{
+    o.ProbeTimeout = TimeSpan.FromSeconds(2);        // per-check probe budget (default 5s)
+    o.IdpProbeUrl = &quot;https://idp.internal/health&quot;;   // probe this instead of {authority}/.well-known/...
+    o.IdpProbeMethod = &quot;HEAD&quot;;                       // GET (default) or HEAD
+    o.CheckDistributedCache = false;                 // never register this check
+    o.CheckDataProtection = true;                    // missing dependency = failure, not skip
+    o.IdpFailureStatus = HealthStatus.Unhealthy;     // override a failure status
+});</code></pre>
+<p>Each <code>Check*</code> switch is tri-state:</p>
+<ul><li><code>null</code> (default) - <strong>auto</strong>: probe iff the dependency is configured/resolvable at execution</li></ul>
+<p>  time, otherwise report Healthy with a "skipped" description.</p>
+<ul><li><code>true</code> - <strong>required</strong>: a missing dependency is reported with the check's failure status.</li><li><code>false</code> - the check is not registered at all.</li></ul>
+<p>Probes carry no credentials, follow no redirects, and record only status code, duration, and host+path - never query strings or response bodies.</p>
+<h2>Readiness vs. liveness (Kubernetes)</h2>
+<p>Wire the Porta checks into <strong>readiness only</strong> and keep liveness dependency-free:</p>
+<pre data-lang="yaml"><code data-lang="yaml" class="language-yaml">readinessProbe:
+  httpGet: { path: /healthz/ready, port: 8080 }
+  periodSeconds: 10
+livenessProbe:
+  httpGet: { path: /healthz/live, port: 8080 }
+  periodSeconds: 10</code></pre>
+<p>A readiness failure only removes the pod from rotation - reversible, and the correct response to a dependency outage. A liveness failure <strong>restarts the container</strong>, and restarting never fixes an unreachable cache, database, or IdP - it causes restart loops for the whole outage instead. That's why the quick start maps <code>/healthz/live</code> with <code>Predicate = _ =&gt; false</code>: it returns 200 as long as the process serves requests, nothing more.</p>
+<div class="section">
+<h3>Degraded vs. Unhealthy</h3>
+<ul><li>The distributed-cache check defaults to <code>Unhealthy</code>: a dead session store fails every</li></ul>
+<p>  authenticated route, so the pod should leave rotation.</p>
+<ul><li>The IdP and Data Protection checks default to <code>Degraded</code>: an unreachable IdP blocks new</li></ul>
+<p>  sign-ins but existing sessions keep working, and the cached key ring keeps traffic flowing -   pulling pods from rotation wouldn't help either case.</p>
+<p>Note ASP.NET Core's default response mapping returns <strong>200 for <code>Degraded</code></strong> (only <code>Unhealthy</code> maps to 503), so a Degraded pod stays in rotation by default - that is intentional here. The overall JSON status still says <code>Degraded</code> for dashboards and alerting.</p>
+<h2>Notes and caveats</h2>
+<ul><li><strong>Security</strong>: expose only the status. The default <code>MapHealthChecks</code> response is the bare</li></ul>
+<p>  status string; if you add a detailed response writer (per-check data), keep that endpoint   off the public edge - descriptions name hosts and implementation types.</p>
+<ul><li><strong>In-memory cache</strong>: when the resolved <code>IDistributedCache</code> is the in-memory</li></ul>
+<p>  <code>MemoryDistributedCache</code>, the check reports Healthy without probing (an in-process   dictionary can't fail) and logs a one-time warning - sessions are then NOT shared across   instances. See <a href="ha-deployment.html">HA Deployment</a>.</p>
+<ul><li><strong>Not live secret-store monitoring</strong>: the Data Protection round-trip exercises the cached</li></ul>
+<p>  key ring. A Key Vault / certificate outage surfaces at key rotation, not on the next scrape.   Use your vault vendor's monitoring for that.</p>
+<ul><li><strong>Backend URL probes are out of scope</strong>: for plain "is this URL up" checks on your backends,</li></ul>
+<p>  use the community package <code>AspNetCore.HealthChecks.Uris</code> (<code>AddUrlGroup</code>) alongside these   checks - <code>AddPortaHealthChecks</code> returns the builder so they chain naturally.</p>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

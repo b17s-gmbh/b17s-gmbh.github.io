@@ -1,0 +1,21 @@
+<nav class="main-navigation">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <img src="/img/logo.svg" alt="b17s" class="logo-image">
+            <span class="logo-text">b17s</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/docs" class="nav-link" data-page="docs">Docs</a></li>
+            <li><a href="/blog" class="nav-link" data-page="blog">Blog</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Slide-out sidebar toggle. Hidden on default pages via CSS; shown on blog/docs pages.
+     Opens the blog-posts sidebar on blog pages and the docs-projects sidebar on docs pages. -->
+<button class="blog-menu-toggle" id="blog-menu-toggle-fixed" aria-label="Toggle menu">
+    <i data-lucide="menu" class="menu-icon"></i>
+</button>
+
+<!-- Sidebar content (blog menu or docs projects) is injected here by main.js based on the page type. -->
+<div id="blog-menu-container"></div>

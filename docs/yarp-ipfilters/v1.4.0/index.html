@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>YARP IP Filters | b17s</title>
+<meta name="description" content="A customizable IP filtering middleware for Microsoft's YARP (Yet Another Reverse Proxy) that provides fine-grained control over allowed or blocked IP addresses globally and per-route.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/yarp-ipfilters/v1.4.0/">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="YARP IP Filters">
+<meta property="og:description" content="A customizable IP filtering middleware for Microsoft's YARP (Yet Another Reverse Proxy) that provides fine-grained control over allowed or blocked IP addresses globally and per-route.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/yarp-ipfilters/v1.4.0/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="YARP IP Filters">
+<meta name="twitter:description" content="A customizable IP filtering middleware for Microsoft's YARP (Yet Another Reverse Proxy) that provides fine-grained control over allowed or blocked IP addresses globally and per-route.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-sunset.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/yarp-ipfilters/v1.4.0/" class="docs-nav-title">YARP IP Filters</a><p class="docs-nav-description">IP filtering middleware for Microsoft YARP</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/yarp-ipfilters/" data-current-slug="" data-pages="{&quot;v1.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;policies&quot;,&quot;routes&quot;,&quot;global-policy&quot;,&quot;tracing&quot;,&quot;advanced&quot;]}"><option value="v1.4.0" selected>v1.4.0 (latest)</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item active"><a href="/docs/yarp-ipfilters/v1.4.0/" aria-current="page">Overview</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/policies.html">Policies</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/routes.html">Route Configuration</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/global-policy.html">Global Policy</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/tracing.html">Tracing</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">YARP IP Filters</div>
+                <h1>YARP IP Filters</h1>
+                <p class="docs-subtitle">IP filtering middleware for Microsoft YARP</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p><a href="https://www.nuget.org/packages/BBelius.Yarp.ReverseProxy.IPFilters/"><figure><img src="https://img.shields.io/nuget/v/BBelius.Yarp.ReverseProxy.IPFilters.svg" alt="NuGet"></figure></a> <a href="https://github.com/bbelius/YARP.ReverseProxy.IPFilters/blob/main/LICENSE.md"><figure><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></figure></a></p>
+<p>A customizable IP filtering middleware for Microsoft's <a href="https://microsoft.github.io/reverse-proxy/">YARP (Yet Another Reverse Proxy)</a> that provides fine-grained control over allowed or blocked IP addresses globally and per-route, ensuring secure and flexible access management.</p>
+<h2>Features</h2>
+<ul><li><strong>Global IP filtering</strong> — a single policy evaluated for every proxied request before route-specific rules</li><li><strong>Route-specific policies</strong> — attach a named policy to any YARP route via route metadata</li><li><strong>Allowlist and blocklist modes</strong> — allow only known IPs, or block known-bad IPs</li><li><strong>IP address and CIDR network matching</strong> — mix individual addresses and network ranges in one policy</li><li><strong>Dynamic reload</strong> — configuration changes are picked up at runtime without a restart</li><li><strong>Fast lookups</strong> — <code>HashSet</code> for addresses and a trie-based collection for networks on the critical path</li><li><strong>Built-in tracing</strong> — an <code>ActivitySource</code> emits a span per evaluation</li></ul>
+<h2>Installation</h2>
+<p>Install the package via <a href="https://www.nuget.org/packages/BBelius.Yarp.ReverseProxy.IPFilters/">NuGet</a>:</p>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash">dotnet add package BBelius.Yarp.ReverseProxy.IPFilters</code></pre>
+<p>The package targets <strong>.NET 8</strong> and <strong>.NET 9</strong> and depends on <code>Yarp.ReverseProxy</code> 2.x.</p>
+<h2>Quick Start</h2>
+<div class="section">
+<h3>1. Register the policy provider</h3>
+<p>Add the IP filter policy provider to your DI container, binding it from configuration:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">using BBelius.Yarp.ReverseProxy.IPFilters;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection(&quot;ReverseProxy&quot;));
+
+builder.Services.AddIPFilterPolicies(builder.Configuration);</code></pre>
+</div>
+<div class="section">
+<h3>2. Add the middleware to the YARP pipeline</h3>
+<p>Register the middleware inside <code>MapReverseProxy</code>. <strong>Add it before any other YARP middleware</strong> so blocked requests are rejected as early as possible.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var app = builder.Build();
+
+app.MapReverseProxy(proxyPipeline =&gt;
+{
+    proxyPipeline.UseIPFilterPolicies();
+    proxyPipeline.UseLoadBalancing();
+});
+
+app.Run();</code></pre>
+<blockquote><p><strong>Important:</strong> Add the middleware to YARP's middleware pipeline via <code>UseIPFilterPolicies()</code> — <strong>not</strong> to the regular ASP.NET Core request pipeline. It requires access to the YARP <code>HttpContext</code> route feature, which is only available inside <code>MapReverseProxy</code>. See the YARP <a href="https://microsoft.github.io/reverse-proxy/articles/middleware.html#adding-middleware">middleware documentation</a>.</p></blockquote>
+</div>
+<div class="section">
+<h3>3. Configure policies</h3>
+<p>Define your policies in <code>appsettings.json</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;IPFilterConfiguration&quot;: {
+    &quot;EnableGlobalPolicy&quot;: true,
+    &quot;GlobalPolicyName&quot;: &quot;Global&quot;,
+    &quot;Policies&quot;: [
+      {
+        &quot;PolicyName&quot;: &quot;Global&quot;,
+        &quot;Mode&quot;: &quot;BlockList&quot;,
+        &quot;IPAddresses&quot;: [&quot;192.168.0.3&quot;, &quot;192.168.0.4&quot;]
+      },
+      {
+        &quot;PolicyName&quot;: &quot;Intranet&quot;,
+        &quot;Mode&quot;: &quot;AllowList&quot;,
+        &quot;IPNetworks&quot;: [&quot;192.168.0.0/24&quot;]
+      }
+    ]
+  }
+}</code></pre>
+</div>
+<div class="section">
+<h3>4. Attach policies to routes</h3>
+<p>Reference a policy by name in a route's <code>Metadata</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;ReverseProxy&quot;: {
+    &quot;Routes&quot;: [
+      {
+        &quot;RouteId&quot;: &quot;route1&quot;,
+        &quot;ClusterId&quot;: &quot;cluster1&quot;,
+        &quot;Match&quot;: { &quot;Path&quot;: &quot;/{**catch-all}&quot; },
+        &quot;Metadata&quot;: { &quot;IPFilterPolicy&quot;: &quot;Intranet&quot; }
+      }
+    ]
+  }
+}</code></pre>
+<h2>Documentation</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Topic</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><a href="configuration.html">Configuration</a></td><td>Service registration and the <code>IPFilterConfiguration</code> section</td><td></td></tr><tr><td></td><td><a href="policies.html">Policies</a></td><td>Policy modes, IP address and CIDR network matching</td><td></td></tr><tr><td></td><td><a href="routes.html">Route Configuration</a></td><td>Attaching policies to YARP routes via metadata</td><td></td></tr><tr><td></td><td><a href="global-policy.html">Global Policy</a></td><td>The global policy evaluated for every request</td><td></td></tr><tr><td></td><td><a href="tracing.html">Tracing</a></td><td>The <code>ActivitySource</code> and emitted span tags</td><td></td></tr><tr><td></td><td><a href="advanced.html">Advanced</a></td><td>Programmatic configuration, dynamic reload, custom providers</td><td></td></tr></tbody></table></div>
+<h2>How it works</h2>
+<p>For each proxied request the middleware:</p>
+<ol><li>Resolves the client IP from <code>HttpContext.Connection.RemoteIpAddress</code> (IPv4-mapped IPv6 addresses are</li></ol>
+<p>   normalised back to IPv4).</p>
+<ol><li>If a <a href="global-policy.html">global policy</a> is enabled and the IP is not allowed by it, responds <strong>403 Forbidden</strong></li></ol>
+<p>   and stops.</p>
+<ol><li>Reads the <code>IPFilterPolicy</code> key from the current route's metadata. If absent, the request passes straight through.</li><li>Looks up the named <a href="policies.html">policy</a>. A <code>Disabled</code> policy passes through; otherwise the IP is matched</li></ol>
+<p>   against the policy's addresses and networks in the configured mode.</p>
+<ol><li>Allowed requests continue down the pipeline; blocked requests get <strong>403 Forbidden</strong>.</li></ol>
+<p>A referenced-but-missing policy is a configuration error: the middleware logs a critical event, responds <strong>500 Internal Server Error</strong>, and throws <code>IPFilterPolicyNotFoundException</code>.</p>
+<h2>License</h2>
+<p>Licensed under the <a href="https://github.com/bbelius/YARP.ReverseProxy.IPFilters/blob/main/LICENSE.md">MIT License</a>. Contributions are welcome — open an issue or submit a pull request on <a href="https://github.com/bbelius/YARP.ReverseProxy.IPFilters">GitHub</a>.</p>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Endpoint Configuration | b17s</title>
+<meta name="description" content="The fluent endpoint builder in b17s.Porta: routing, HTTP verb helpers, authorization, and multi-backend endpoints.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.4.0/endpoints.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Endpoint Configuration">
+<meta property="og:description" content="The fluent endpoint builder in b17s.Porta: routing, HTTP verb helpers, authorization, and multi-backend endpoints.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.4.0/endpoints.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Endpoint Configuration">
+<meta name="twitter:description" content="The fluent endpoint builder in b17s.Porta: routing, HTTP verb helpers, authorization, and multi-backend endpoints.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.4.0/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="endpoints" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0" selected>v0.4.0 (latest)</option><option value="v0.3.1-rc6">v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/transformers.html">Transformers</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.4.0/endpoints.html" aria-current="page">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/health-checks.html">Health Checks</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Endpoint Configuration</h1>
+                <p class="docs-subtitle">Endpoint builder, routing, and authorization</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>The BFF framework uses a fluent builder pattern for configuring endpoints. The vocabulary documented here (<code>FromGet/Post/...</code>, <code>FromAny</code>, <code>ToGet/Post/...</code>, <code>ToAny</code>, <code>.When(...)</code>, <code>RequireAuth/AllowAnonymous</code>, <code>WithBackendAuth/WithTokenExchange/WithRetries</code>, <code>AllowForwardingHeaders(...)</code>, <code>Build()</code>) is shared between <code>MapTransformer&lt;...&gt;()</code> and <code>MapPassThrough&lt;T&gt;()</code> - the examples below use <code>MapTransformer</code> but apply to both. The one exception is <code>ToBackends(...)</code>, which is only available on <code>MapTransformer</code> (multi-backend aggregation is by definition not a pass-through concern). <code>MapRawForward()</code> is a separate streaming builder with its own - smaller - surface (it shares the <code>FromGet/...</code> and <code>ToGet/...</code> verb sugar); see <a href="raw-forwarding.html">Raw Forwarding</a>.</p>
+<h2>Basic Endpoint Registration</h2>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;MyTransformer, MyResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://backend.internal/products&quot;)
+    .Build();</code></pre>
+<h2>HTTP Method Helpers</h2>
+<p>Instead of passing the verb as a string to <code>.FromRoute(&quot;METHOD&quot;, pattern)</code> / <code>.ToBackend(&quot;METHOD&quot;, url)</code>, use the method-specific shorthands:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// These are equivalent:
+.FromRoute(&quot;GET&quot;, &quot;/api/products&quot;)
+.FromGet(&quot;/api/products&quot;)
+
+// ...as are these:
+.ToBackend(&quot;GET&quot;, &quot;https://backend.internal/products&quot;)
+.ToGet(&quot;https://backend.internal/products&quot;)
+
+// All supported incoming-route helpers:
+.FromGet(&quot;/api/products&quot;)
+.FromPost(&quot;/api/products&quot;)
+.FromPut(&quot;/api/products/{id}&quot;)
+.FromDelete(&quot;/api/products/{id}&quot;)
+.FromPatch(&quot;/api/products/{id}&quot;)
+.FromHead(&quot;/api/products&quot;)
+.FromOptions(&quot;/api/products&quot;)
+
+// All supported backend helpers (GET/POST/PUT/DELETE/PATCH):
+.ToGet(&quot;https://backend.internal/products&quot;)
+.ToPost(&quot;https://backend.internal/products&quot;)
+.ToPut(&quot;https://backend.internal/products/{id}&quot;)
+.ToDelete(&quot;https://backend.internal/products/{id}&quot;)
+.ToPatch(&quot;https://backend.internal/products/{id}&quot;)</code></pre>
+<p>Reach for the string form (<code>.ToBackend(&quot;HEAD&quot;, url)</code>) only for verbs without a shorthand. The backend helpers keep the optional <code>ContentType</code> argument: <code>.ToPost(url, ContentType.Xml)</code>. <code>.ToAny(url)</code> (method-preserving proxy) and <code>.ToGraphQL(url)</code> round out the backend vocabulary.</p>
+<h2>Wildcard HTTP Method Matching</h2>
+<p>For endpoints that should handle any HTTP method:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Match any HTTP method on the route
+app.MapTransformer&lt;ResourceTransformer, ResourceResponse&gt;()
+    .FromAny(&quot;/api/resource/{id}&quot;)
+    .ToGet(&quot;https://backend.internal/resource/{id}&quot;)  // Fixed backend method
+    .Build();
+
+// Method-preserving proxy: incoming method = backend method
+app.MapTransformer&lt;ProxyTransformer, object&gt;()
+    .FromAny(&quot;/api/proxy/{**path}&quot;)
+    .ToAny(&quot;https://backend.internal/{**path}&quot;)  // POST in = POST out, GET in = GET out
+    .Build();</code></pre>
+<p>The transformer can access the actual HTTP method via <code>context.HttpContext.Request.Method</code>.</p>
+<h2>Route Parameter Interpolation</h2>
+<p>Route parameters captured by <code>FromRoute</code>/<code>FromGet</code>/... are substituted into the backend URL template (<code>ToBackend</code>/<code>ToGet</code>/.../<code>ToAny</code>, plus <code>ToGraphQL</code> on <code>MapTransformer</code>/<code>MapPassThrough</code>; <code>MapRawForward</code> exposes <code>ToBackend</code>/<code>ToGet</code>/.../<code>ToAny</code>) by matching <code>{name}</code> placeholders against the captured route values. This interpolation is shared by <code>MapTransformer</code>, <code>MapPassThrough</code>, and <code>MapRawForward</code>, and is a <strong>security boundary</strong>: a value an attacker controls must not be able to change the backend scheme/host/port or escape the template's static path prefix.</p>
+<p>Two placeholder forms, with different encoding:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Single segment: {id} encodes the value as ONE path segment. A '/' in the value becomes
+// %2F, so it can never inject an extra segment or pivot the authority.
+app.MapPassThrough&lt;ProductResponse&gt;()
+    .FromGet(&quot;/api/products/{id}&quot;)
+    .ToGet(&quot;https://backend.internal/products/{id}&quot;)
+    .Build();
+// /api/products/42        -&gt; https://backend.internal/products/42
+// /api/products/a%2Fb     -&gt; https://backend.internal/products/a%2Fb   (slash stays encoded)
+
+// Catch-all: {*path} or {**path} is the subtree-proxy opt-in. The matched value's '/'
+// separators are PRESERVED so a nested request path maps to a nested backend path. Each
+// individual segment is still encoded (so '@'/':' inside a segment can't pivot the authority).
+app.MapRawForward()
+    .FromGet(&quot;/api/proxy/{**path}&quot;)
+    .ToGet(&quot;https://backend.internal/{**path}&quot;)
+    .Build();
+// /api/proxy/a/b/c        -&gt; https://backend.internal/a/b/c</code></pre>
+<p>Use a catch-all placeholder in <strong>both</strong> the route and the backend template when proxying a subtree. Note the backend template must use the catch-all syntax too (<code>{**path}</code>), not a bare <code>{path}</code> — a bare placeholder is single-segment and would percent-encode the separators (<code>a%2Fb%2Fc</code>).</p>
+<p>Regardless of form, the following are <strong>rejected</strong> with an <code>InvalidRouteValueException</code> (surfaced as a <code>400</code>-class failure) so they can never reach the backend:</p>
+<ul><li><code>.</code> / <code>..</code> path-traversal segments (e.g. <code>../admin</code>)</li><li>literal <code>?</code>, <code>#</code>, or <code>\</code> (query/fragment/path smuggling)</li><li>pre-encoded separators or dots (<code>%2F</code>, <code>%5C</code>, <code>%2E</code>) that <code>Uri</code> canonicalization would collapse</li></ul>
+<p>As defense-in-depth, the fully interpolated URL is re-parsed and its scheme/host/port and path prefix are compared against the static portion of the template; anything that moved outside the configured backend is rejected even if it slipped past per-segment encoding.</p>
+<h2>Conditional Route Matching</h2>
+<p>Use <code>.When()</code> to add a runtime predicate for conditional endpoint selection:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// API versioning via header
+app.MapTransformer&lt;ProductsV2Transformer, ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .When(ctx =&gt; ctx.Request.Headers[&quot;X-Api-Version&quot;] == &quot;2&quot;)
+    .ToGet(&quot;https://products-v2.internal/products&quot;)
+    .Build();
+
+// A/B testing - route based on cookie
+app.MapTransformer&lt;NewCheckoutTransformer, CheckoutResponse&gt;()
+    .FromPost(&quot;/api/checkout&quot;)
+    .When(ctx =&gt; ctx.Request.Cookies[&quot;feature_new_checkout&quot;] == &quot;true&quot;)
+    .ToPost(&quot;https://checkout.internal/checkout&quot;)
+    .Build();
+
+// Feature flag - route based on query parameter
+app.MapTransformer&lt;ExperimentalTransformer, Response&gt;()
+    .FromGet(&quot;/api/search&quot;)
+    .When(ctx =&gt; ctx.Request.Query[&quot;experimental&quot;] == &quot;true&quot;)
+    .ToGet(&quot;https://search-experimental.internal/search&quot;)
+    .Build();
+
+// Fallback endpoint (no constraint - catches all remaining requests)
+app.MapTransformer&lt;ProductsTransformer, ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .Build();</code></pre>
+<p><strong>How it works:</strong></p>
+<ul><li>The predicate runs during ASP.NET Core's endpoint selection phase (before authorization)</li><li>If the predicate returns <code>false</code>, the endpoint is skipped and other matching routes are tried</li><li>A guarded endpoint wins its route when its predicate is <code>true</code>; an unguarded endpoint on the same</li></ul>
+<p>  route is the fallback that serves everything no guard claims</p>
+<ul><li>A request is an ambiguous match only when two endpoints on the same route+method stay valid at the</li></ul>
+<p>  same precedence with no guard to break the tie — i.e. two <em>unguarded</em> endpoints, or two <code>.When()</code>s   that are true at once. A single unguarded fallback alongside guarded variants is fine</p>
+<ul><li>Keep predicates simple for performance - they run on every matching request</li></ul>
+<h2>Forwarding Client Request Headers</h2>
+<p>A typed endpoint (<code>MapTransformer</code> / <code>MapPassThrough</code>) builds its backend request from scratch, so by default <strong>no</strong> client request headers reach the backend. <code>AllowForwardingHeaders()</code> opts specific ones in without writing a custom transformer:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowForwardingHeaders([&quot;Accept-Language&quot;, &quot;X-Request-Id&quot;])
+    .Build();
+
+// Scope forwarding to specific backend hosts (matched per request against the
+// interpolated backend URL, since route values can steer the host):
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowForwardingHeaders([&quot;X-Request-Id&quot;], destinationHosts: [&quot;products-api.internal&quot;])
+    .Build();</code></pre>
+<p><strong>Rules:</strong></p>
+<ul><li>Header names are case-insensitive; multi-value headers are folded with <code>,</code>.</li><li>Hop-by-hop headers (<code>Connection</code>, <code>Host</code>, ...), framing headers (<code>Content-Length</code>,</li></ul>
+<p>  <code>Transfer-Encoding</code>) and entity headers describing the request body (<code>Content-Type</code>,   <code>Content-Encoding</code>, ...) are rejected at configuration time - the typed pipeline serializes its   own backend body. Use <a href="raw-forwarding.html"><code>MapRawForward()</code></a> to relay a body verbatim.</p>
+<ul><li>Listing a sensitive header (<code>Cookie</code>, <code>Authorization</code>, <code>X-Forwarded-*</code>) is an explicit opt-in,</li></ul>
+<p>  mirroring raw-forward's allow-list. Forwarding <code>Authorization</code> while a backend-auth policy   (<code>WithBackendAuth</code>/<code>WithTokenExchange</code>) would overwrite it fails at <code>Build()</code> instead of   silently dropping the client's value.</p>
+<ul><li><code>AllowForwardingHeaders()</code> applies to the single backend configured via <code>ToBackend/ToGet/...</code>;</li></ul>
+<p>  combining it with only <code>ToBackends(...)</code> fails at <code>Build()</code> - named multi-backend legs build   their own requests inside the transformer, where you can set <code>BackendRequest.Headers</code> directly.</p>
+<p>Note the different default on <code>MapRawForward()</code>: raw forwarding is a proxy and forwards most headers already, so its <code>AllowForwardingHeaders()</code> opts <em>sensitive</em> headers back in. Here the default is "forward nothing" and the method opts headers in at all.</p>
+<h2>Multi-Backend Endpoints</h2>
+<p>Configure multiple backends for aggregation:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;MyTransformer, MyResponse&gt;()
+    .FromGet(&quot;/api/aggregated&quot;)
+    .ToBackends(b =&gt; b
+        .ToPost(&quot;UserInfo&quot;, &quot;https://users.internal/userinfo&quot;).WithAuth(BackendAuthPolicies.BasicAuth)
+        .ToGet(&quot;Products&quot;, &quot;https://products.internal/products&quot;).WithAuth(BackendAuthPolicies.BearerToken))
+    .Build();</code></pre>
+<p>The <code>ToBackends(configure =&gt; ...)</code> builder adds a backend per <code>ToGet/ToPost/...</code> call; the per-backend modifiers (<code>WithAuth</code>, <code>WithUserToken</code>, <code>WithTokenExchange</code>, <code>WithTimeout</code>, <code>WithRetries</code>) apply to the backend they follow. See <a href="transformers.html#declaring-named-backends-fluently">Transformers</a> for the full surface.</p>
+<div class="section">
+<h3>Backend Tuple Syntax</h3>
+<p><code>ToBackends(...)</code> also accepts an array of <code>NamedBackendEndpoint</code> values if you'd rather build them yourself. The terse way is the <code>(name, method, url)</code> tuple plus a fluent modifier:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Basic 3-tuple (no auth)
+(&quot;BackendName&quot;, &quot;GET&quot;, &quot;http://backend/api/endpoint&quot;)
+
+// With specific auth policy
+(&quot;BackendName&quot;, &quot;GET&quot;, &quot;http://backend/api/endpoint&quot;).WithAuth(BackendAuthPolicies.BasicAuth)
+
+// Forward user's OAuth token
+(&quot;BackendName&quot;, &quot;GET&quot;, &quot;http://internal-service/api/endpoint&quot;).WithUserToken()
+
+// Token exchange for backend-specific token
+(&quot;BackendName&quot;, &quot;GET&quot;, &quot;http://other-service/api/endpoint&quot;).WithTokenExchange(&quot;other-api-audience&quot;)
+
+// With custom timeout
+(&quot;BackendName&quot;, &quot;GET&quot;, &quot;http://backend/api/endpoint&quot;).WithAuth(...).WithTimeout(TimeSpan.FromSeconds(10))
+
+// With automatic retries
+(&quot;BackendName&quot;, &quot;GET&quot;, &quot;http://backend/api/endpoint&quot;).WithAuth(...).WithRetries(3)</code></pre>
+<p><code>WithRetries(n)</code> retries transient backend failures (5xx, connection errors, timeouts) with exponential backoff. The count is <strong>per endpoint</strong> - each backend retries the number of attempts it declares. <code>PortaCore:MaxRetryAttempts</code> (default <code>3</code>) is the app-wide <strong>ceiling</strong>, so the effective count is <code>min(n, MaxRetryAttempts)</code>; raise the ceiling to let endpoints request more, or set it to <code>0</code> to disable retries app-wide. Endpoints that never call <code>WithRetries(...)</code> are not retried.</p>
+<h2>Refresh-on-401 Retry</h2>
+<p>A backend <code>401</code> on a <code>BearerToken</code>/<code>TokenExchange</code> endpoint triggers a one-shot user-token refresh and a single retry with the rotated token. This is <strong>on by default</strong> - no builder call needed - and disabled globally via <code>PortaCore:RefreshBackendTokenOn401 = false</code>. It is bounded (one refresh + one retry, skipped when the token doesn't rotate) and concurrency-safe across aggregation. See <a href="authentication.html#refreshing-the-user-token-on-a-backend-401">Authentication</a> for the full behavior and caveats.</p>
+<h2>Endpoint Authorization</h2>
+<p>Endpoints require user authorization by default.</p>
+</div>
+<div class="section">
+<h3>Global Default</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore(options =&gt;
+{
+    // Default: true - all endpoints require authorization
+    options.RequireAuthorizationByDefault = true;
+});</code></pre>
+</div>
+<div class="section">
+<h3>Per-Endpoint Override</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Uses default (RequireAuthorizationByDefault)
+app.MapTransformer&lt;ProtectedTransformer, Response&gt;()
+    .FromGet(&quot;/api/protected&quot;)
+    .ToGet(&quot;https://backend.internal/data&quot;)
+    .Build();
+
+// Explicitly require auth with a specific policy
+app.MapTransformer&lt;AdminTransformer, Response&gt;()
+    .FromGet(&quot;/api/admin&quot;)
+    .ToGet(&quot;https://backend.internal/admin&quot;)
+    .RequireAuth(&quot;AdminPolicy&quot;)
+    .Build();
+
+// Allow anonymous access
+app.MapTransformer&lt;PublicTransformer, Response&gt;()
+    .FromGet(&quot;/api/public&quot;)
+    .ToGet(&quot;https://backend.internal/public&quot;)
+    .AllowAnonymous()
+    .Build();
+
+// Anonymous with optional auth - populate auth context if available
+app.MapTransformer&lt;ProductTransformer, ProductResponse&gt;()
+    .FromGet(&quot;/api/products/{id}&quot;)
+    .ToGet(&quot;https://backend.internal/products/{id}&quot;)
+    .AllowAnonymousWithOptionalAuth()
+    .Build();</code></pre>
+</div>
+<div class="section">
+<h3>Optional Authentication</h3>
+<p>Use <code>.AllowAnonymousWithOptionalAuth()</code> for endpoints that work for both authenticated and anonymous users. (<code>.AllowAnonymous()</code> behaves identically: any endpoint that does not require authentication resolves the auth context optionally, so present credentials still populate <code>context.AuthContext</code> and an anonymous request never throws or counts as an authentication failure.)</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class ProductTransformer : TransformerBase&lt;ProductResponse&gt;
+{
+    public override async Task&lt;ProductResponse&gt; TransformAsync(TransformerContext context)
+    {
+        var result = await CallBackendAsync(context);
+        if (!result.IsSuccess)
+        {
+            throw new InvalidOperationException(result.Error);
+        }
+
+        var product = result.Value!;
+
+        if (context.AuthContext.IsAuthenticated)
+        {
+            // Show personalized recommendations
+            product.Recommendations = await GetPersonalizedRecommendations(context);
+        }
+        else
+        {
+            // Show generic recommendations
+            product.Recommendations = await GetPopularProducts(context);
+        }
+
+        return product;
+    }
+}</code></pre>
+<p><strong>Use cases:</strong></p>
+<ul><li>Product pages with personalized recommendations for logged-in users</li><li>APIs that return different data based on authentication status</li><li>Endpoints where auth is optional but enhances functionality</li></ul>
+<h2>Authorization Validation</h2>
+<p>If any backend requires user identity but <code>AllowAnonymous()</code> is used, the application fails to start:</p>
+<pre><code>InvalidOperationException: Endpoint '/api/data' has backends that require user identity but
+AllowAnonymous() was called. Remove AllowAnonymous() or change backend auth policies.
+Backends requiring identity: ['InternalApi' (policy: BearerToken)]</code></pre>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

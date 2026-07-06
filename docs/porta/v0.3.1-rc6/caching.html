@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Response Caching | b17s</title>
+<meta name="description" content="Response caching with b17s.Porta: whole-response output caching, distributed (HA) caching, and per-backend caching.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/caching.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Response Caching">
+<meta property="og:description" content="Response caching with b17s.Porta: whole-response output caching, distributed (HA) caching, and per-backend caching.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/caching.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Response Caching">
+<meta name="twitter:description" content="Response caching with b17s.Porta: whole-response output caching, distributed (HA) caching, and per-backend caching.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="caching" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/caching.html" aria-current="page">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Response Caching</h1>
+                <p class="docs-subtitle">Output caching, distributed (HA) cache, and per-leg caching</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>Porta does <strong>not</strong> model response caching itself, and nothing is cached by default. It doesn't need to: a Porta endpoint's <code>.Build()</code> returns a stock <code>RouteHandlerBuilder</code>, so ASP.NET Core's <a href="https://learn.microsoft.com/aspnet/core/performance/caching/output">output caching</a> middleware composes straight onto it. That gives you a battle-tested, HA-capable cache without Porta reimplementing one.</p>
+<p>This guide covers the supported approach:</p>
+<ol><li><strong><a href="#whole-response-output-caching">Whole-response output caching</a></strong> — cache an entire endpoint's</li></ol>
+<p>   response with the framework's <code>OutputCache</code>. This is the recommended path and the focus of this    guide.</p>
+<ol><li><strong><a href="#distributed-ha-caching">Distributed (HA) caching</a></strong> — back the cache with Redis so the cache</li></ol>
+<p>   is shared across replicas instead of per-instance.</p>
+<ol><li><strong><a href="#caching-only-part-of-an-aggregation">Caching only part of an aggregation</a></strong> — when one leg of</li></ol>
+<p>   a multi-backend endpoint is cacheable but the rest isn't, cache that leg <em>inside</em> the transformer.</p>
+<blockquote><p><strong>The one rule that matters:</strong> never cache a response that varies by user unless the cache key varies by user too. A BFF forwards tokens and returns per-identity data; a misconfigured cache serves one user's response to another. The default output-cache policy keys on the URL only — it does <strong>not</strong> vary by the auth cookie. See <a href="#caching-and-authentication">Caching and authentication</a>.</p></blockquote>
+<h2>Whole-response output caching</h2>
+<p>Output caching is opt-in middleware. Register it, add it to the pipeline, then attach a policy to the endpoints you want cached.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPortaCore();
+builder.Services.AddOutputCache();          // 1. register the cache + default policy
+
+var app = builder.Build();
+
+app.UseOutputCache();                         // 2. add the middleware (before endpoints)
+
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .AllowAnonymous()
+    .Build()                                  // 3. RouteHandlerBuilder from here on
+    .CacheOutput(p =&gt; p.Expire(TimeSpan.FromSeconds(30)));
+
+app.Run();</code></pre>
+<p><code>UseOutputCache()</code> must sit before the endpoint execution in the pipeline. When you also use authentication/authorization, place it after <code>UseAuthentication()</code>/<code>UseAuthorization()</code> so the auth state is resolved before the cache decides whether to serve — relevant if you ever build an auth-varying policy (see below).</p>
+<p>A few framework defaults worth knowing:</p>
+<ul><li>The built-in policy only caches <code>GET</code>/<code>HEAD</code> requests that return <code>200</code>, and only when the</li></ul>
+<p>  response sets no cookies and the request carries no <code>Authorization</code> <strong>header</strong>.</p>
+<ul><li>The cache key is the request path plus query string. Use <code>.SetVaryByQuery(...)</code> to restrict which</li></ul>
+<p>  query parameters vary the cache, or <code>.SetVaryByHeader(...)</code> to add headers.</p>
+<ul><li><code>.Expire(...)</code> is the absolute TTL. There is no sliding expiration in output caching by design.</li></ul>
+<div class="section">
+<h3>Tagging and invalidation</h3>
+<p>Tag endpoints so you can evict them as a group when the underlying data changes:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .AllowAnonymous()
+    .Build()
+    .CacheOutput(p =&gt; p.Expire(TimeSpan.FromMinutes(5)).Tag(&quot;catalog&quot;));</code></pre>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// e.g. from a webhook the backend calls when the catalog changes:
+app.MapPost(&quot;/internal/invalidate/catalog&quot;,
+    async (IOutputCacheStore cache, CancellationToken ct) =&gt;
+    {
+        await cache.EvictByTagAsync(&quot;catalog&quot;, ct);
+        return Results.NoContent();
+    })
+    .RequireAuthorization(&quot;internal&quot;);        // protect the invalidation hook</code></pre>
+</div>
+<div class="section">
+<h3>A reusable cache policy</h3>
+<p>If several endpoints share caching rules, register a named policy once and reference it by name — keeps the cache contract in one place instead of scattered <code>.CacheOutput(p =&gt; ...)</code> lambdas:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddOutputCache(options =&gt;
+{
+    options.AddPolicy(&quot;short-public&quot;, p =&gt;
+        p.Expire(TimeSpan.FromSeconds(30)).Tag(&quot;public&quot;));
+});
+
+// ...
+    .Build()
+    .CacheOutput(&quot;short-public&quot;);</code></pre>
+<h2>Distributed (HA) caching</h2>
+<p>The default <code>OutputCache</code> store is <strong>in-memory and per-replica</strong>. Behind a load balancer with multiple replicas that means each instance caches independently: lower hit rates, and a <code>Tag</code> eviction on one replica doesn't clear the others. For a shared cache, register a distributed <code>IOutputCacheStore</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddOutputCache();
+builder.Services.AddStackExchangeRedisOutputCache(opts =&gt;
+{
+    opts.Configuration = builder.Configuration[&quot;Redis:ConnectionString&quot;];
+});</code></pre>
+<p>This is the same Redis you likely already run for the auth ticket/session store (see <a href="ha-deployment.html">HA Deployment</a>), but note it is a <strong>distinct registration</strong>: the output-cache store is an <code>IOutputCacheStore</code>, separate from the <code>IDistributedCache</code> used for sessions. Registering one does not register the other. You can point both at the same Redis instance; keep their key namespaces from colliding (the output-cache store uses its own prefix, so they don't by default).</p>
+<p>With a distributed store, <code>EvictByTagAsync</code> clears the entry for every replica, and a response cached by replica A is served by replica B. No sticky sessions required — consistent with the rest of Porta's <a href="ha-deployment.html">HA model</a>.</p>
+<h2>Caching and authentication</h2>
+<p>This is where a BFF differs from a plain API, and where output caching is easy to get dangerously wrong.</p>
+<p><strong>Safe to cache:</strong> endpoints marked <code>.AllowAnonymous()</code> that forward no user token and return the same bytes to everyone — public catalogs, config, reference data, anonymous search. These are the endpoints output caching is <em>for</em>.</p>
+<p><strong>Not safe to cache as-is:</strong> anything that forwards the user's token (<code>BackendAuthPolicies.BearerToken</code>, token exchange) or returns per-identity data. The default policy keys on the URL only. Critically, <strong>it does not vary by the auth cookie</strong> — so applying a default <code>.CacheOutput()</code> to a cookie-authenticated endpoint will serve the first user's cached response to every subsequent user. The <code>Authorization</code>-header guard in the default policy does <strong>not</strong> protect you here, because Porta sessions authenticate via cookie, not that header.</p>
+<p>If you must cache a user-varying response, partition the key by the user explicitly:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddOutputCache(options =&gt;
+{
+    options.AddPolicy(&quot;per-user&quot;, p =&gt; p
+        .Expire(TimeSpan.FromSeconds(15))
+        // vary the cache by the authenticated subject so users never share an entry
+        .VaryByValue(ctx =&gt;
+            new KeyValuePair&lt;string, string&gt;(
+                &quot;sub&quot;, ctx.User.FindFirst(&quot;sub&quot;)?.Value ?? &quot;anonymous&quot;)));
+});
+
+// ...
+    .RequireAuth()
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build()
+    .CacheOutput(&quot;per-user&quot;);</code></pre>
+<p>Even then, weigh whether it's worth it: per-user entries have low hit rates, store user data in a shared cache, and can outlive a logout or a permission change for the duration of the TTL. Keep TTLs short, and prefer caching anonymous shared reads over per-user responses. When in doubt, don't cache.</p>
+<h2>Caching only part of an aggregation</h2>
+<p>Output caching caches the <em>whole</em> merged response — it can't cache one leg of an <a href="transformers.html#level-3-multi-backend-aggregation">aggregating transformer</a> while leaving the others live. When exactly one backend is slow-but-cacheable (e.g. a shared reference feed) and the rest are per-user, cache that single call <em>inside</em> the transformer instead of caching the endpoint.</p>
+</div>
+<div class="section">
+<h3>Declarative: <code>WithCache(...)</code> on the aggregation builder</h3>
+<p>Use the <code>WithCache(...)</code> modifier on a backend leg in the aggregator's <code>Configure</code>. It caches that one leg's deserialized result in <a href="https://learn.microsoft.com/aspnet/core/performance/caching/hybrid"><code>HybridCache</code></a> — in-process (L1) speed, an optional distributed (L2) backing store for HA, and stampede protection (concurrent cold requests collapse to a single backend call). Register the cache once during startup; Porta does not pick a backend for you:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddHybridCache();                  // L1 only
+builder.Services.AddStackExchangeRedisCache(o =&gt;     // add L2 → shared across replicas (HA)
+    o.Configuration = builder.Configuration[&quot;Redis:ConnectionString&quot;]);</code></pre>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public sealed class DashboardTransformer : AggregatingTransformer&lt;DashboardResponse&gt;
+{
+    protected override void Configure(AggregatorBuilder builder)
+    {
+        // Shared, anonymous leg — cached across all users for 5 minutes.
+        builder.Backend&lt;Weather&gt;(&quot;Weather&quot;)
+            .WithCache(TimeSpan.FromMinutes(5));
+
+        // Per-user leg — never cached (no .WithCache() call); calls the backend on every request.
+        builder.Backend&lt;Profile&gt;(&quot;Profile&quot;)
+            .WithBody(ctx =&gt; new ProfileRequest { UserId = ctx.UserId! });
+
+        // Per-user leg that IS cacheable, but MUST be partitioned by user.
+        builder.Backend&lt;Entitlements&gt;(&quot;Entitlements&quot;)
+            .WithCache(TimeSpan.FromSeconds(30), varyByUser: true);
+    }
+
+    protected override DashboardResponse MapResults(AggregatorResults results, TransformerContext context) =&gt;
+        new(results.Get&lt;Profile&gt;(&quot;Profile&quot;),
+            results.Get&lt;Weather&gt;(&quot;Weather&quot;),
+            results.Get&lt;Entitlements&gt;(&quot;Entitlements&quot;));
+}</code></pre>
+<p>What <code>WithCache(...)</code> does and the rules it enforces:</p>
+<ul><li><strong>Key.</strong> Keyed by the transformer, the leg name, the HTTP method, the <strong>resolved</strong> (route-interpolated)</li></ul>
+<p>  backend URL, and the request body when present — so different route/query values are different   entries automatically. <code>varyByUser: true</code> partitions the key by the authenticated subject   (<code>ctx.UserId</code>); <code>varyBy: ctx =&gt; ...</code> appends a custom dimension (tenant, locale, …).</p>
+<ul><li><strong>Fail-closed safety.</strong> A leg that forwards the user's identity (<code>BearerToken</code>, token exchange, or</li></ul>
+<p>  <code>WithUserToken()</code>) <strong>must</strong> set <code>varyByUser: true</code>. Caching such a leg with a shared key would serve   one user's data to another, so Porta throws at request time instead. A <code>varyBy</code> key does <strong>not</strong>   satisfy this — it's an extra dimension (tenant, locale) Porta can't inspect, so a <code>varyBy</code> that omits   the user would silently re-open the leak; pair it <em>with</em> <code>varyByUser: true</code>, never in place of it. A   <code>varyByUser</code> leg with no authenticated subject also throws — that signals an unauthenticated endpoint.</p>
+<ul><li><strong>GET/HEAD only.</strong> Caching a mutating verb is almost always a mistake, so <code>WithCache(...)</code> rejects</li></ul>
+<p>  any leg whose method is not <code>GET</code> or <code>HEAD</code>.</p>
+<ul><li><strong>Never caches failures.</strong> Only successful responses are stored. A <code>4xx</code>/<code>5xx</code>, a timeout, a thrown</li></ul>
+<p>  error, or a cancellation is returned to the caller uncached, so a transient failure can't poison the   entry. A legitimate <code>200</code> with a null/empty body <em>is</em> a cacheable result.</p>
+<ul><li><strong>TTL is the staleness bound.</strong> A cached entitlement or permission can outlive a logout or a</li></ul>
+<p>  permission change for up to the TTL. Keep user-varying TTLs short — the same trade-off called out in   <a href="#caching-and-authentication">Caching and authentication</a>.</p>
+<ul><li><strong>Telemetry.</strong> The per-leg <code>bff.backend</code> span is tagged <code>cache.enabled</code> and <code>cache.hit</code> so a</li></ul>
+<p>  served-from-cache leg is distinguishable from a backend round-trip. For ad-hoc debugging, set   <code>PortaCore.VerboseCacheTelemetry = true</code> to additionally tag the span with <code>cache.key.hash</code> (the   leg's hashed cache key). It's off by default because that key varies per route/body/user and would   add high-cardinality noise to every span; turn it on temporarily, not in steady state.</p>
+<p>If <code>.WithCache(...)</code> is used but no <code>HybridCache</code> is registered, the transformer throws — with a message telling you to call <code>AddHybridCache()</code> — and never silently falls back to calling the backend uncached. Porta also cross-checks every cacheable leg at <strong>startup</strong> (in <code>.Build()</code>): a user-varying leg cached without a per-user key, a non-cacheable verb, or a missing <code>HybridCache</code> registration fails the boot rather than waiting for the first request. (The request-time guard still runs as a back-stop; if a transformer can't be constructed outside a request scope, the startup cross-check is skipped and that guard takes over.)</p>
+</div>
+<div class="section">
+<h3>Tagging and invalidation</h3>
+<p>Attach <code>tags</code> to a cached leg, then evict the whole tagged group at once — e.g. from a webhook the backend calls when the underlying data changes — by injecting <code>HybridCache</code> and calling <code>RemoveByTagAsync</code>. This mirrors the <a href="#tagging-and-invalidation">output-cache tag story</a> above, but for a single aggregation leg:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Backend&lt;Weather&gt;(&quot;Weather&quot;)
+    .WithCache(TimeSpan.FromMinutes(5), tags: [&quot;weather&quot;, &quot;reference-data&quot;]);</code></pre>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// e.g. from a webhook the weather backend calls when its data changes:
+app.MapPost(&quot;/internal/invalidate/weather&quot;,
+    async (HybridCache cache, CancellationToken ct) =&gt;
+    {
+        await cache.RemoveByTagAsync(&quot;weather&quot;, ct);
+        return Results.NoContent();
+    })
+    .RequireAuthorization(&quot;internal&quot;);        // protect the invalidation hook</code></pre>
+<p>As with output caching, eviction is cluster-wide only when a distributed L2 (Redis) is registered; with L1 only, <code>RemoveByTagAsync</code> clears the local replica.</p>
+</div>
+<div class="section">
+<h3>GraphQL query legs: <code>WithGraphQLCache(...)</code></h3>
+<p><code>WithCache(...)</code> is GET/HEAD-only, so a GraphQL-over-<code>POST</code> leg can't use it. Cache a GraphQL <strong>query</strong> leg with <code>WithGraphQLCache(...)</code> instead — same rules and same key (the request body, i.e. the query + variables, is part of the key, so different queries are different entries), but it opts the <code>POST</code> leg into caching:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Backend&lt;Product&gt;(&quot;Catalog&quot;)
+    .WithBody(ctx =&gt; GraphQLExtensions.CreateRequest(ProductsQuery))
+    .WithGraphQLCache(TimeSpan.FromMinutes(5), tags: [&quot;catalog&quot;]);</code></pre>
+<blockquote><p><strong>Only cache query operations.</strong> A GraphQL <code>mutation</code> also rides <code>POST</code>, and Porta can't tell a query from a mutation by verb — caching a mutation leg would cache a write. The same fail-closed per-user safety applies: a leg that forwards the user's identity must set <code>varyByUser: true</code>.</p></blockquote>
+</div>
+<div class="section">
+<h3>Full control: cache inside a transformer by hand</h3>
+<p>When you need behaviour <code>WithCache(...)</code> doesn't express — a composite key spanning several legs, a conditional TTL, tag-based eviction — inject <code>HybridCache</code> into a transformer and wrap the call yourself. The same two rules apply: only cache a leg with a <strong>user-independent</strong> key, and partition the key by <code>context.UserId</code> (or claims) if the leg's data is user-specific.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public sealed class DashboardTransformer(HybridCache cache) : TransformerBase&lt;DashboardResponse&gt;
+{
+    public override async Task&lt;DashboardResponse&gt; TransformAsync(TransformerContext context)
+    {
+        // Shared, anonymous leg — cache it across all users by a stable key.
+        // CallLeg here is your own helper around context.BackendCaller.CallAsync(...).
+        var weather = await cache.GetOrCreateAsync(
+            $&quot;weather:{context.RouteValues[&quot;region&quot;]}&quot;,
+            async ct =&gt; await CallLeg&lt;Weather&gt;(context, &quot;https://weather.internal/now&quot;, ct),
+            options: new() { Expiration = TimeSpan.FromMinutes(5) },
+            cancellationToken: context.CancellationToken);
+
+        // Per-user leg — never cached; calls the backend with the user's forwarded token every time.
+        var profile = await CallLeg&lt;Profile&gt;(context, &quot;https://users.internal/me&quot;,
+            context.CancellationToken, forwardUserToken: true);
+
+        return new DashboardResponse(profile, weather);
+    }
+}</code></pre>
+<h2>Related</h2>
+<ul><li><a href="advanced.html">Advanced Topics</a> — composing other framework conventions onto <code>.Build()</code>.</li><li><a href="endpoints.html">Endpoints</a> — the endpoint builder and authorization model.</li><li><a href="ha-deployment.html">HA Deployment</a> — running multiple replicas and the shared Redis story.</li><li><a href="authentication.html">Authentication</a> — backend auth policies and token forwarding.</li></ul>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

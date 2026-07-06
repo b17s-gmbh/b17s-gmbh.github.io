@@ -1,0 +1,590 @@
+/*
+ * halo.css - NorthLight Design System
+ * Full-page layout matching ci-design-demo.html
+ */
+
+/* Font Imports */
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('./fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+  font-optical-sizing: auto;
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('./fonts/Outfit-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SourceCodePro';
+  src: url('./fonts/SourceCodePro-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SourceCodePro';
+  src: url('./fonts/SourceCodePro-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ---- BASE STYLES ---- */
+.halo body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--halo-bg-dark);
+  color: var(--halo-text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background grid pattern */
+.halo body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.01) 2px,
+      rgba(255, 255, 255, 0.01) 4px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.01) 2px,
+      rgba(255, 255, 255, 0.01) 4px
+    );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Background noise texture */
+.halo body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  z-index: 11;
+  pointer-events: none;
+}
+
+@media (dynamic-range: high) {
+  .halo img[src$=".jpg" i],
+  .halo img[src$=".jpeg" i],
+  .halo img[src$=".png" i] {
+    filter: saturate(1.1) contrast(1.05);
+  }
+}
+
+/* ---- LAYOUT ---- */
+.halo .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.halo section {
+  padding: 8rem 0;
+  position: relative;
+}
+
+/* ---- NAVIGATION ---- */
+.halo nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--halo-glass-border);
+}
+
+.halo .nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.halo .logo {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--halo-text), var(--halo-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.halo .nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.halo .nav-links a {
+  color: var(--halo-text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.halo .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--halo-accent);
+  transition: width 0.3s;
+}
+
+.halo .nav-links a:hover {
+  color: var(--halo-text);
+}
+
+.halo .nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ---- HERO SECTION ---- */
+.halo .hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 6rem 2rem 4rem;
+}
+
+.halo .hero-content {
+  max-width: 900px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.halo .hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: var(--halo-glass-bg);
+  border: 1px solid var(--halo-glass-border);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--halo-accent);
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.halo .hero-description {
+  font-size: 1.35rem;
+  color: var(--halo-text-secondary);
+  font-weight: 300;
+  margin-bottom: 3rem;
+  line-height: 1.7;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.halo .hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* ---- SECTION HEADERS ---- */
+.halo .section-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.halo .section-tag {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--halo-glass-bg);
+  border: 1px solid var(--halo-glass-border);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--halo-accent);
+  margin-bottom: 1.5rem;
+}
+
+.halo .section-description {
+  font-size: 1.2rem;
+  color: var(--halo-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ---- TYPOGRAPHY ---- */
+.halo h1 {
+  font-size: 5rem;
+  font-weight: 300;
+  letter-spacing: -3px;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.halo h2 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: -2px;
+  margin-bottom: 1.5rem;
+  color: var(--halo-text);
+}
+
+.halo h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: var(--halo-text);
+  font-weight: 500;
+}
+
+.halo .gradient-text {
+  background: linear-gradient(135deg, var(--halo-text) 0%, var(--halo-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.halo .brand-text {
+  font-family: 'SourceCodePro', Menlo, Consolas, "Courier New", monospace;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ---- BUTTONS ---- */
+.halo .button,
+.halo .btn {
+  display: inline-block;
+  padding: 1.1rem 2.75rem;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+
+.halo .button-secondary,
+.halo .btn-secondary {
+  background: var(--halo-glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--halo-glass-border);
+  color: var(--halo-text);
+}
+
+.halo .button-secondary:hover,
+.halo .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--halo-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.halo .button-primary,
+.halo .btn-primary {
+  background: linear-gradient(135deg, var(--halo-accent), var(--halo-primary));
+  color: var(--halo-bg-dark);
+  box-shadow: 0 8px 32px rgba(0, 200, 255, 0.25);
+}
+
+.halo .button-primary::before,
+.halo .btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.halo .button-primary:hover,
+.halo .btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 48px rgba(0, 200, 255, 0.4);
+}
+
+.halo .button-primary:hover::before,
+.halo .btn-primary:hover::before {
+  left: 100%;
+}
+
+/* ---- CARDS ---- */
+.halo .card {
+  background: var(--halo-glass-bg);
+  border: 1px solid var(--halo-glass-border);
+  border-radius: 20px;
+  padding: 3rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.halo .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--halo-accent), var(--halo-primary));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.halo .card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle,
+    var(--halo-accent) 0%,
+    color-mix(in oklch, var(--halo-accent) 90%, transparent) 12%,
+    color-mix(in oklch, var(--halo-accent) 75%, transparent) 22%,
+    color-mix(in oklch, var(--halo-accent) 60%, transparent) 30%,
+    color-mix(in oklch, var(--halo-accent) 40%, transparent) 38%,
+    color-mix(in oklch, var(--halo-accent) 25%, transparent) 46%,
+    color-mix(in oklch, var(--halo-accent) 12%, transparent) 53%,
+    color-mix(in oklch, var(--halo-accent) 5%, transparent) 58%,
+    transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.halo .card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(0, 200, 255, 0.3);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.halo .card:hover::before {
+  opacity: 1;
+}
+
+.halo .card:hover::after {
+  opacity: 0.03;
+}
+
+.halo .card p {
+  color: var(--halo-text-secondary);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* ---- GRIDS ---- */
+.halo .capabilities-grid,
+.halo .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
+}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.halo .fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+/* ---- UTILITIES ---- */
+.halo .flex { display: flex; }
+.halo .flex-row { flex-direction: row; }
+.halo .flex-col { flex-direction: column; }
+.halo .flex-wrap { flex-wrap: wrap; }
+.halo .gap-xs { gap: 0.25rem; }
+.halo .gap-sm { gap: 0.5rem; }
+.halo .gap-md { gap: 1rem; }
+.halo .gap-lg { gap: 1.5rem; }
+.halo .items-center { align-items: center; }
+.halo .justify-center { justify-content: center; }
+
+.halo .list-reset { list-style: none; margin: 0; padding: 0; }
+
+.halo .radius-xs { border-radius: 6px; }
+.halo .radius-sm { border-radius: 10px; }
+.halo .radius-md { border-radius: 12px; }
+.halo .radius-lg { border-radius: 16px; }
+.halo .radius-xl { border-radius: 20px; }
+
+.halo .text-primary { color: var(--halo-primary); }
+.halo .text-accent { color: var(--halo-accent); }
+.halo .text-secondary { color: var(--halo-text-secondary); }
+
+.halo .w-full { width: 100%; }
+.halo .hidden { display: none; }
+
+/* ---- FOOTER ---- */
+.halo footer {
+  background: var(--halo-bg-elevated);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 4rem 0 2rem;
+  margin-top: 8rem;
+}
+
+.halo .footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.halo .footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 2rem 0;
+  border-top: 1px solid var(--halo-glass-border);
+  text-align: center;
+  color: var(--halo-text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1024px) {
+  .halo .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .halo h1 {
+    font-size: 3rem;
+    letter-spacing: -1px;
+  }
+
+  .halo h2 {
+    font-size: 2.5rem;
+  }
+
+  .halo .nav-links {
+    display: none;
+  }
+
+  .halo .hero {
+    min-height: 80vh;
+    padding: 5rem 1rem 3rem;
+  }
+
+  .halo .hero-description {
+    font-size: 1.15rem;
+  }
+
+  .halo .hero-buttons {
+    flex-direction: column;
+  }
+
+  .halo .button,
+  .halo .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .halo section {
+    padding: 5rem 0;
+  }
+
+  .halo .capabilities-grid,
+  .halo .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .halo .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .halo .card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .halo h1 {
+    font-size: 2.25rem;
+  }
+
+  .halo h2 {
+    font-size: 2rem;
+  }
+
+  .halo .nav-container {
+    padding: 1rem;
+  }
+
+  .halo .logo {
+    font-size: 1.5rem;
+  }
+}

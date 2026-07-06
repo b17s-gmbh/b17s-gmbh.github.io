@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+    <meta name="robots" content="noindex">
+
+<title>404 - Page Not Found | b17s</title>
+<meta name="description" content="The page you're looking for seems to have wandered off into the digital void.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/404.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="404 - Page Not Found">
+<meta property="og:description" content="The page you're looking for seems to have wandered off into the digital void.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/404.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="404 - Page Not Found">
+<meta name="twitter:description" content="The page you're looking for seems to have wandered off into the digital void.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-sunset.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+
+    <style>
+        /* Center the whole error state vertically; the page has no other content. */
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 1rem 6rem;
+        }
+        .error-container h1 {
+            font-size: clamp(6rem, 18vw, 10rem);
+            font-weight: 200;
+            letter-spacing: -6px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .error-container h2 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 0;
+            color: var(--text-secondary);
+        }
+
+        /* The meme and its quote caption share one glass card. */
+        .error-figure {
+            margin: 3rem auto 0;
+            max-width: 460px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .error-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .error-quote {
+            padding: 1.25rem 1.75rem 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+        .error-quote p {
+            font-style: italic;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .error-quote cite {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .error-container .hero-buttons {
+            justify-content: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body data-page="404">
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation Placeholder (loaded dynamically) -->
+    <div id="navigation-placeholder"></div>
+
+    <main class="container">
+        <section class="error-container">
+            <h1 class="gradient-text">404</h1>
+            <h2>Page Not Found</h2>
+
+            <figure class="error-figure">
+                <picture>
+                    <source srcset="/img/this-is-fine.webp" type="image/webp">
+                    <img src="/img/this-is-fine.jpg" alt="This is fine meme - dog sitting in burning room">
+                </picture>
+            </figure>
+
+            <div class="hero-buttons">
+                <a href="/" class="btn btn-primary">Homepage</a>
+                <a href="/docs" class="btn btn-secondary">Read the docs</a>
+                <a href="javascript:history.back()" class="btn btn-secondary">Navigate back</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

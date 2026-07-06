@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>GraphQL Backend Support | b17s</title>
+<meta name="description" content="Calling GraphQL backends from REST endpoints in b17s.Porta - the REST-facade-over-GraphQL BFF pattern.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/graphql.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="GraphQL Backend Support">
+<meta property="og:description" content="Calling GraphQL backends from REST endpoints in b17s.Porta - the REST-facade-over-GraphQL BFF pattern.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/graphql.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GraphQL Backend Support">
+<meta name="twitter:description" content="Calling GraphQL backends from REST endpoints in b17s.Porta - the REST-facade-over-GraphQL BFF pattern.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="graphql" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/graphql.html" aria-current="page">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>GraphQL Backend Support</h1>
+                <p class="docs-subtitle">A REST facade over GraphQL backends</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>The library supports calling GraphQL backends while exposing REST endpoints to clients. This is a common BFF pattern - REST facade over GraphQL.</p>
+<h2>Basic Usage</h2>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class ProductTransformer : TransformerBase&lt;ProductDto&gt;
+{
+    private const string GetProductQuery = &quot;&quot;&quot;
+        query GetProduct($id: ID!) {
+            product(id: $id) {
+                id
+                name
+                slug
+                featuredAsset { preview }
+                variants { id name price }
+            }
+        }
+        &quot;&quot;&quot;;
+
+    public override async Task&lt;ProductDto&gt; TransformAsync(TransformerContext context)
+    {
+        var productId = GetRouteValue(context, &quot;id&quot;);
+
+        // The configured backend (from ToGraphQL(...)) is exposed on the context
+        // under the &quot;BackendRequest&quot; property.
+        var backendRequest = (BackendRequest)context.Properties[&quot;BackendRequest&quot;];
+
+        // CallGraphQLAsync handles:
+        // - Wrapping query + variables into { &quot;query&quot;: &quot;...&quot;, &quot;variables&quot;: {...} }
+        // - Unwrapping response from { &quot;data&quot;: { &quot;product&quot;: {...} } }
+        // - Extracting errors from GraphQL errors array
+        var result = await context.BackendCaller.CallGraphQLAsync&lt;Product&gt;(
+            backendRequest,
+            GetProductQuery,
+            variables: new { id = productId },
+            dataPath: &quot;product&quot;,  // extracts data.product
+            cancellationToken: context.CancellationToken
+        );
+
+        if (!result.IsSuccess)
+        {
+            // Surfaces the GraphQL-mapped status (404, 401, 403, ...) verbatim. Use this rather
+            // than WriteBackendErrorResponseAsync for GraphQL results: an application-level auth
+            // error (UNAUTHENTICATED/FORBIDDEN over HTTP 200) is the user's, and must reach the
+            // client as 401/403 instead of the 502 the backend writer applies.
+            await WriteGraphQLErrorResponseAsync(context, result);
+            return default!;
+        }
+
+        return MapToDto(result.Data);
+    }
+}
+
+// Endpoint registration - client sees REST
+app.MapTransformer&lt;ProductTransformer, ProductDto&gt;()
+    .FromGet(&quot;/api/products/{id}&quot;)
+    .ToGraphQL(&quot;https://graphql.internal/my-api&quot;)  // GraphQL endpoint
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build();</code></pre>
+<h2>Features</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Feature</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>CallGraphQLAsync&lt;T&gt;()</code></td><td>Wraps/unwraps GraphQL request/response</td><td></td></tr><tr><td></td><td><code>ToGraphQL(url)</code></td><td>Builder method for GraphQL backend (sets POST, content-type)</td><td></td></tr><tr><td></td><td><code>dataPath</code> parameter</td><td>Extracts nested data (e.g., <code>&quot;product&quot;</code> → <code>data.product</code>)</td><td></td></tr><tr><td></td><td>Error handling</td><td>GraphQL errors array → <code>GraphQLResult.Error</code></td><td></td></tr></tbody></table></div>
+<h2>Error Handling</h2>
+<p>GraphQL returns HTTP 200 even with errors. The library handles this:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// GraphQL response with errors
+{
+    &quot;data&quot;: null,
+    &quot;errors&quot;: [
+        { &quot;message&quot;: &quot;Product not found&quot;, &quot;extensions&quot;: { &quot;code&quot;: &quot;NOT_FOUND&quot; } }
+    ]
+}
+
+// Becomes GraphQLResult with:
+// - IsSuccess = false
+// - MappedStatusCode = 404 (mapped from extensions.code)
+// - Error = &quot;Product not found&quot; (the GraphQL error's message, verbatim)</code></pre>
+<div class="section">
+<h3>Error Code Mapping</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>GraphQL Error Code</th><th>HTTP Status</th><th></th></tr></thead><tbody><tr><td></td><td><code>NOT_FOUND</code></td><td>404</td><td></td></tr><tr><td></td><td><code>UNAUTHORIZED</code>, <code>UNAUTHENTICATED</code></td><td>401</td><td></td></tr><tr><td></td><td><code>FORBIDDEN</code>, <code>ACCESS_DENIED</code></td><td>403</td><td></td></tr><tr><td></td><td><code>BAD_REQUEST</code>, <code>VALIDATION_ERROR</code></td><td>400</td><td></td></tr><tr><td></td><td><code>INTERNAL_SERVER_ERROR</code></td><td>500</td><td></td></tr><tr><td></td><td><code>TIMEOUT</code>, <code>GATEWAY_TIMEOUT</code></td><td>504</td><td></td></tr><tr><td></td><td><code>TOO_MANY_REQUESTS</code></td><td>429</td><td></td></tr></tbody></table></div>
+<blockquote><p><strong>Relaying GraphQL errors:</strong> use <code>WriteGraphQLErrorResponseAsync(context, result)</code> to surface these mapped statuses to the client. It relays the mapped status verbatim — including a genuine user-facing 401/403 from an application-level <code>UNAUTHENTICATED</code>/<code>FORBIDDEN</code> error — while masking 5xx detail. Do <strong>not</strong> route GraphQL results through <code>WriteBackendErrorResponseAsync</code>: that writer is for relayed <em>backend transport</em> statuses and remaps 401/403 to 502 (a BFF-credential failure), which would hide the documented GraphQL auth statuses. A transport-level backend 401/403 is already neutralized to 502 before it reaches your transformer — even when the backend attaches a GraphQL <code>errors</code> envelope to that 401/403 response (a custom <code>IBackendErrorMapper</code> that passes the status through re-enables the envelope's code → status mapping).</p></blockquote>
+<h2>Parallel GraphQL Queries</h2>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class DashboardTransformer : TransformerBase&lt;DashboardDto&gt;
+{
+    public override async Task&lt;DashboardDto&gt; TransformAsync(TransformerContext context)
+    {
+        var backendRequest = (BackendRequest)context.Properties[&quot;BackendRequest&quot;];
+
+        // Parallel GraphQL queries
+        var productsTask = context.BackendCaller.CallGraphQLAsync&lt;List&lt;Product&gt;&gt;(
+            backendRequest,
+            ProductsQuery, variables: null, dataPath: &quot;products&quot;);
+        var ordersTask = context.BackendCaller.CallGraphQLAsync&lt;List&lt;Order&gt;&gt;(
+            backendRequest,
+            OrdersQuery, variables: new { customerId = context.UserId }, dataPath: &quot;orders&quot;);
+
+        await Task.WhenAll(productsTask, ordersTask);
+
+        return new DashboardDto
+        {
+            Products = productsTask.Result.Data,
+            Orders = ordersTask.Result.Data
+        };
+    }
+}</code></pre>
+<h2>Mutations</h2>
+<p>GraphQL mutations work the same way:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class CreateOrderTransformer : TransformerBase&lt;CreateOrderRequest, OrderDto&gt;
+{
+    private const string CreateOrderMutation = &quot;&quot;&quot;
+        mutation CreateOrder($input: CreateOrderInput!) {
+            createOrder(input: $input) {
+                id
+                code
+                state
+                total
+            }
+        }
+        &quot;&quot;&quot;;
+
+    public override async Task&lt;OrderDto&gt; TransformAsync(
+        CreateOrderRequest? request,
+        TransformerContext context)
+    {
+        var backendRequest = (BackendRequest)context.Properties[&quot;BackendRequest&quot;];
+
+        var result = await context.BackendCaller.CallGraphQLAsync&lt;Order&gt;(
+            backendRequest,
+            CreateOrderMutation,
+            variables: new { input = request },
+            dataPath: &quot;createOrder&quot;,
+            cancellationToken: context.CancellationToken
+        );
+
+        if (!result.IsSuccess)
+        {
+            await WriteGraphQLErrorResponseAsync(context, result);
+            return default!;
+        }
+
+        return MapToDto(result.Data);
+    }
+}
+
+// POST endpoint for mutation
+app.MapTransformer&lt;CreateOrderTransformer, CreateOrderRequest, OrderDto&gt;()
+    .FromPost(&quot;/api/orders&quot;)
+    .ToGraphQL(&quot;https://graphql.internal/my-api&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build();</code></pre>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

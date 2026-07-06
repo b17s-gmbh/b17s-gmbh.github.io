@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Route Configuration | b17s</title>
+<meta name="description" content="How to attach a named IP filter policy to a YARP route using route metadata, and how the middleware resolves it per request.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/yarp-ipfilters/v1.4.0/routes.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Route Configuration">
+<meta property="og:description" content="How to attach a named IP filter policy to a YARP route using route metadata, and how the middleware resolves it per request.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/yarp-ipfilters/v1.4.0/routes.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Route Configuration">
+<meta name="twitter:description" content="How to attach a named IP filter policy to a YARP route using route metadata, and how the middleware resolves it per request.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-sunset.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/yarp-ipfilters/v1.4.0/" class="docs-nav-title">YARP IP Filters</a><p class="docs-nav-description">IP filtering middleware for Microsoft YARP</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/yarp-ipfilters/" data-current-slug="routes" data-pages="{&quot;v1.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;policies&quot;,&quot;routes&quot;,&quot;global-policy&quot;,&quot;tracing&quot;,&quot;advanced&quot;]}"><option value="v1.4.0" selected>v1.4.0 (latest)</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/policies.html">Policies</a></li><li class="docs-nav-item active"><a href="/docs/yarp-ipfilters/v1.4.0/routes.html" aria-current="page">Route Configuration</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/global-policy.html">Global Policy</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/tracing.html">Tracing</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">YARP IP Filters</div>
+                <h1>Route Configuration</h1>
+                <p class="docs-subtitle">Attaching policies to YARP routes via metadata</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>Route-specific filtering is opt-in per YARP route. A route participates by carrying an <code>IPFilterPolicy</code> entry in its <code>Metadata</code> whose value is the name of a <a href="policies.html">policy</a> you defined in <a href="configuration.html#the-ipfilterconfiguration-section"><code>IPFilterConfiguration</code></a>.</p>
+<h2>Attaching a policy</h2>
+<p>Add the <code>IPFilterPolicy</code> key to the route's <code>Metadata</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;ReverseProxy&quot;: {
+    &quot;Routes&quot;: [
+      {
+        &quot;RouteId&quot;: &quot;admin&quot;,
+        &quot;ClusterId&quot;: &quot;admin-cluster&quot;,
+        &quot;Match&quot;: { &quot;Path&quot;: &quot;/admin/{**catch-all}&quot; },
+        &quot;Metadata&quot;: { &quot;IPFilterPolicy&quot;: &quot;Intranet&quot; }
+      },
+      {
+        &quot;RouteId&quot;: &quot;public&quot;,
+        &quot;ClusterId&quot;: &quot;public-cluster&quot;,
+        &quot;Match&quot;: { &quot;Path&quot;: &quot;/{**catch-all}&quot; }
+      }
+    ]
+  }
+}</code></pre>
+<p>Here the <code>admin</code> route is filtered by the <code>Intranet</code> policy, while <code>public</code> has no <code>IPFilterPolicy</code> metadata and is never filtered by a route-specific policy (the <a href="global-policy.html">global policy</a>, if enabled, still applies to both).</p>
+<h2>How a route is resolved</h2>
+<p>For each request the middleware reads the current route from YARP's reverse-proxy feature and inspects its metadata:</p>
+<ol><li><strong>No <code>IPFilterPolicy</code> key, or an empty value</strong> → the middleware logs a <code>Debug</code> event (<code>NoIPPolicyFound</code>) and</li></ol>
+<p>   passes the request through untouched.</p>
+<ol><li><strong>A policy name that resolves</strong> → the IP is matched against that policy in its configured mode. Allowed requests</li></ol>
+<p>   continue; blocked requests receive <strong>403 Forbidden</strong>.</p>
+<ol><li><strong>A policy name that does not exist</strong> → this is treated as a configuration error. The middleware logs a</li></ol>
+<p>   <code>Critical</code> event (<code>PolicyIsNull</code>), sets the response to <strong>500 Internal Server Error</strong>, and throws    <code>IPFilterPolicyNotFoundException</code>. Keep route metadata and your policy list in sync so this never fires in    production.</p>
+<ol><li><strong>A policy in <code>Disabled</code> mode</strong> → logs an <code>Information</code> event (<code>PolicyIsDisabled</code>) and passes through.</li></ol>
+<h2>Evaluation order</h2>
+<p>When a global policy is enabled, it is checked <strong>first</strong>, for every request. Only if the request survives the global policy does the route-specific policy run. A request must pass <strong>both</strong> to reach the backend. See <a href="global-policy.html">Global Policy</a> for details.</p>
+<h2>Notes</h2>
+<ul><li>The metadata key is case-sensitive and must be exactly <code>IPFilterPolicy</code>.</li><li>One route references at most one policy. To combine rules, put both <code>IPAddresses</code> and <code>IPNetworks</code> in a single</li></ul>
+<p>  policy (see <a href="policies.html#combining-addresses-and-networks">Combining addresses and networks</a>).</p>
+<ul><li>Route metadata is part of your YARP config and reloads with it — changing which policy a route uses does not need</li></ul>
+<p>  a restart.</p></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

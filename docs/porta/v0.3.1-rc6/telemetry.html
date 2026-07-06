@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Telemetry | b17s</title>
+<meta name="description" content="Automatic OpenTelemetry traces and metrics for transformers and backend calls in b17s.Porta.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/telemetry.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Telemetry">
+<meta property="og:description" content="Automatic OpenTelemetry traces and metrics for transformers and backend calls in b17s.Porta.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/telemetry.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Telemetry">
+<meta name="twitter:description" content="Automatic OpenTelemetry traces and metrics for transformers and backend calls in b17s.Porta.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="telemetry" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/telemetry.html" aria-current="page">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Telemetry</h1>
+                <p class="docs-subtitle">OpenTelemetry traces and metrics</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>The BFF framework automatically generates OpenTelemetry traces and metrics for all transformer executions and backend calls. This is enabled by default and requires no additional code in transformer implementations.</p>
+<h2>Automatic Instrumentation</h2>
+<p>When <code>EnableTelemetry</code> is true (default), the framework automatically instruments transformer and raw-forward endpoint execution, backend HTTP calls, authentication, token exchange/refresh, session lifecycle, CSRF validation, the session-admin endpoint, and OIDC back-channel logout. Activities are emitted by <code>PortaActivitySource</code> (source name <code>b17s.Porta</code>) and metrics by <code>PortaMetrics</code> on the same meter name. Each activity uses a <strong>fixed category name</strong>; the specific transformer/backend is carried on a <strong>tag</strong>, never baked into the activity name (see the note below).</p>
+<p>The whole-pipeline request instrumentation in the last row is <strong>opt-in</strong> - the BFF has no other always-on middleware, so it only runs when you add <a href="#request-lifecycle-instrumentation-useportatelemetry"><code>app.UsePortaTelemetry()</code></a>.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Component</th><th>Activity name</th><th>Related metrics</th><th></th></tr></thead><tbody><tr><td></td><td>Transformer execution</td><td><code>bff.transformation</code> (with <code>bff.transformation.strategy</code> tag set to the transformer class name)</td><td><code>bff.transformation.duration</code></td><td></td></tr><tr><td></td><td>Raw-forward execution</td><td><code>bff.raw_forward</code> (with <code>bff.transformation.strategy</code> tag set to the transformer class name and <code>bff.component</code> = <code>raw_forward</code>)</td><td><code>bff.transformation.duration</code> (<code>strategy</code> = <code>RawForward:{name}</code>)</td><td></td></tr><tr><td></td><td>Backend HTTP calls</td><td><code>bff.backend</code> (with <code>bff.backend.service</code> tag set to the service hostname)</td><td><code>bff.backend.duration</code>, <code>bff.backend.requests</code>, <code>bff.backend.errors</code></td><td></td></tr><tr><td></td><td>Aggregator child spans</td><td><code>bff.backend</code> (one per parallel backend, <code>bff.component</code> = <code>aggregator</code>, parented to the transformation activity)</td><td><code>bff.backend.duration</code>, <code>bff.backend.requests</code>, <code>bff.backend.errors</code> (from the inner backend call)</td><td></td></tr><tr><td></td><td>Authentication (<code>IAuthenticationProvider</code> resolution)</td><td><code>bff.authentication</code> (child of the endpoint span)</td><td><code>bff.auth.duration</code>, <code>bff.auth.successes</code>, <code>bff.auth.failures</code></td><td></td></tr><tr><td></td><td>Token exchange</td><td><code>bff.token_exchange</code></td><td>-</td><td></td></tr><tr><td></td><td>Token refresh (cookie-session + API token)</td><td><code>bff.token_refresh</code></td><td><code>bff.token.refreshes</code>, <code>bff.token.refresh_failures</code></td><td></td></tr><tr><td></td><td>Session lifecycle</td><td>- (recorded inside the OIDC callback / admin / back-channel spans)</td><td><code>bff.session.created</code>, <code>bff.session.invalidated</code>, <code>bff.sessions.active</code></td><td></td></tr><tr><td></td><td>CSRF validation (logout + session-admin)</td><td>-</td><td><code>bff.csrf.validation_failures</code></td><td></td></tr><tr><td></td><td>Session-admin endpoint</td><td><code>bff.session_admin</code></td><td>-</td><td></td></tr><tr><td></td><td>OIDC back-channel logout</td><td><code>bff.backchannel_logout</code></td><td>-</td><td></td></tr><tr><td></td><td>Refresh-lock cleanup timer</td><td>-</td><td><code>bff.session.lock_cleanup_runs</code>, <code>bff.session.stale_locks_cleaned</code></td><td></td></tr><tr><td></td><td>Incoming request lifecycle (opt-in, <code>UsePortaTelemetry()</code>)</td><td><code>bff.request</code></td><td><code>bff.request.duration</code>, <code>bff.request.size</code>, <code>bff.response.size</code>, <code>bff.requests.active</code></td><td></td></tr></tbody></table></div>
+<blockquote><p>Activity names are <strong>fixed category strings</strong> (<code>bff.transformation</code>, <code>bff.raw_forward</code>, <code>bff.backend</code>, …). The literal <code>bff.transformer.{Name}</code> / <code>bff.backend.{ServiceName}</code> strings you may have seen in older revisions of this doc are <em>display</em> shapes only - at runtime each span carries its category as the activity name plus a tag (<code>bff.transformation.strategy</code>, <code>bff.backend.service</code>) that names the specific transformer or backend. <strong>Search by tag, not by composed activity name.</strong></p></blockquote>
+<div class="section">
+<h3>Request-lifecycle instrumentation (<code>UsePortaTelemetry()</code>)</h3>
+<p>The <code>bff.request</code> span and the request/response-size, duration, and in-flight-count metrics cover the <strong>entire</strong> request pipeline, not just Porta endpoints. Because Porta has no always-on middleware, this is opt-in: register it as early as possible so it brackets everything.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var app = builder.Build();
+app.UsePortaTelemetry();   // first, so it brackets the whole pipeline
+app.UseRouting();
+// ... auth, endpoints, etc.</code></pre>
+<p>The matched low-cardinality route <strong>template</strong> (e.g. <code>/api/users/{id}</code>) is read back from the resolved endpoint after the inner pipeline runs; requests that match no route are recorded under a single <code>unmatched</code> route series. The middleware is a no-op pass-through when <code>EnableTelemetry</code> is <code>false</code>.</p>
+</div>
+<div class="section">
+<h3>Session-lifecycle metrics and the active-sessions gauge</h3>
+<p><code>bff.session.created</code> / <code>bff.session.invalidated</code> are counters; <code>bff.sessions.active</code> is an up/down gauge incremented on create and decremented on each explicit termination. <code>bff.session.invalidated</code> carries a <code>reason</code> tag (<code>logout</code>, <code>backchannel</code>, <code>admin</code>, …). To keep the gauge balanced, <strong>cookie logout terminates the server-side session</strong> (in addition to clearing the cookie), and a terminate against an already-gone session never double-decrements. Note the gauge is still a <em>lower bound</em> on truly-active sessions: a session evicted purely by distributed-cache expiry (never explicitly terminated) is not counted as an invalidation, so the gauge can drift upward over long-lived deployments.</p>
+</div>
+<div class="section">
+<h3>Reserved spans (declared but not yet emitted)</h3>
+<p>Two activity names are defined on <code>PortaActivitySource</code> but not yet started by any production path - queries against them return no data, and they are reserved for future use: <code>bff.session</code> (session-lifecycle metrics are emitted, but without a dedicated span) and <code>bff.health_check</code>.</p>
+<h2>Metric reference</h2>
+<p>All counters and histograms below are emitted under the <code>b17s.Porta</code> meter. Source of truth is <a href="https://github.com/b17s-gmbh/b17s-Porta/blob/main/src/Telemetry/PortaMetrics.cs"><code>PortaMetrics.cs</code></a> - when in doubt, read the meter declarations there. The <code>bff.request.*</code>, <code>bff.response.size</code>, and <code>bff.requests.active</code> instruments require the opt-in <a href="#request-lifecycle-instrumentation-useportatelemetry"><code>UsePortaTelemetry()</code></a> middleware; everything else is automatic when <code>EnableTelemetry</code> is true.</p>
+</div>
+<div class="section">
+<h3>Counters</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Metric</th><th>Tags</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>bff.backend.requests</code></td><td><code>service</code>, <code>protocol</code>, <code>status_code</code></td><td>Backend HTTP requests.</td><td></td></tr><tr><td></td><td><code>bff.backend.errors</code></td><td><code>service</code>, <code>protocol</code>, <code>status_code</code></td><td>Backend requests with <code>status_code &gt;= 400</code>.</td><td></td></tr><tr><td></td><td><code>bff.auth.failures</code></td><td><code>reason</code>, <code>provider</code> (optional)</td><td>Authentication failures (<code>reason</code> = <code>unauthenticated</code>, <code>provider_threw</code>).</td><td></td></tr><tr><td></td><td><code>bff.auth.successes</code></td><td><code>provider</code> (optional)</td><td>Successful authentications (<code>provider</code> = short provider name, e.g. <code>SessionAuthProvider</code>).</td><td></td></tr><tr><td></td><td><code>bff.token.refreshes</code></td><td><code>reason</code> (optional)</td><td>Successful token refreshes at the IdP (cookie-session refresh, plus <code>reason</code> = <code>api_token</code> for API-token refreshes).</td><td></td></tr><tr><td></td><td><code>bff.token.refresh_failures</code></td><td><code>reason</code> (optional)</td><td>Failed token refreshes (<code>reason</code> = <code>invalid_grant</code>, <code>transient</code>, <code>api_token</code>).</td><td></td></tr><tr><td></td><td><code>bff.csrf.validation_failures</code></td><td><code>reason</code></td><td>Antiforgery/CSRF validation failures (<code>reason</code> = <code>oidc_logout</code>, <code>session_admin</code>).</td><td></td></tr><tr><td></td><td><code>bff.session.created</code></td><td>-</td><td>Sessions created (also increments <code>bff.sessions.active</code>).</td><td></td></tr><tr><td></td><td><code>bff.session.invalidated</code></td><td><code>reason</code></td><td>Sessions invalidated (<code>reason</code> = <code>logout</code>, <code>backchannel</code>, <code>admin</code>, …; also decrements <code>bff.sessions.active</code>).</td><td></td></tr><tr><td></td><td><code>bff.session.lock_cleanup_runs</code></td><td>-</td><td>Stale-lock cleanup timer executions.</td><td></td></tr><tr><td></td><td><code>bff.session.stale_locks_cleaned</code></td><td>-</td><td>Stale per-user refresh locks reclaimed.</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Histograms</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Metric</th><th>Unit</th><th>Tags</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>bff.request.duration</code></td><td><code>ms</code></td><td><code>method</code>, <code>route</code>, <code>status_code</code></td><td>End-to-end request processing time. Nonstandard HTTP methods collapse to <code>_OTHER</code> (OTel <code>http.request.method</code> convention); unrouted requests collapse to <code>route</code> = <code>unmatched</code>. Requires <code>UsePortaTelemetry()</code>.</td><td></td></tr><tr><td></td><td><code>bff.backend.duration</code></td><td><code>ms</code></td><td><code>service</code>, <code>protocol</code></td><td>Backend call duration.</td><td></td></tr><tr><td></td><td><code>bff.transformation.duration</code></td><td><code>ms</code></td><td><code>strategy</code></td><td>Time spent inside the transformer's <code>TransformAsync</code> (raw-forward records <code>strategy</code> = <code>RawForward:{name}</code>).</td><td></td></tr><tr><td></td><td><code>bff.auth.duration</code></td><td><code>ms</code></td><td><code>provider</code></td><td>Time spent in <code>IAuthenticationProvider</code> resolution.</td><td></td></tr><tr><td></td><td><code>bff.request.size</code></td><td><code>bytes</code></td><td><code>method</code></td><td>Incoming request body size (from <code>Content-Length</code>). Nonstandard HTTP methods collapse to <code>_OTHER</code>. Requires <code>UsePortaTelemetry()</code>.</td><td></td></tr><tr><td></td><td><code>bff.response.size</code></td><td><code>bytes</code></td><td><code>status_code</code></td><td>Outgoing response body size. Requires <code>UsePortaTelemetry()</code>.</td><td></td></tr></tbody></table></div>
+<p>Latency histograms use the OpenTelemetry <code>http.server.request.duration</code>-style buckets (<code>0.5, 1, 2.5, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000</code> ms). Size histograms cover <code>256 B → 256 MiB</code> so the <code>MaxBackendResponseBytes</code> (10 MiB) and <code>MaxRawForwardResponseBytes</code> (100 MiB) caps land in real buckets.</p>
+</div>
+<div class="section">
+<h3>UpDownCounters</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Metric</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>bff.sessions.active</code></td><td>Active sessions. Incremented on <code>bff.session.created</code>, decremented on <code>bff.session.invalidated</code>. See the <a href="#session-lifecycle-metrics-and-the-active-sessions-gauge">gauge note</a> on expiry drift.</td><td></td></tr><tr><td></td><td><code>bff.requests.active</code></td><td>In-flight requests. Requires <code>UsePortaTelemetry()</code>.</td><td></td></tr></tbody></table></div>
+<h2>Span Hierarchy</h2>
+<p>Activity names are the fixed category strings (<code>bff.transformation</code>, <code>bff.backend</code>); the specific transformer/backend is carried on a tag, not baked into the name (see the note under <a href="#automatic-instrumentation">Automatic Instrumentation</a>). Porta's top-level endpoint span (<code>bff.transformation</code> here) is parented directly under the host's ambient ASP.NET Core request activity. The tags are shown in brackets below:</p>
+<pre><code>Incoming HTTP Request
+└── ASP.NET Core Activity (auto)
+    └── bff.transformation                [bff.transformation.strategy = EnrichedUserProfileTransformer]
+        ├── bff.backend                   [bff.backend.service = api.internal.com]
+        │   └── HTTP GET api.internal.com (auto)
+        └── bff.backend                   [bff.backend.service = products.internal.com]
+            └── HTTP GET products.internal.com (auto)</code></pre>
+<h2>Trace Context Propagation</h2>
+<p>W3C Trace Context headers (<code>traceparent</code>, <code>tracestate</code>) are automatically propagated to all backend HTTP calls via <code>AddHttpClientInstrumentation()</code>. This enables end-to-end distributed tracing across services.</p>
+<h2>Configuration</h2>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore(options =&gt;
+{
+    // Disable telemetry if needed (default: true)
+    options.EnableTelemetry = false;
+});</code></pre>
+<h2>Tags and Attributes</h2>
+<p>Activity tags emitted by <code>PortaActivitySource</code>. Source of truth is <a href="https://github.com/b17s-gmbh/b17s-Porta/blob/main/src/Telemetry/PortaActivitySource.cs"><code>PortaActivitySource.cs</code></a>.</p>
+</div>
+<div class="section">
+<h3>General</h3>
+<ul><li><code>bff.service.name</code></li><li><code>bff.component</code> - <code>&quot;transformer&quot;</code>, <code>&quot;aggregator&quot;</code>, <code>&quot;backend&quot;</code>, etc.</li></ul>
+</div>
+<div class="section">
+<h3>HTTP</h3>
+<ul><li><code>http.method</code>, <code>http.url</code>, <code>http.status_code</code>, <code>http.route</code></li></ul>
+</div>
+<div class="section">
+<h3>Backend</h3>
+<ul><li><code>bff.backend.service</code> - service hostname</li><li><code>bff.backend.protocol</code> - <code>&quot;http&quot;</code></li><li><code>bff.backend.endpoint</code>, <code>bff.backend.operation</code></li></ul>
+</div>
+<div class="section">
+<h3>Transformation</h3>
+<ul><li><code>bff.transformation.strategy</code> - transformer class name</li><li><code>bff.transformation.rule</code></li></ul>
+</div>
+<div class="section">
+<h3>Authentication</h3>
+<ul><li><code>bff.auth.provider</code> - <code>&quot;SessionAuthProvider&quot;</code>, <code>&quot;JwtBearerAuthProvider&quot;</code>, <code>&quot;ReferenceTokenAuthProvider&quot;</code>, etc.</li><li><code>bff.auth.user_id</code></li><li><code>bff.auth.token_type</code></li></ul>
+</div>
+<div class="section">
+<h3>Session</h3>
+<ul><li><code>bff.session.id</code></li><li><code>bff.session.user_id</code></li></ul>
+</div>
+<div class="section">
+<h3>Health check</h3>
+<ul><li><code>bff.health.status</code>, <code>bff.health.backend_count</code></li></ul>
+</div>
+<div class="section">
+<h3>Errors</h3>
+<ul><li><code>error.type</code>, <code>error.message</code></li></ul>
+<p>Stack traces are intentionally <strong>not</strong> exposed as a tag (high cardinality + inner-exception messages frequently contain PII). Use <code>Activity.AddException(ex)</code> instead, which records the stack trace as event-scoped attributes per OpenTelemetry semantic conventions.</p>
+<h2>Exporting Traces</h2>
+<p>Traces are exported when <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> is configured. The activity source is registered with OpenTelemetry in ServiceDefaults.</p>
+</div>
+<div class="section">
+<h3>Example: Jaeger</h3>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash"># Start Jaeger
+docker run -d --name jaeger \
+  -p 16686:16686 \
+  -p 4317:4317 \
+  jaegertracing/all-in-one:latest
+
+# Configure app
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317</code></pre>
+</div>
+<div class="section">
+<h3>Example: Aspire Dashboard</h3>
+<p>When running with .NET Aspire, traces are automatically exported to the Aspire dashboard.</p>
+<h2>Backend Call Logging</h2>
+<p><code>BackendCaller</code> separates structured <em>metadata</em> logs from <em>body</em> logs so that production log sinks do not capture sensitive payloads (access tokens, refresh tokens, PII) by default.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Event ID</th><th>Level</th><th>What it logs</th><th></th></tr></thead><tbody><tr><td></td><td>14005 <code>BackendErrorResponseMeta</code></td><td>Warning</td><td>URL, status, reason, body size, content-type</td><td></td></tr><tr><td></td><td>14006 <code>BackendDeserializationFailed</code></td><td>Error</td><td>URL, status, body size, exception</td><td></td></tr><tr><td></td><td>14007 <code>BackendResponseMeta</code></td><td>Debug</td><td>URL, status, body size, content-type</td><td></td></tr><tr><td></td><td>14015 <code>BackendErrorResponseBody</code></td><td><strong>Trace</strong></td><td>Error response body, capped by <code>PortaCore:MaxBodyLogLength</code></td><td></td></tr><tr><td></td><td>14016 <code>BackendDeserializationFailedBody</code></td><td><strong>Trace</strong></td><td>Body that failed to deserialize, capped by <code>PortaCore:MaxBodyLogLength</code></td><td></td></tr><tr><td></td><td>14017 <code>BackendResponseBody</code></td><td><strong>Trace</strong></td><td>Response body, capped by <code>PortaCore:MaxBodyLogLength</code></td><td></td></tr></tbody></table></div>
+<p>Body logs are emitted at <code>LogLevel.Trace</code>, which is disabled by default in production. Enable Trace only for the <code>b17s.Porta.Transformers.BackendCaller</code> category in development or with operator approval - never enable it globally on a system that brokers tokens or PII.</p>
+</div>
+<div class="section">
+<h3>Body length cap (<code>PortaCore:MaxBodyLogLength</code>)</h3>
+<p>To bound the blast radius of accidentally enabling Trace logs, body events 14015/14016/14017 are truncated to the first <code>MaxBodyLogLength</code> characters (default <code>512</code>). Truncated entries get a <code>… (truncated, N chars total)</code> suffix so you can still see the full size in the meta log (14005/14006/14007).</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Value</th><th>Behavior</th><th></th></tr></thead><tbody><tr><td></td><td><code>&gt; 0</code></td><td>Truncate body to N characters (default <code>512</code>)</td><td></td></tr><tr><td></td><td><code>0</code></td><td>Do not emit body events at all - only metadata logs are written</td><td></td></tr><tr><td></td><td><code>-1</code></td><td>Unlimited; full body is logged</td><td></td></tr></tbody></table></div>
+<p>GraphQL responses and any payload that may include access tokens, refresh tokens, or PII (e.g. <code>me { ... }</code> queries, OIDC userinfo) should keep the default cap. Set <code>-1</code> only in isolated development environments where you have already accepted the risk.</p>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

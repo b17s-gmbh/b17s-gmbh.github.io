@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>OIDC Endpoints | b17s</title>
+<meta name="description" content="The b17s.Porta OIDC pipeline: login, logout, back-channel logout, token revocation, and session administration.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/oidc.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="OIDC Endpoints">
+<meta property="og:description" content="The b17s.Porta OIDC pipeline: login, logout, back-channel logout, token revocation, and session administration.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/oidc.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OIDC Endpoints">
+<meta name="twitter:description" content="The b17s.Porta OIDC pipeline: login, logout, back-channel logout, token revocation, and session administration.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="oidc" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/oidc.html" aria-current="page">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>OIDC Endpoints</h1>
+                <p class="docs-subtitle">Login, logout, back-channel logout, and session admin</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>The library wires <code>Microsoft.AspNetCore.Authentication.OpenIdConnect</code> (the framework's OIDC handler) into a BFF-shaped pipeline: server-side ticket storage, automatic refresh, RFC 7009 token revocation, and back-channel logout. State, nonce, PKCE generation, the auth-code-for-token exchange, and id_token validation are all delegated to the framework - the BFF only adds value where the framework leaves a gap.</p>
+<h2>The pipeline at a glance</h2>
+<pre><code>GET /bff/login   →  ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme)
+                    ├─ framework builds authorize URL with state/nonce/PKCE
+                    └─ 302 to IdP
+
+GET /signin-oidc →  framework handler:
+                    ├─ verifies state + nonce + PKCE
+                    ├─ exchanges code for tokens at the IdP
+                    ├─ validates id_token (signature, iss, aud, exp, nonce)
+                    ├─ raises OnTokenValidated
+                    │   └─ b17s.Porta: registers session + stores encrypted refresh token
+                    └─ SignInAsync(Cookie scheme)
+                        └─ DistributedCacheTicketStore: tokens persisted server-side
+                            cookie carries only an opaque ticket id
+
+POST /bff/logout →  SignOutAsync(Cookie + OIDC schemes)
+                    ├─ b17s.Porta: revokes refresh token at IdP (RFC 7009)
+                    └─ framework redirects to IdP end-session endpoint
+                    (POST required - GET would be CSRF-able under SameSite=Lax)</code></pre>
+<h2>Service registration</h2>
+<p>Single entry point. Pass an <code>IConfiguration</code> containing the <code>SessionAuthentication</code> section (or your own section name).</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore();
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p><code>appsettings.json</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;SessionAuthentication&quot;: {
+    &quot;Authority&quot;: &quot;https://auth.example.com&quot;,
+    &quot;ClientId&quot;: &quot;my-porta&quot;,
+    &quot;ClientSecret&quot;: &quot;...&quot;,
+    &quot;Scope&quot;: &quot;openid profile email&quot;,
+    &quot;CookieName&quot;: &quot;__Porta&quot;,
+    &quot;UsePkce&quot;: true,
+    &quot;QueryUserInfoEndpoint&quot;: true,
+    &quot;SessionTimeoutInMin&quot;: 60,
+    &quot;Cookie&quot;: {
+      &quot;SecurePolicy&quot;: &quot;Always&quot;,
+      &quot;SameSite&quot;: &quot;Lax&quot;,
+      &quot;ExpireTimeSpanMinutes&quot;: 60,
+      &quot;SlidingExpiration&quot;: false
+    },
+    &quot;DataProtection&quot;: {
+      &quot;ApplicationName&quot;: &quot;MyPorta&quot;,
+      &quot;KeyLifetimeDays&quot;: 90
+    }
+  }
+}</code></pre>
+<p><code>AddPortaAuthentication</code> registers:</p>
+<ul><li><code>AddAuthentication().AddCookie().AddOpenIdConnect()</code> with options bound from configuration.</li><li><code>DistributedCacheTicketStore</code> as the cookie scheme's <code>SessionStore</code>.</li><li><code>AddDistributedMemoryCache()</code> as a fallback (real Redis/Valkey wins via <code>TryAddSingleton</code>).</li><li><code>AddDataProtection()</code> with <code>ApplicationName</code> and <code>KeyLifetimeDays</code>.</li><li><code>IAccessTokenRefreshService</code>, <code>ISessionManagementService</code>, <code>ITokenRefreshService</code>, <code>ITokenRevocationService</code>, <code>ITokenExchangeService</code>.</li></ul>
+<p>For production, layer Redis on top:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddStackExchangeRedisCache(o =&gt; o.Configuration = &quot;...&quot;);</code></pre>
+<h2>Endpoint options composition</h2>
+<p>All four endpoint shims (<code>UseOidcLogin</code>, <code>UseOidcLogout</code>, <code>UseOidcBackChannelLogout</code>, <code>UseSessionAdmin</code>) build their options per call from the DI options pipeline: any <code>services.Configure&lt;TOptions&gt;(...)</code> / <code>PostConfigure&lt;TOptions&gt;(...)</code> composition is applied first, then the per-call lambda runs last and wins on conflicts. Each call gets a fresh options instance, so two endpoints registered with different lambdas never share state.</p>
+<h2>UseOidcLogin</h2>
+<p>Thin shim: validates the post-login destination (open-redirect guard + signed-return-url policy), then triggers the framework's challenge flow.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.UseOidcLogin();
+
+// Custom path and options
+app.UseOidcLogin(&quot;/auth/login&quot;, options =&gt;
+{
+    options.DefaultRedirectUri = &quot;/dashboard&quot;;
+    // Bare hostnames match any port; &quot;host:port&quot; pins the port.
+    options.AllowedRedirectHosts = [&quot;app.example.com&quot;, &quot;staging.example.com:8443&quot;];
+});</code></pre>
+<div class="section">
+<h3>Specifying a post-login destination</h3>
+<p>There are two flows for telling <code>/bff/login</code> where to land after authentication. Which one is active depends on <code>OidcLoginOptions.RequireSignedReturnUrl</code> (default: <code>true</code>).</p>
+<h4>Default - signed <code>return_url</code> flow (<code>RequireSignedReturnUrl = true</code>)</h4>
+<p>An unauthenticated caller cannot supply a raw <code>redirect_uri</code>; it must present a signed token minted by this server. This blocks attacker-crafted login links from pre-setting a target path the victim never chose.</p>
+<ol><li>From an authenticated session, <code>POST /bff/login/sign-return-url?redirect_uri=/dashboard</code> (the auth cookie must be on the request).</li><li>Response: <code>{ &quot;return_url&quot;: &quot;&lt;opaque-token&gt;&quot;, &quot;expires_in&quot;: 600 }</code>. Lifetime is <code>OidcLoginOptions.ReturnUrlTtl</code> (default 10 minutes).</li><li>Client navigates to <code>/bff/login?return_url=&lt;opaque-token&gt;</code>.</li><li><code>ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme)</code> - the framework builds the authorize URL with state/nonce/PKCE and 302s the browser to the IdP.</li><li>After auth, the IdP redirects to <code>/signin-oidc</code> (the framework's default callback path). <strong>You do not need to write a callback handler.</strong></li></ol>
+<p>If an unauthenticated caller hits <code>/bff/login?redirect_uri=/dashboard</code> (raw, unsigned) under this default, the request is rejected with HTTP 400:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{ &quot;error&quot;: &quot;redirect_uri must be signed&quot;, &quot;sign_endpoint&quot;: &quot;/bff/login/sign-return-url&quot; }</code></pre>
+<p>An <em>already-authenticated</em> caller (e.g. a step-up reauth flow) may pass <code>redirect_uri</code> directly under either mode - they could navigate to that path themselves anyway.</p>
+<h4>Permissive - raw <code>redirect_uri</code> flow (<code>RequireSignedReturnUrl = false</code>)</h4>
+<p>For deployments where every login link is server-rendered or originates inside a trusted UI (no anonymous link-injection threat), the signed flow can be disabled:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.UseOidcLogin(&quot;/bff/login&quot;, options =&gt;
+{
+    options.RequireSignedReturnUrl = false;
+});</code></pre>
+<p>Then <code>/bff/login?redirect_uri=/dashboard</code> works directly. The open-redirect guard (relative-only or <code>AllowedRedirectHosts</code>) still applies regardless of mode.</p>
+<p>If no destination is supplied at all, <code>OidcLoginOptions.DefaultRedirectUri</code> is used.</p>
+<p>Scope and PKCE come from <code>SessionAuthentication</code> config; there are no <code>OidcLoginOptions.AdditionalScopes</code> / <code>UsePkce</code> knobs at the endpoint level.</p>
+<h2>UseOidcLogout</h2>
+<p>Thin shim: validates <code>redirect_uri</code>, optionally revokes the refresh token at the IdP, then triggers the framework's sign-out flow.</p>
+<p><strong>HTTP method:</strong> the endpoint only accepts <code>POST</code> and returns <code>405 Method Not Allowed</code> with <code>Allow: POST</code> otherwise. This blocks CSRF logout via <code>&lt;img src=&quot;…/bff/logout&quot;&gt;</code> - under the default <code>SameSite=Lax</code> the auth cookie attaches to top-level GETs, and global logout would then revoke the user's refresh token at the IdP as an attacker-triggered side effect.</p>
+<p><strong>Antiforgery:</strong> by default the endpoint also requires a valid ASP.NET antiforgery token on the POST. This is defense-in-depth on top of the method gate: if an operator later flips the auth cookie to <code>SameSite=None</code> (cross-site embedded scenarios), a cross-origin POST would attach the cookie and trigger logout + IdP-side revocation as a side effect. The antiforgery token closes that window. See <a href="#antiforgery-for-browser-callers">Antiforgery for browser callers</a> below.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.UseOidcLogout();
+
+// JSON response mode for SPA
+app.UseOidcLogout(&quot;/auth/logout&quot;, options =&gt;
+{
+    options.ReturnJson = true;
+    options.PerformGlobalLogout = true;          // revoke refresh token at IdP (RFC 7009) + clear local session
+                                                 // NOTE: JSON mode does NOT end the IdP SSO session - see
+                                                 // &quot;Global logout from a SPA&quot; below
+    options.AllowedRedirectHosts = [&quot;app.example.com&quot;];
+    options.DefaultRedirectUri = &quot;/&quot;;
+    options.RequireAntiforgery = true;           // default; browser callers must present a token
+});
+
+// Local logout only - no IdP round-trip
+app.UseOidcLogout(&quot;/auth/logout&quot;, options =&gt;
+{
+    options.PerformGlobalLogout = false;
+});
+
+// Non-browser logout caller (CLI, native app with token auth) - opt out
+app.UseOidcLogout(&quot;/auth/logout&quot;, options =&gt;
+{
+    options.RequireAntiforgery = false;
+});</code></pre>
+</div>
+<div class="section">
+<h3>OidcLogoutOptions</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Notes</th><th></th></tr></thead><tbody><tr><td></td><td><code>DefaultRedirectUri</code></td><td><code>/</code></td><td>Used when the request omits <code>redirect_uri</code>. Validated at startup against <code>AllowedRedirectHosts</code> / <code>AllowLocalhost</code>.</td><td></td></tr><tr><td></td><td><code>AllowedRedirectHosts</code></td><td><code>[]</code></td><td>Whitelist of accepted hosts for <code>redirect_uri</code>. Entries can be bare hostnames or <code>host:port</code>. Empty means same-origin only.</td><td></td></tr><tr><td></td><td><code>AllowLocalhost</code></td><td><code>false</code></td><td>When <code>true</code>, loopback hosts are accepted as redirect targets even when not in <code>AllowedRedirectHosts</code>.</td><td></td></tr><tr><td></td><td><code>ReturnJson</code></td><td><code>false</code></td><td>When <code>true</code>, return a JSON envelope instead of a redirect. Note this also changes what <code>PerformGlobalLogout</code> can do — see below.</td><td></td></tr><tr><td></td><td><code>PerformGlobalLogout</code></td><td><code>true</code></td><td>Revoke the refresh token at the IdP (RFC 7009). In <strong>redirect mode</strong> (<code>ReturnJson = false</code>) it <em>also</em> signs out the OIDC scheme, driving the framework to the IdP end-session endpoint and ending the IdP SSO session. In <strong>JSON mode</strong> (<code>ReturnJson = true</code>) it revokes the refresh token and clears the local session <strong>only</strong> — it does <strong>not</strong> end the IdP SSO session (a JSON response cannot also emit the end-session redirect). See <a href="#global-logout-from-a-spa">Global logout from a SPA</a>.</td><td></td></tr><tr><td></td><td><code>RequireAntiforgery</code></td><td><code>true</code></td><td>Require a valid ASP.NET antiforgery token on the logout POST. Disable only when logout callers are non-browser (CLI, server-to-server, native app). When <code>true</code> and <code>IAntiforgery</code> is not registered, the endpoint fails closed with HTTP 403.</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Antiforgery for browser callers</h3>
+<p>When <code>RequireAntiforgery = true</code> (default), the logout POST must include a valid ASP.NET antiforgery token. The middleware uses <code>Microsoft.AspNetCore.Antiforgery.IAntiforgery</code>, which by default reads the token from the <code>RequestVerificationToken</code> header (or matching form field). A browser SPA should fetch a token via <code>IAntiforgery.GetAndStoreTokens</code> on a GET, then attach it to the logout POST:</p>
+<pre data-lang="javascript"><code data-lang="javascript" class="language-javascript">const csrf = document.cookie.split('; ').find(c =&gt; c.startsWith('XSRF-TOKEN='))?.split('=')[1];
+
+await fetch('/bff/logout', {
+    method: 'POST',
+    headers: { 'RequestVerificationToken': decodeURIComponent(csrf) },
+});</code></pre>
+<p><strong>Global logout</strong> (the default), in <strong>redirect mode</strong> (<code>ReturnJson = false</code>):</p>
+<ol><li>Revoke the refresh token at the IdP via RFC 7009 (cascades to access tokens for spec-compliant IdPs).</li><li><code>SignOutAsync(Cookie)</code> clears the cookie + ticket store.</li><li><code>SignOutAsync(OIDC)</code> lets the framework redirect to the IdP's end-session endpoint with <code>id_token_hint</code>. This ends the IdP SSO session, so the next login is <em>not</em> silently SSO'd.</li></ol>
+<p><strong>Global logout in JSON mode</strong> (<code>ReturnJson = true</code>): only steps 1 and 2 run. Step 3 is <strong>skipped</strong> — a JSON response body cannot also carry the <code>302</code> redirect the end-session flow needs. The refresh token is dead and the local BFF session is gone, but the <strong>IdP SSO session is still alive</strong>, so the next <code>/bff/login</code> may sign the user straight back in without a credential prompt. To end the IdP session too, the SPA must drive it — see <a href="#global-logout-from-a-spa">Global logout from a SPA</a>.</p>
+<p><strong>Local logout</strong>: <code>SignOutAsync(Cookie)</code> only; no IdP round-trip.</p>
+</div>
+<div class="section">
+<h3>Global logout from a SPA</h3>
+<p>The IdP SSO session is a cookie the IdP set <strong>in the browser</strong>. Ending it is inherently a browser navigation — the browser has to visit the IdP's end-session endpoint so the IdP can clear that cookie. This library does not (and cannot) do that for you from a JSON response. You have two practical options:</p>
+<p><strong>Option A — use redirect mode for logout (recommended).</strong> If you want true global logout, don't use <code>ReturnJson</code> for the logout call. Do a full-page navigation to the logout endpoint and let the framework handle the end-session redirect end to end:</p>
+<pre data-lang="javascript"><code data-lang="javascript" class="language-javascript">// Submit a POST form (so antiforgery + SameSite still apply) and let the browser follow the 302 chain
+const form = document.createElement('form');
+form.method = 'POST';
+form.action = '/bff/logout';
+// include your antiforgery token as a hidden field or header-bearing fetch+redirect as your setup requires
+document.body.appendChild(form);
+form.submit();</code></pre>
+<p>The browser ends up at the IdP end-session endpoint and then back at your <code>post_logout_redirect_uri</code>. SSO is fully cleared.</p>
+<p><strong>Option B — JSON logout, then navigate to the IdP yourself.</strong> Keep <code>ReturnJson = true</code> for the local teardown (handy when the SPA wants to react to the JSON first), then send the browser to the IdP end-session endpoint:</p>
+<pre data-lang="javascript"><code data-lang="javascript" class="language-javascript">await fetch('/bff/logout', { method: 'POST', headers: { 'RequestVerificationToken': csrf } });
+// local session + refresh token are now gone; finish by ending the IdP session:
+window.location = 'https://auth.example.com/connect/endsession'
+    + '?post_logout_redirect_uri=' + encodeURIComponent('https://app.example.com/');</code></pre>
+<p>Caveats for Option B: the BFF holds the <code>id_token</code> server-side, so the SPA cannot supply <code>id_token_hint</code>. Without it, many IdPs still end the session but may show a "do you want to sign out?" confirmation, and the <code>post_logout_redirect_uri</code> usually must be pre-registered with the IdP. The end-session path is provider-specific (<code>/connect/endsession</code>, <code>/v2/logout</code>, <code>/oidc/logout</code>, …) — read it from the IdP's discovery document (<code>end_session_endpoint</code>). Where the confirmation prompt and <code>id_token_hint</code> matter, prefer Option A.</p>
+<p><strong>JSON response format:</strong></p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+    &quot;success&quot;: true,
+    &quot;logoutType&quot;: &quot;global&quot;,
+    &quot;redirectUrl&quot;: &quot;/dashboard&quot;,
+    &quot;localSessionCleared&quot;: true,
+    &quot;tokensRevoked&quot;: true
+}</code></pre>
+</div>
+<div class="section">
+<h3>Redirect URI validation</h3>
+<p>Both <code>UseOidcLogin</code> and <code>UseOidcLogout</code> validate any client-supplied <code>redirect_uri</code> before storing or following it:</p>
+<ul><li><strong>Relative URIs</strong> (<code>/path</code>) are accepted as same-origin. <strong>Protocol-relative URIs</strong> (<code>//host/...</code>) and backslash variants (<code>/\host/...</code>) are rejected with HTTP 400 - these resolve to an external origin in browsers.</li><li><strong>Absolute URIs</strong> must use <code>https://</code>, except loopback hosts (<code>localhost</code> / <code>127.0.0.0/8</code> / <code>::1</code>) which may use HTTP. Loopback is <strong>not</strong> accepted unless <code>AllowLocalhost = true</code> (default <code>false</code>); in docker/sidecar deployments a permissive loopback fallback is exploitable.</li><li><strong>Same-origin</strong> matches require both host AND port equality. A redirect to <code>app.example.com:8443</code> is not same-origin with a request to <code>app.example.com</code> (HTTPS default :443).</li><li>Hosts must match the request origin or appear in <code>AllowedRedirectHosts</code>. Entries may be a bare hostname (any port matches) or <code>host:port</code> to pin a specific port. Hostnames are compared in IDN/punycode form and are case-insensitive - <code>müller.example</code> and <code>xn--mller-kva.example</code> are treated as equal.</li></ul>
+<h2>UseOidcBackChannelLogout</h2>
+<p>IdP-initiated back-channel logout endpoint (OpenID Connect Back-Channel Logout 1.0). The framework doesn't implement this; we do.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.UseOidcBackChannelLogout();
+
+// Custom path and options
+app.UseOidcBackChannelLogout(&quot;/auth/backchannel-logout&quot;, options =&gt;
+{
+    options.ClockSkew = TimeSpan.FromMinutes(5);
+    options.ValidateSignature = true;
+    options.ValidateIssuer = true;
+    options.ValidateAudience = true;
+    options.MaxRequestBodyBytes = 64 * 1024;       // 64 KB Content-Length cap
+    options.MaxLogoutTokenLength = 16 * 1024;     // 16 KB JWT character cap
+    options.RequireLogoutTypHeader = true;        // require typ: logout+jwt
+    options.MaxReplayCacheTtl = TimeSpan.FromHours(24);
+});</code></pre>
+<p>Flow:</p>
+<ol><li>User logs out from another app connected to the same IdP.</li><li>IdP POSTs a signed <code>logout_token</code> JWT to this endpoint.</li><li>Middleware validates the JWT signature against the IdP's JWKS (via the shared <code>JwtValidationHelper</code>). If the token's signing key is missing from the cached JWKS — typically after an IdP signing-key rollover — the metadata is re-fetched and validation retried once, so IdP-initiated logouts keep working across key rotations. Forced re-fetches are throttled to one per authority per 30 seconds, since this endpoint is anonymous and the trigger (an unknown <code>kid</code>) is attacker-controllable.</li><li>Validates the <code>events</code> claim contains the back-channel logout event type.</li><li>Extracts <code>sid</code> (session ID) or <code>sub</code> and calls <code>ISessionManagementService.TerminateSessionAsync(...)</code>.</li></ol>
+<p><strong>Register with your IdP:</strong> Configure your IdP to send back-channel logout requests to this endpoint URL.</p>
+</div>
+<div class="section">
+<h3>OidcBackChannelLogoutOptions</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>ClockSkew</code></td><td><code>5 minutes</code></td><td>Maximum allowed clock skew when validating the JWT's <code>exp</code> / <code>iat</code>.</td><td></td></tr><tr><td></td><td><code>ValidateSignature</code></td><td><code>true</code></td><td>Validate the logout token signature against the IdP's JWKS. Disabling this lets an anonymous caller terminate arbitrary sessions.</td><td></td></tr><tr><td></td><td><code>ValidateIssuer</code></td><td><code>true</code></td><td>Validate the <code>iss</code> claim against the configured authority.</td><td></td></tr><tr><td></td><td><code>ValidateAudience</code></td><td><code>true</code></td><td>Validate the <code>aud</code> claim against the configured client.</td><td></td></tr><tr><td></td><td><code>MaxRequestBodyBytes</code></td><td><code>64 KB</code></td><td>Maximum allowed <code>Content-Length</code>. The endpoint is anonymous, so this caps memory an unauthenticated caller can force the server to buffer; a spec-compliant logout_token is only a few KB.</td><td></td></tr><tr><td></td><td><code>MaxLogoutTokenLength</code></td><td><code>16 KB</code></td><td>Maximum allowed length of the <code>logout_token</code> string itself, in characters. Bounds JWT-validator work for obviously-oversized tokens.</td><td></td></tr><tr><td></td><td><code>RequireLogoutTypHeader</code></td><td><code>true</code></td><td>Require the JWT header to carry <code>typ: logout+jwt</code> per OIDC Back-Channel Logout 1.0 §2.4. Primary defense against an attacker presenting a signed <code>id_token</code> or <code>access_token</code> from the same issuer/audience. Disable only for legacy IdPs that mint logout tokens with <code>typ: JWT</code> or no <code>typ</code>.</td><td></td></tr><tr><td></td><td><code>MaxReplayCacheTtl</code></td><td><code>24 hours</code></td><td>Upper bound on how long a consumed <code>jti</code> is kept in the replay cache (TTL is otherwise <code>(token.ValidTo - UtcNow) + ClockSkew</code>). Defends against a misconfigured IdP that mints tokens without <code>exp</code> from pinning entries indefinitely.</td><td></td></tr></tbody></table></div>
+<p><strong>Startup fail-fast.</strong> <code>ValidateSignature</code>, <code>ValidateIssuer</code>, and <code>ValidateAudience</code> default to <code>true</code> and exist only as a Development debugging affordance. <code>UseOidcBackChannelLogout</code> throws <code>OptionsValidationException</code> at startup if any of them is <code>false</code> and <code>IHostEnvironment.IsDevelopment()</code> is <code>false</code>.</p>
+<h2>Server-side ticket store</h2>
+<p>By default, ASP.NET Core's cookie auth handler stores tokens in the cookie itself via <code>AuthenticationProperties</code>. For a BFF this means cookies grow with the access/refresh/id tokens (typically 3–5 KB+) and tokens travel over the wire on every request.</p>
+<p><code>AddPortaAuthentication</code> instead registers a <code>DistributedCacheTicketStore</code> as the cookie scheme's <code>SessionStore</code>:</p>
+<ul><li>Cookie carries only an opaque ticket id (~32 bytes): the IdP-issued <code>sid</code> claim when present, otherwise a generated <code>Guid.NewGuid(&quot;N&quot;)</code>.</li><li>The actual <code>AuthenticationTicket</code> (with tokens) is serialized via <code>TicketSerializer.Default</code>, encrypted via <code>IDataProtector</code> with purpose <code>&quot;Porta.AuthTickets.v1&quot;</code>, and written to <code>IDistributedCache</code> under <code>porta:auth_ticket:{id}</code>.</li><li>The cache entry expires when the cookie ticket expires: its absolute expiration is the ticket's stamped <code>ExpiresUtc</code> (driven by <code>Cookie.ExpireTimeSpanMinutes</code>, re-stamped on each sliding renewal when <code>SlidingExpiration</code> is enabled). <code>SessionTimeoutInMin</code> does <strong>not</strong> control the ticket TTL - see <a href="configuration.html#session-timeouts---sessiontimeoutinmin-vs-cookieexpiretimespanminutes">Session timeouts</a>.</li></ul>
+<p><strong>Cache eviction effectively logs the user out</strong> (the cookie's ticket id no longer resolves). Acceptable for a session store. If you need stronger guarantees, use Redis with persistence and capacity headroom.</p>
+<p><strong>Decrypt failures</strong> (e.g., after Data Protection key rotation without persistent key storage) cause the ticket to be treated as missing - the user is silently logged out and must re-authenticate. To survive key rotation across instances, configure persistent key storage (<code>PersistKeysToStackExchangeRedis</code>, <code>PersistKeysToFileSystem</code>, etc.) on the <code>IDataProtectionBuilder</code>.</p>
+<h2>Session token revocation</h2>
+<p><code>TerminateSessionAsync(sessionId, revokeTokens: true)</code> from the admin API (with <code>?revokeTokens=true</code>) revokes the refresh token at the IdP via RFC 7009 (cascades to access tokens for spec-compliant IdPs). Back-channel logout terminates the local session with <code>revokeTokens: false</code> - the IdP just told us the user signed out, so calling back to revoke would be redundant.</p>
+<p>Revocation requires:</p>
+<ul><li>A refresh token was stored on the session metadata at sign-in time. <code>OnTokenValidated</code> calls <code>ISessionManagementService.RegisterSessionAsync(..., encryptedRefreshToken: ...)</code>. The token is encrypted via <code>IDataProtector</code> with purpose <code>&quot;Porta.SessionTokenRevocation.v1&quot;</code>.</li><li><code>ITokenRevocationService</code> is registered (<code>AddPortaAuthentication</code> does this).</li><li><code>IDataProtectionProvider</code> is registered (<code>AddPortaAuthentication</code> does this).</li></ul>
+<p>If any of these are missing, termination still succeeds locally (cookie + ticket store) but logs that IdP-side revocation was skipped:</p>
+<ul><li><code>Porta/13813</code>: <code>ITokenRevocationService is not registered</code></li><li><code>Porta/13814</code>: <code>IDataProtectionProvider is not registered</code></li><li><code>Porta/13815</code>: <code>no encrypted refresh token on metadata</code></li><li><code>Porta/13816</code>: <code>failed to decrypt refresh token (data protection key rotation?)</code></li></ul>
+<p><code>AccessTokenRefreshService</code> updates the encrypted refresh token after every successful rotation, so revocation always targets the current refresh token (not a stale rotated-out one).</p>
+<h2>Session Administration</h2>
+<p>For administrative session management, use <code>UseSessionAdmin()</code>. <strong>Opt-in</strong> and <strong>requires an authorization policy</strong>.</p>
+</div>
+<div class="section">
+<h3>Basic Usage</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddAuthorization(options =&gt;
+{
+    options.AddPolicy(&quot;AdminOnly&quot;, policy =&gt; policy.RequireRole(&quot;Admin&quot;));
+});
+
+app.UseSessionAdmin(&quot;/bff/admin/sessions&quot;, options =&gt;
+{
+    options.RequirePolicy = &quot;AdminOnly&quot;;  // REQUIRED - startup fails if missing
+    options.RequireAntiforgery = true;    // default; cookie callers must present a token on DELETE
+});</code></pre>
+</div>
+<div class="section">
+<h3>SessionAdminOptions</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>RequirePolicy</code></td><td>-</td><td><strong>Required.</strong> Name of an <code>AddAuthorization</code> policy. Startup fails if missing or if the policy is not registered.</td><td></td></tr><tr><td></td><td><code>RequireAntiforgery</code></td><td><code>true</code></td><td>State-changing requests (<code>DELETE</code>) require a valid ASP.NET antiforgery token when the authenticated caller is identified via a cookie scheme. Token-auth callers (bearer / reference tokens / API keys) are exempt because their credentials are not auto-attached cross-origin. Disable only when admin clients are non-browser (CLI, server-to-server).</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>REST Endpoints</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Method</th><th>Path</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>GET</code></td><td><code>/bff/admin/sessions?email={email}</code></td><td>List all sessions for a user</td><td></td></tr><tr><td></td><td><code>DELETE</code></td><td><code>/bff/admin/sessions/{sessionId}</code></td><td>Terminate a specific session - antiforgery token required for cookie callers when <code>RequireAntiforgery = true</code>.</td><td></td></tr><tr><td></td><td><code>DELETE</code></td><td><code>/bff/admin/sessions?email={email}</code></td><td>Terminate all sessions for a user - antiforgery token required for cookie callers when <code>RequireAntiforgery = true</code>.</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Antiforgery for cookie callers</h3>
+<p>When <code>RequireAntiforgery = true</code> (default), a cookie-authenticated <code>DELETE</code> must include a valid ASP.NET antiforgery token. The middleware uses <code>Microsoft.AspNetCore.Antiforgery.IAntiforgery</code>, which by default reads the token from the <code>RequestVerificationToken</code> header (or matching form field). A browser admin UI should fetch a token via <code>IAntiforgery.GetAndStoreTokens</code> on a GET, then attach it to subsequent DELETEs:</p>
+<pre data-lang="javascript"><code data-lang="javascript" class="language-javascript">const csrf = document.cookie.split('; ').find(c =&gt; c.startsWith('XSRF-TOKEN='))?.split('=')[1];
+
+await fetch('/bff/admin/sessions/abc123', {
+    method: 'DELETE',
+    headers: { 'RequestVerificationToken': decodeURIComponent(csrf) },
+    credentials: 'include'
+});</code></pre>
+<p>CSRF failures are counted under the <code>bff.csrf.validation_failures</code> metric (see <a href="telemetry.html">telemetry.md</a>).</p>
+</div>
+<div class="section">
+<h3>Optional Query Parameters</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Parameter</th><th>Description</th><th>Default</th><th></th></tr></thead><tbody><tr><td></td><td><code>revokeTokens</code></td><td>Also revoke refresh token at IdP (RFC 7009). Pass <code>true</code> / <code>1</code> / <code>yes</code> to opt in; any other value (or omission) is treated as <code>false</code>.</td><td><code>false</code></td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Example Responses</h3>
+<p><strong>List sessions:</strong></p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+    &quot;email&quot;: &quot;user@example.com&quot;,
+    &quot;sessionCount&quot;: 2,
+    &quot;sessions&quot;: [
+        {
+            &quot;sessionId&quot;: &quot;abc123&quot;,
+            &quot;userId&quot;: &quot;user-456&quot;,
+            &quot;createdAt&quot;: &quot;2024-01-15T10:00:00Z&quot;,
+            &quot;lastActivity&quot;: &quot;2024-01-15T14:30:00Z&quot;,
+            &quot;expiresAt&quot;: &quot;2024-01-15T22:00:00Z&quot;,
+            &quot;ipAddress&quot;: &quot;192.168.1.100&quot;,
+            &quot;userAgent&quot;: &quot;Mozilla/5.0...&quot;
+        }
+    ]
+}</code></pre>
+<p><strong>Terminate session:</strong></p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{ &quot;success&quot;: true, &quot;sessionId&quot;: &quot;abc123&quot;, &quot;tokensRevoked&quot;: true }</code></pre>
+<p><strong>Terminate by email:</strong></p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{ &quot;success&quot;: true, &quot;email&quot;: &quot;user@example.com&quot;, &quot;terminatedCount&quot;: 2, &quot;tokensRevoked&quot;: true }</code></pre>
+</div>
+<div class="section">
+<h3>Security Considerations</h3>
+<ul><li><strong>Disabled by default</strong>: Must be explicitly enabled with <code>UseSessionAdmin()</code>.</li><li><strong>Mandatory auth policy</strong>: No default - callers must specify a policy.</li><li><strong>Startup validation</strong>: Fails if the specified policy doesn't exist.</li><li><strong>Audit logging</strong>: All operations are logged at Information level.</li></ul>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

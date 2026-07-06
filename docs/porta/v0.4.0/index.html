@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>b17s.Porta | b17s</title>
+<meta name="description" content="b17s.Porta lets you build customizable, boiler-plate-free Backend-for-Frontend (BFF) services for ASP.NET Core, with transformer-based API aggregation and multi-frontend/backend authentication.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.4.0/">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="b17s.Porta">
+<meta property="og:description" content="b17s.Porta lets you build customizable, boiler-plate-free Backend-for-Frontend (BFF) services for ASP.NET Core, with transformer-based API aggregation and multi-frontend/backend authentication.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.4.0/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="b17s.Porta">
+<meta name="twitter:description" content="b17s.Porta lets you build customizable, boiler-plate-free Backend-for-Frontend (BFF) services for ASP.NET Core, with transformer-based API aggregation and multi-frontend/backend authentication.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.4.0/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0" selected>v0.4.0 (latest)</option><option value="v0.3.1-rc6">v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item active"><a href="/docs/porta/v0.4.0/" aria-current="page">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/health-checks.html">Health Checks</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>b17s.Porta</h1>
+                <p class="docs-subtitle">Backend-for-Frontend library for ASP.NET Core</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p><a href="https://github.com/b17s-gmbh/b17s-Porta/actions/workflows/ci.yml"><figure><img src="https://github.com/b17s-gmbh/b17s-Porta/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></figure></a> <a href="https://www.nuget.org/packages/b17s.Porta/"><figure><img src="https://img.shields.io/nuget/v/b17s.Porta.svg" alt="NuGet"></figure></a> <a href="https://github.com/b17s-gmbh/b17s-Porta/blob/main/LICENSE"><figure><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></figure></a></p>
+<p>Porta is your way to create completely customizable, easy-to-implement, boiler-plate code free Backend-For-Frontend (BFF) services with opinionated, sensible defaults. Its architecture hooks into ASP.Net Core's minimal API design, and extends it via transformer-based API aggregation with multi-frontend/backend authentication support.</p>
+<blockquote><p><strong>IMPORTANT</strong> Porta is not yet battle-hardened. For this reason it is advised to not use it on edge yet, but have a reverse proxy in front of it.</p></blockquote>
+<h2>Features</h2>
+<ul><li><strong>Transformer Pattern</strong>: Clean separation between API contracts and backend calls</li><li><strong>Multi-Backend Aggregation</strong>: Combine data from multiple backends in a single endpoint</li><li><strong>Per-Backend Authentication</strong>: Configure different auth policies for each backend</li><li><strong>Startup Validation</strong>: Catch configuration errors at application startup, not runtime</li><li><strong>OIDC Endpoints</strong>: Opt-in login, logout, and back-channel logout middleware</li><li><strong>Session Administration</strong>: Opt-in REST endpoints for session management</li><li><strong>Raw Forwarding</strong>: Zero-code proxy endpoints for binary content, files, and non-JSON APIs</li><li><strong>GraphQL Support</strong>: REST facade over GraphQL backends</li><li><strong>OpenTelemetry</strong>: Automatic distributed tracing for all transformers and backend calls</li><li><strong>Health Checks</strong>: Opt-in readiness checks for the IdP, session store, and Data Protection keys</li></ul>
+<h2>Installation</h2>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash">dotnet add package b17s.Porta</code></pre>
+<h2>Quick Start</h2>
+<div class="section">
+<h3>Minimal Setup (Mapped Passthrough; No Auth)</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPortaCore();
+
+var app = builder.Build();
+
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();
+
+app.Run();</code></pre>
+<blockquote><p><strong>Note</strong>: endpoints require authorization by default (<code>PortaCoreOptions.RequireAuthorizationByDefault = true</code>). Drop <code>.AllowAnonymous()</code> only when you've configured an authentication scheme. Flip the option to <code>false</code> to invert the default if you'd rather opt <em>into</em> auth per endpoint.</p></blockquote>
+</div>
+<div class="section">
+<h3>With OIDC Authentication</h3>
+<p>Same pass-through endpoint as above, but now it requires a logged-in user and forwards their access token to the backend. The only new ingredients are the OIDC pipeline registration (<code>AddPortaAuthentication</code>, bound from configuration) and dropping <code>.AllowAnonymous()</code> in favour of <code>.RequireAuth()</code>. See the <a href="oidc.html">OIDC Endpoints</a> guide for the login/logout middleware.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPortaCore(options =&gt; {
+    options.TrustedHosts = [&quot;https://products-api.internal&quot;];
+});
+
+// Wire up the OIDC pipeline (cookie + OIDC handler + ticket store) from configuration.
+builder.Services.AddPortaAuthentication(builder.Configuration);
+
+var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .RequireAuth()                                      // 401 unless the user is logged in
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)   // forward the user's token to the backend
+    .Build();
+
+app.Run();</code></pre>
+</div>
+<div class="section">
+<h3>Raw Passthrough (Binary, Files, Non-JSON)</h3>
+<p>When you don't want to parse or reshape the response — file downloads, streaming, XML — use <code>MapRawForward()</code>. The body is streamed straight through; no response type is needed. See <a href="raw-forwarding.html">Raw Forwarding</a> for header handling and size/timeout limits.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapRawForward()
+    .FromGet(&quot;/api/files/{id}&quot;)
+    .ToGet(&quot;https://files-api.internal/files/{id}&quot;)
+    .RequireAuth()
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build();</code></pre>
+<blockquote><p><strong>Catch-all routes must use catch-all syntax on <em>both</em> sides.</strong> A plain <code>{name}</code> placeholder is encoded as a single path segment — any <code>/</code> in the value becomes <code>%2F</code> (secure by default, so a route value can't introduce new path segments). To proxy a multi-segment subtree, use <code>{**name}</code> in <strong>both</strong> the route pattern and the backend URL. Mixing them (catch-all route, plain backend placeholder) encodes the slashes and 404s at the backend:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapRawForward()
+    .FromGet(&quot;/files/{**rest}&quot;)
+    .ToGet(&quot;https://files-api.internal/files/{**rest}&quot;)  // not {rest}
+    .Build();
+// /files/a/b/c.pdf  -&gt;  https://files-api.internal/files/a/b/c.pdf</code></pre></blockquote>
+</div>
+<div class="section">
+<h3>Introducing a Transformer</h3>
+<p>A transformer is where you reshape the backend response. Inherit a base class (here <code>PassThroughTransformer&lt;T&gt;</code>, overriding <code>TransformResponse</code> to strip an internal field), register it with <code>AddTransformer&lt;T&gt;()</code>, then map it with <code>MapTransformer&lt;,&gt;()</code>. See <a href="transformers.html">Transformers</a> for the full hierarchy.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class ProductsTransformer : PassThroughTransformer&lt;ProductsResponse&gt;
+{
+    // Strip the internal cost price the frontend should never see.
+    protected override ProductsResponse TransformResponse(ProductsResponse response, TransformerContext context)
+        =&gt; response with { Items = response.Items.Select(i =&gt; i with { CostPrice = null }).ToList() };
+}</code></pre>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddTransformer&lt;ProductsTransformer&gt;();
+
+app.MapTransformer&lt;ProductsTransformer, ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<h2>Documentation</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Topic</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><a href="configuration.html">Configuration</a></td><td>Service registration, options, and production settings</td><td></td></tr><tr><td></td><td><a href="transformers.html">Transformers</a></td><td>Writing transformers, base classes, and error handling</td><td></td></tr><tr><td></td><td><a href="endpoints.html">Endpoints</a></td><td>Endpoint builder, routing, and authorization</td><td></td></tr><tr><td></td><td><a href="authentication.html">Authentication</a></td><td>User auth providers and backend auth handlers</td><td></td></tr><tr><td></td><td><a href="oidc.html">OIDC Endpoints</a></td><td>Login, logout, back-channel logout, and session admin</td><td></td></tr><tr><td></td><td><a href="raw-forwarding.html">Raw Forwarding</a></td><td>Binary content, file proxying, and streaming</td><td></td></tr><tr><td></td><td><a href="caching.html">Caching</a></td><td>Output caching endpoints, distributed (HA) cache, and per-leg aggregation caching</td><td></td></tr><tr><td></td><td><a href="graphql.html">GraphQL</a></td><td>Calling GraphQL backends from REST endpoints</td><td></td></tr><tr><td></td><td><a href="telemetry.html">Telemetry</a></td><td>OpenTelemetry traces and metrics</td><td></td></tr><tr><td></td><td><a href="health-checks.html">Health Checks</a></td><td>Readiness checks for the IdP, distributed cache, and Data Protection</td><td></td></tr><tr><td></td><td><a href="ha-deployment.html">HA Deployment</a></td><td>Running multiple replicas behind a load balancer without sticky sessions</td><td></td></tr><tr><td></td><td><a href="api-gateway.html">API Gateway Use</a></td><td>When to use this library as a gateway, and when to pick something else</td><td></td></tr><tr><td></td><td><a href="advanced.html">Advanced</a></td><td>API versioning, MapGroup, OpenAPI metadata, and composing framework features</td><td></td></tr></tbody></table></div>
+<h2>Try it (runnable demo)</h2>
+<p>A self-contained, run-out-of-the-box demo lives in <a href="https://github.com/b17s-gmbh/b17s-Porta/blob/main/demo/README.md">demo/</a>. One command brings up a complete BFF topology against <strong>two</strong> identity providers — Keycloak and Zitadel — orchestrated by .NET Aspire, plus end-to-end login tests against both:</p>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash">cd demo
+aspire run          # or: dotnet run --project Demo.AppHost</code></pre>
+<p>A container runtime (Docker Desktop or Podman) is the only prerequisite — the IdPs, database, and seeded test users are provisioned automatically. See <a href="https://github.com/b17s-gmbh/b17s-Porta/blob/main/demo/README.md">demo/README.md</a> for the topology, seeded credentials, exposed endpoints, and how to run the functional/E2E suite.</p>
+<h2>Transformer Hierarchy</h2>
+<p>Choose the right base class for your use case. Each links to its guide and a worked example:</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Base Class</th><th>Use Case</th><th>Code Required</th><th></th></tr></thead><tbody><tr><td></td><td><a href="transformers.html#level-1-zero-code-pass-through"><code>MapPassThrough&lt;T&gt;()</code></a></td><td>Zero-code pass-through</td><td>Config only</td><td></td></tr><tr><td></td><td><a href="transformers.html#level-1-zero-code-pass-through"><code>PassThroughTransformer&lt;T&gt;</code></a></td><td>Simple pass-through</td><td>1 line</td><td></td></tr><tr><td></td><td><a href="transformers.html#level-2-authenticated-endpoints"><code>AuthenticatedTransformer&lt;T&gt;</code></a></td><td>Auth required, no request body</td><td>1 line</td><td></td></tr><tr><td></td><td><a href="transformers.html#level-2-authenticated-endpoints"><code>AuthenticatedTransformer&lt;TReq, TRes&gt;</code></a></td><td>Auth + backend request body</td><td>2-3 lines</td><td></td></tr><tr><td></td><td><a href="transformers.html#level-3-multi-backend-aggregation"><code>AggregatingTransformer&lt;T&gt;</code></a></td><td>Multi-backend aggregation</td><td>~15 lines</td><td></td></tr><tr><td></td><td><a href="transformers.html#level-4-custom-logic"><code>TransformerBase&lt;T&gt;</code></a></td><td>Full custom control</td><td>Varies</td><td></td></tr></tbody></table></div>
+<h2>Backend Authentication</h2>
+<p>Built-in policies:</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Policy</th><th>Description</th><th>Requires User</th><th></th></tr></thead><tbody><tr><td></td><td><code>None</code></td><td>No authentication</td><td>No</td><td></td></tr><tr><td></td><td><code>BasicAuth</code></td><td>HTTP Basic auth from config</td><td>No</td><td></td></tr><tr><td></td><td><code>BearerToken</code></td><td>Forward user's token</td><td>Yes</td><td></td></tr><tr><td></td><td><code>TokenExchange</code></td><td>Exchange for backend token (needs an audience - see <a href="authentication.html#backend-authentication">Authentication</a>)</td><td>Yes</td><td></td></tr><tr><td></td><td><em>Custom</em></td><td>Anything else (HMAC, API keys, client credentials) — implement <code>IBackendAuthHandler</code></td><td>Depends</td><td></td></tr></tbody></table></div>
+<p>Per-backend configuration:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;MyTransformer, Response&gt;()
+    .FromGet(&quot;/api/data&quot;)
+    .ToBackends(b =&gt; b
+        .ToGet(&quot;Users&quot;, &quot;https://users.internal/api&quot;).WithAuth(BackendAuthPolicies.BearerToken)
+        .ToGet(&quot;Products&quot;, &quot;https://products.internal/api&quot;).WithAuth(BackendAuthPolicies.BasicAuth))
+    .Build();</code></pre>
+</div>
+<div class="section">
+<h3>Custom Policies</h3>
+<p>The built-in policies aren't a closed set. Implement <code>IBackendAuthHandler</code> to add your own (HMAC signing, API keys, client-credentials, etc.). The handler exposes a <code>PolicyName</code>, and <code>ApplyAuthAsync</code> mutates the outgoing request — add headers, sign the body, attach a token. Register it with <code>AddPortaAuthHandler&lt;T&gt;()</code>, then reference it by name via <code>WithBackendAuth(&quot;...&quot;)</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class HmacAuthHandler : IBackendAuthHandler
+{
+    public string PolicyName =&gt; &quot;HmacAuth&quot;;
+
+    public Task ApplyAuthAsync(HttpRequestMessage request, BackendAuthContext context)
+    {
+        request.Headers.Add(&quot;X-Signature&quot;, ComputeHmacSignature(request));
+        request.Headers.Add(&quot;X-Timestamp&quot;, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString());
+        return Task.CompletedTask;
+    }
+}
+
+// Registration
+builder.Services.AddPortaAuthHandler&lt;HmacAuthHandler&gt;();
+
+// Usage — reference the custom handler by its PolicyName
+app.MapPassThrough&lt;Response&gt;()
+    .FromGet(&quot;/api/partner-data&quot;)
+    .ToGet(&quot;https://partner-api.example.com/data&quot;)
+    .WithBackendAuth(&quot;HmacAuth&quot;)
+    .Build();</code></pre>
+<p>See <a href="authentication.html#custom-backend-auth-handler">Authentication</a> for the full <code>BackendAuthContext</code> contract and registering multiple handlers.</p>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Advanced | b17s</title>
+<meta name="description" content="Programmatic policy configuration, runtime reload behaviour, the trie-based network collection, exceptions, and replacing the policy provider.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/yarp-ipfilters/v1.4.0/advanced.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Advanced">
+<meta property="og:description" content="Programmatic policy configuration, runtime reload behaviour, the trie-based network collection, exceptions, and replacing the policy provider.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/yarp-ipfilters/v1.4.0/advanced.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced">
+<meta name="twitter:description" content="Programmatic policy configuration, runtime reload behaviour, the trie-based network collection, exceptions, and replacing the policy provider.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-sunset.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/yarp-ipfilters/v1.4.0/" class="docs-nav-title">YARP IP Filters</a><p class="docs-nav-description">IP filtering middleware for Microsoft YARP</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/yarp-ipfilters/" data-current-slug="advanced" data-pages="{&quot;v1.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;policies&quot;,&quot;routes&quot;,&quot;global-policy&quot;,&quot;tracing&quot;,&quot;advanced&quot;]}"><option value="v1.4.0" selected>v1.4.0 (latest)</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/policies.html">Policies</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/routes.html">Route Configuration</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/global-policy.html">Global Policy</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/tracing.html">Tracing</a></li><li class="docs-nav-item active"><a href="/docs/yarp-ipfilters/v1.4.0/advanced.html" aria-current="page">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">YARP IP Filters</div>
+                <h1>Advanced</h1>
+                <p class="docs-subtitle">Programmatic configuration, dynamic reload, custom providers</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<h2>Programmatic configuration</h2>
+<p>Instead of binding from <code>appsettings.json</code>, you can build policies in code by passing an <code>Action&lt;List&lt;IPFilterPolicy&gt;&gt;</code> to <code>AddIPFilterPolicies</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddIPFilterPolicies(policies =&gt;
+{
+    policies.Add(new IPFilterPolicy
+    {
+        PolicyName = &quot;Global&quot;,
+        Mode = IPFilterPolicyMode.BlockList,
+        IPAddresses = [&quot;198.51.100.23&quot;]
+    });
+
+    policies.Add(new IPFilterPolicy
+    {
+        PolicyName = &quot;Intranet&quot;,
+        Mode = IPFilterPolicyMode.AllowList,
+        IPNetworks = [&quot;192.168.0.0/24&quot;, &quot;10.0.0.0/8&quot;]
+    });
+});</code></pre>
+<p>This overload configures the <code>Policies</code> list only. To enable the <a href="global-policy.html">global policy</a> alongside code-defined policies, also configure the surrounding <code>IPFilterPoliciesConfiguration</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.Configure&lt;IPFilterPoliciesConfiguration&gt;(config =&gt;
+{
+    config.EnableGlobalPolicy = true;
+    config.GlobalPolicyName = &quot;Global&quot;;
+});</code></pre>
+<p><code>IPFilterPolicy</code> properties are init-only, so construct each policy with an object initialiser as shown. <code>Mode</code> defaults to <code>AllowList</code> and both list properties default to empty.</p>
+<h2>Dynamic reload</h2>
+<p><code>IPFilterPolicyProvider</code> subscribes to <code>IOptionsMonitor&lt;IPFilterPoliciesConfiguration&gt;.OnChange</code>. When the bound configuration changes — for example the configuration provider detects an edited <code>appsettings.json</code> with <code>reloadOnChange</code> enabled — the provider rebuilds its policy dictionary and re-evaluates the global policy, without a restart.</p>
+<p>Two things to know:</p>
+<ul><li>The provider indexes policies by <code>PolicyName</code>. Duplicate names in a reloaded configuration will throw while</li></ul>
+<p>  building the dictionary — keep names unique.</p>
+<ul><li>If a reload enables the global policy but the named global policy is missing, the provider throws during the</li></ul>
+<p>  reload callback. Validate configuration before shipping it to avoid a broken reload.</p>
+<p>Because parsing of addresses and networks is lazy and cached per policy instance, a reload transparently picks up new values: the next request evaluates freshly built policy objects.</p>
+<h2>IPNetworkCollection</h2>
+<p>CIDR matching is backed by <code>IPNetworkCollection</code>, a binary trie keyed on the bits of each network prefix. Rather than testing a client IP against every configured range one by one, <code>Contains</code> walks the trie bit by bit and returns as soon as it reaches a terminal node (a configured prefix). This keeps per-request cost proportional to the prefix length, not to the number of networks, which matters when a policy lists many ranges on a hot path.</p>
+<p>The collection is built once per policy instance (lazily, on first use) from the policy's <code>IPNetworks</code> strings and reused for the lifetime of that instance.</p>
+<h2>Exceptions</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Exception</th><th>Thrown when</th><th></th></tr></thead><tbody><tr><td></td><td><code>IPFilterPolicyException</code></td><td>Base type for the library's exceptions.</td><td></td></tr><tr><td></td><td><code>IPFilterPolicyNotFoundException</code></td><td>A route's <code>IPFilterPolicy</code> metadata names a policy that does not exist. The middleware sets <strong>500 Internal Server Error</strong> and throws this. Its message includes the policy name and the YARP route id.</td><td></td></tr></tbody></table></div>
+<p>A missing <strong>global</strong> policy (when enabled) surfaces as a plain exception thrown by the provider at load/reload time, not as <code>IPFilterPolicyNotFoundException</code>.</p>
+<h2>Replacing the policy provider</h2>
+<p>The middleware depends on the <code>IIPFilterPolicyProvider</code> abstraction:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public interface IIPFilterPolicyProvider
+{
+    IPFilterPolicy? GetPolicy(string policyName);
+    IPFilterPolicy? GetGlobalPolicy();
+}</code></pre>
+<p>To source policies from somewhere other than configuration — a database, a feature-flag service, a remote API — implement this interface and register your implementation as a singleton <strong>instead of</strong> calling <code>AddIPFilterPolicies</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddSingleton&lt;IIPFilterPolicyProvider, MyCustomPolicyProvider&gt;();</code></pre>
+<p><code>GetGlobalPolicy()</code> should return the active global policy or <code>null</code> when none applies; <code>GetPolicy(name)</code> should return the named policy or <code>null</code> when it is not found (which the middleware treats as a configuration error). Still register the middleware with <a href="configuration.html#useipfilterpolicies--the-middleware"><code>UseIPFilterPolicies()</code></a>.</p>
+<h2>Performance notes</h2>
+<p>The critical path is deliberately lean: individual addresses are matched via <code>HashSet&lt;IPAddress&gt;.Contains</code>, networks via the trie described above, and every log call uses the compiled <code>LoggerMessage</code> pattern to avoid allocations and boxing. As of v1.4.0 most types are <code>sealed</code>, and the middleware wraps each evaluation in a single lightweight <a href="tracing.html">activity</a>.</p></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

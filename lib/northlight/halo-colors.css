@@ -1,0 +1,428 @@
+/* =====================================================
+   HALO DESIGN SYSTEM - COLOR PALETTE
+   b17s Corporate Identity
+
+   NOTE: Core colors (--halo-primary, --halo-accent, etc.)
+   are mapped from theme variables (--primary, --accent, etc.)
+   which are defined in theme-*.css files.
+   ===================================================== */
+
+:root {
+  /* ---- CORE COLORS (mapped from theme variables) ---- */
+
+  /* Background Colors - use theme values with fallbacks */
+  --halo-bg-dark: var(--bg-dark, oklch(18% 0.02 230));
+  --halo-bg-elevated: var(--bg-elevated, oklch(22% 0.02 230));
+
+  /* Brand Colors - use theme values with fallbacks */
+  --halo-primary: var(--primary, oklch(55% 0.08 220));
+  --halo-accent: var(--accent, oklch(72% 0.14 200));
+  --halo-accent-warm: var(--accent-warm, oklch(68% 0.16 45));
+
+  /* Text-safe primary: same hue/chroma, lightness floored at 62% so
+     text meets WCAG AA on dark backgrounds in every theme (some themes
+     define --primary well below readable lightness, e.g. emerald at 46%) */
+  --halo-primary-text: oklch(from var(--halo-primary) max(l, 0.62) c h);
+
+  /* Text Colors - use theme values with fallbacks */
+  --halo-text: var(--text, oklch(94% 0.01 220));
+  --halo-text-secondary: var(--text-secondary, oklch(68% 0.02 220));
+
+  /* Glass Morphism - use theme values with fallbacks */
+  --halo-glass-bg: var(--glass-bg, rgba(255, 255, 255, 0.03));
+  --halo-glass-border: var(--glass-border, rgba(255, 255, 255, 0.08));
+
+  /* Semantic Colors (derived from brand palette) */
+  --halo-white: oklch(100% 0 0);
+  --halo-black: oklch(0% 0 0);
+  --halo-success: oklch(70% 0.18 150);
+  --halo-warning: oklch(75% 0.18 85);
+  --halo-error: oklch(62% 0.22 25);
+  --halo-info: oklch(68% 0.16 230);
+
+  /* Neutral Grays (cool-toned to match Arctic theme) */
+  --halo-grey: oklch(55% 0.02 230);  /* Default grey alias */
+  --halo-grey-100: oklch(95% 0.01 230);
+  --halo-grey-200: oklch(88% 0.01 230);
+  --halo-grey-300: oklch(78% 0.02 230);
+  --halo-grey-400: oklch(68% 0.02 230);
+  --halo-grey-500: oklch(55% 0.02 230);
+  --halo-grey-600: oklch(45% 0.02 230);
+  --halo-grey-700: oklch(32% 0.02 230);
+  --halo-grey-800: oklch(22% 0.02 230);
+  --halo-grey-900: oklch(15% 0.02 230);
+
+  /* Grey Transparency Steps (using grey-500 as base) */
+  --halo-grey-a01: oklch(from var(--halo-grey) l c h / 0.01);
+  --halo-grey-a02: oklch(from var(--halo-grey) l c h / 0.02);
+  --halo-grey-a05: oklch(from var(--halo-grey) l c h / 0.05);
+  --halo-grey-a10: oklch(from var(--halo-grey) l c h / 0.10);
+  --halo-grey-a15: oklch(from var(--halo-grey) l c h / 0.15);
+  --halo-grey-a20: oklch(from var(--halo-grey) l c h / 0.20);
+  --halo-grey-a30: oklch(from var(--halo-grey) l c h / 0.30);
+  --halo-grey-a40: oklch(from var(--halo-grey) l c h / 0.40);
+  --halo-grey-a50: oklch(from var(--halo-grey) l c h / 0.50);
+
+  /* Shadow Color */
+  --halo-shadow: oklch(12% 0.01 220);
+
+  /* Background Gradient Accents (for animated backgrounds) */
+  --halo-bg-grad-start: var(--halo-bg-dark);
+  --halo-bg-grad-end: oklch(16% 0.02 230);
+  --halo-bg-grad-acc-1: var(--halo-accent-a15);
+  --halo-bg-grad-acc-2: var(--halo-primary-a10);
+  --halo-bg-grad-acc-3: var(--halo-accent-warm-a08);
+
+
+  /* ---- TRANSPARENCY VARIANTS ---- */
+
+  /* Primary Transparency Steps (a01 - a95) */
+  --halo-primary-a01: oklch(from var(--halo-primary) l c h / 0.01);
+  --halo-primary-a02: oklch(from var(--halo-primary) l c h / 0.02);
+  --halo-primary-a03: oklch(from var(--halo-primary) l c h / 0.03);
+  --halo-primary-a04: oklch(from var(--halo-primary) l c h / 0.04);
+  --halo-primary-a05: oklch(from var(--halo-primary) l c h / 0.05);
+  --halo-primary-a10: oklch(from var(--halo-primary) l c h / 0.10);
+  --halo-primary-a15: oklch(from var(--halo-primary) l c h / 0.15);
+  --halo-primary-a20: oklch(from var(--halo-primary) l c h / 0.20);
+  --halo-primary-a25: oklch(from var(--halo-primary) l c h / 0.25);
+  --halo-primary-a30: oklch(from var(--halo-primary) l c h / 0.30);
+  --halo-primary-a35: oklch(from var(--halo-primary) l c h / 0.35);
+  --halo-primary-a40: oklch(from var(--halo-primary) l c h / 0.40);
+  --halo-primary-a45: oklch(from var(--halo-primary) l c h / 0.45);
+  --halo-primary-a50: oklch(from var(--halo-primary) l c h / 0.50);
+  --halo-primary-a55: oklch(from var(--halo-primary) l c h / 0.55);
+  --halo-primary-a60: oklch(from var(--halo-primary) l c h / 0.60);
+  --halo-primary-a65: oklch(from var(--halo-primary) l c h / 0.65);
+  --halo-primary-a70: oklch(from var(--halo-primary) l c h / 0.70);
+  --halo-primary-a75: oklch(from var(--halo-primary) l c h / 0.75);
+  --halo-primary-a80: oklch(from var(--halo-primary) l c h / 0.80);
+  --halo-primary-a85: oklch(from var(--halo-primary) l c h / 0.85);
+  --halo-primary-a90: oklch(from var(--halo-primary) l c h / 0.90);
+  --halo-primary-a95: oklch(from var(--halo-primary) l c h / 0.95);
+
+  /* Accent Transparency Steps */
+  --halo-accent-a01: oklch(from var(--halo-accent) l c h / 0.01);
+  --halo-accent-a02: oklch(from var(--halo-accent) l c h / 0.02);
+  --halo-accent-a03: oklch(from var(--halo-accent) l c h / 0.03);
+  --halo-accent-a04: oklch(from var(--halo-accent) l c h / 0.04);
+  --halo-accent-a05: oklch(from var(--halo-accent) l c h / 0.05);
+  --halo-accent-a10: oklch(from var(--halo-accent) l c h / 0.10);
+  --halo-accent-a15: oklch(from var(--halo-accent) l c h / 0.15);
+  --halo-accent-a20: oklch(from var(--halo-accent) l c h / 0.20);
+  --halo-accent-a25: oklch(from var(--halo-accent) l c h / 0.25);
+  --halo-accent-a30: oklch(from var(--halo-accent) l c h / 0.30);
+  --halo-accent-a35: oklch(from var(--halo-accent) l c h / 0.35);
+  --halo-accent-a40: oklch(from var(--halo-accent) l c h / 0.40);
+  --halo-accent-a45: oklch(from var(--halo-accent) l c h / 0.45);
+  --halo-accent-a50: oklch(from var(--halo-accent) l c h / 0.50);
+  --halo-accent-a55: oklch(from var(--halo-accent) l c h / 0.55);
+  --halo-accent-a60: oklch(from var(--halo-accent) l c h / 0.60);
+  --halo-accent-a65: oklch(from var(--halo-accent) l c h / 0.65);
+  --halo-accent-a70: oklch(from var(--halo-accent) l c h / 0.70);
+  --halo-accent-a75: oklch(from var(--halo-accent) l c h / 0.75);
+  --halo-accent-a80: oklch(from var(--halo-accent) l c h / 0.80);
+  --halo-accent-a85: oklch(from var(--halo-accent) l c h / 0.85);
+  --halo-accent-a90: oklch(from var(--halo-accent) l c h / 0.90);
+  --halo-accent-a95: oklch(from var(--halo-accent) l c h / 0.95);
+
+  /* Accent Warm Transparency Steps */
+  --halo-accent-warm-a01: oklch(from var(--halo-accent-warm) l c h / 0.01);
+  --halo-accent-warm-a02: oklch(from var(--halo-accent-warm) l c h / 0.02);
+  --halo-accent-warm-a03: oklch(from var(--halo-accent-warm) l c h / 0.03);
+  --halo-accent-warm-a04: oklch(from var(--halo-accent-warm) l c h / 0.04);
+  --halo-accent-warm-a05: oklch(from var(--halo-accent-warm) l c h / 0.05);
+  --halo-accent-warm-a08: oklch(from var(--halo-accent-warm) l c h / 0.08);
+  --halo-accent-warm-a10: oklch(from var(--halo-accent-warm) l c h / 0.10);
+  --halo-accent-warm-a15: oklch(from var(--halo-accent-warm) l c h / 0.15);
+  --halo-accent-warm-a20: oklch(from var(--halo-accent-warm) l c h / 0.20);
+  --halo-accent-warm-a25: oklch(from var(--halo-accent-warm) l c h / 0.25);
+  --halo-accent-warm-a30: oklch(from var(--halo-accent-warm) l c h / 0.30);
+  --halo-accent-warm-a35: oklch(from var(--halo-accent-warm) l c h / 0.35);
+  --halo-accent-warm-a40: oklch(from var(--halo-accent-warm) l c h / 0.40);
+  --halo-accent-warm-a45: oklch(from var(--halo-accent-warm) l c h / 0.45);
+  --halo-accent-warm-a50: oklch(from var(--halo-accent-warm) l c h / 0.50);
+  --halo-accent-warm-a55: oklch(from var(--halo-accent-warm) l c h / 0.55);
+  --halo-accent-warm-a60: oklch(from var(--halo-accent-warm) l c h / 0.60);
+  --halo-accent-warm-a65: oklch(from var(--halo-accent-warm) l c h / 0.65);
+  --halo-accent-warm-a70: oklch(from var(--halo-accent-warm) l c h / 0.70);
+  --halo-accent-warm-a75: oklch(from var(--halo-accent-warm) l c h / 0.75);
+  --halo-accent-warm-a80: oklch(from var(--halo-accent-warm) l c h / 0.80);
+  --halo-accent-warm-a85: oklch(from var(--halo-accent-warm) l c h / 0.85);
+  --halo-accent-warm-a90: oklch(from var(--halo-accent-warm) l c h / 0.90);
+  --halo-accent-warm-a95: oklch(from var(--halo-accent-warm) l c h / 0.95);
+
+  /* White Transparency Steps */
+  --halo-white-a01: oklch(from var(--halo-white) l c h / 0.01);
+  --halo-white-a02: oklch(from var(--halo-white) l c h / 0.02);
+  --halo-white-a03: oklch(from var(--halo-white) l c h / 0.03);
+  --halo-white-a04: oklch(from var(--halo-white) l c h / 0.04);
+  --halo-white-a05: oklch(from var(--halo-white) l c h / 0.05);
+  --halo-white-a10: oklch(from var(--halo-white) l c h / 0.10);
+  --halo-white-a15: oklch(from var(--halo-white) l c h / 0.15);
+  --halo-white-a20: oklch(from var(--halo-white) l c h / 0.20);
+  --halo-white-a25: oklch(from var(--halo-white) l c h / 0.25);
+  --halo-white-a30: oklch(from var(--halo-white) l c h / 0.30);
+  --halo-white-a35: oklch(from var(--halo-white) l c h / 0.35);
+  --halo-white-a40: oklch(from var(--halo-white) l c h / 0.40);
+  --halo-white-a45: oklch(from var(--halo-white) l c h / 0.45);
+  --halo-white-a50: oklch(from var(--halo-white) l c h / 0.50);
+  --halo-white-a55: oklch(from var(--halo-white) l c h / 0.55);
+  --halo-white-a60: oklch(from var(--halo-white) l c h / 0.60);
+  --halo-white-a65: oklch(from var(--halo-white) l c h / 0.65);
+  --halo-white-a70: oklch(from var(--halo-white) l c h / 0.70);
+  --halo-white-a75: oklch(from var(--halo-white) l c h / 0.75);
+  --halo-white-a80: oklch(from var(--halo-white) l c h / 0.80);
+  --halo-white-a85: oklch(from var(--halo-white) l c h / 0.85);
+  --halo-white-a90: oklch(from var(--halo-white) l c h / 0.90);
+  --halo-white-a95: oklch(from var(--halo-white) l c h / 0.95);
+
+  /* Black Transparency Steps */
+  --halo-black-a01: oklch(from var(--halo-black) l c h / 0.01);
+  --halo-black-a02: oklch(from var(--halo-black) l c h / 0.02);
+  --halo-black-a03: oklch(from var(--halo-black) l c h / 0.03);
+  --halo-black-a04: oklch(from var(--halo-black) l c h / 0.04);
+  --halo-black-a05: oklch(from var(--halo-black) l c h / 0.05);
+  --halo-black-a10: oklch(from var(--halo-black) l c h / 0.10);
+  --halo-black-a15: oklch(from var(--halo-black) l c h / 0.15);
+  --halo-black-a20: oklch(from var(--halo-black) l c h / 0.20);
+  --halo-black-a25: oklch(from var(--halo-black) l c h / 0.25);
+  --halo-black-a30: oklch(from var(--halo-black) l c h / 0.30);
+  --halo-black-a35: oklch(from var(--halo-black) l c h / 0.35);
+  --halo-black-a40: oklch(from var(--halo-black) l c h / 0.40);
+  --halo-black-a45: oklch(from var(--halo-black) l c h / 0.45);
+  --halo-black-a50: oklch(from var(--halo-black) l c h / 0.50);
+  --halo-black-a55: oklch(from var(--halo-black) l c h / 0.55);
+  --halo-black-a60: oklch(from var(--halo-black) l c h / 0.60);
+  --halo-black-a65: oklch(from var(--halo-black) l c h / 0.65);
+  --halo-black-a70: oklch(from var(--halo-black) l c h / 0.70);
+  --halo-black-a75: oklch(from var(--halo-black) l c h / 0.75);
+  --halo-black-a80: oklch(from var(--halo-black) l c h / 0.80);
+  --halo-black-a85: oklch(from var(--halo-black) l c h / 0.85);
+  --halo-black-a90: oklch(from var(--halo-black) l c h / 0.90);
+  --halo-black-a95: oklch(from var(--halo-black) l c h / 0.95);
+
+  /* Shadow Transparency Steps */
+  --halo-shadow-a01: oklch(from var(--halo-shadow) l c h / 0.01);
+  --halo-shadow-a02: oklch(from var(--halo-shadow) l c h / 0.02);
+  --halo-shadow-a03: oklch(from var(--halo-shadow) l c h / 0.03);
+  --halo-shadow-a04: oklch(from var(--halo-shadow) l c h / 0.04);
+  --halo-shadow-a05: oklch(from var(--halo-shadow) l c h / 0.05);
+  --halo-shadow-a10: oklch(from var(--halo-shadow) l c h / 0.10);
+  --halo-shadow-a15: oklch(from var(--halo-shadow) l c h / 0.15);
+  --halo-shadow-a20: oklch(from var(--halo-shadow) l c h / 0.20);
+  --halo-shadow-a25: oklch(from var(--halo-shadow) l c h / 0.25);
+  --halo-shadow-a30: oklch(from var(--halo-shadow) l c h / 0.30);
+  --halo-shadow-a35: oklch(from var(--halo-shadow) l c h / 0.35);
+  --halo-shadow-a40: oklch(from var(--halo-shadow) l c h / 0.40);
+  --halo-shadow-a45: oklch(from var(--halo-shadow) l c h / 0.45);
+  --halo-shadow-a50: oklch(from var(--halo-shadow) l c h / 0.50);
+  --halo-shadow-a55: oklch(from var(--halo-shadow) l c h / 0.55);
+  --halo-shadow-a60: oklch(from var(--halo-shadow) l c h / 0.60);
+  --halo-shadow-a65: oklch(from var(--halo-shadow) l c h / 0.65);
+  --halo-shadow-a70: oklch(from var(--halo-shadow) l c h / 0.70);
+  --halo-shadow-a75: oklch(from var(--halo-shadow) l c h / 0.75);
+  --halo-shadow-a80: oklch(from var(--halo-shadow) l c h / 0.80);
+  --halo-shadow-a85: oklch(from var(--halo-shadow) l c h / 0.85);
+  --halo-shadow-a90: oklch(from var(--halo-shadow) l c h / 0.90);
+  --halo-shadow-a95: oklch(from var(--halo-shadow) l c h / 0.95);
+
+  /* Success Transparency Steps */
+  --halo-success-a01: oklch(from var(--halo-success) l c h / 0.01);
+  --halo-success-a02: oklch(from var(--halo-success) l c h / 0.02);
+  --halo-success-a05: oklch(from var(--halo-success) l c h / 0.05);
+  --halo-success-a10: oklch(from var(--halo-success) l c h / 0.10);
+  --halo-success-a20: oklch(from var(--halo-success) l c h / 0.20);
+  --halo-success-a30: oklch(from var(--halo-success) l c h / 0.30);
+  --halo-success-a50: oklch(from var(--halo-success) l c h / 0.50);
+
+  /* Warning Transparency Steps */
+  --halo-warning-a01: oklch(from var(--halo-warning) l c h / 0.01);
+  --halo-warning-a02: oklch(from var(--halo-warning) l c h / 0.02);
+  --halo-warning-a05: oklch(from var(--halo-warning) l c h / 0.05);
+  --halo-warning-a10: oklch(from var(--halo-warning) l c h / 0.10);
+  --halo-warning-a20: oklch(from var(--halo-warning) l c h / 0.20);
+  --halo-warning-a30: oklch(from var(--halo-warning) l c h / 0.30);
+  --halo-warning-a50: oklch(from var(--halo-warning) l c h / 0.50);
+
+  /* Error Transparency Steps */
+  --halo-error-a01: oklch(from var(--halo-error) l c h / 0.01);
+  --halo-error-a02: oklch(from var(--halo-error) l c h / 0.02);
+  --halo-error-a05: oklch(from var(--halo-error) l c h / 0.05);
+  --halo-error-a10: oklch(from var(--halo-error) l c h / 0.10);
+  --halo-error-a20: oklch(from var(--halo-error) l c h / 0.20);
+  --halo-error-a30: oklch(from var(--halo-error) l c h / 0.30);
+  --halo-error-a50: oklch(from var(--halo-error) l c h / 0.50);
+
+  /* ---- SEMANTIC COLOR ALIASES (for plugin compatibility) ---- */
+
+  /* Green (maps to success) */
+  --halo-green: var(--halo-success);
+  --halo-green-a05: oklch(from var(--halo-green) l c h / 0.05);
+  --halo-green-a08: oklch(from var(--halo-green) l c h / 0.08);
+  --halo-green-a10: oklch(from var(--halo-green) l c h / 0.10);
+  --halo-green-a15: oklch(from var(--halo-green) l c h / 0.15);
+  --halo-green-a20: oklch(from var(--halo-green) l c h / 0.20);
+  --halo-green-a30: oklch(from var(--halo-green) l c h / 0.30);
+  --halo-green-a50: oklch(from var(--halo-green) l c h / 0.50);
+  --halo-green-a80: oklch(from var(--halo-green) l c h / 0.80);
+  --halo-green-a90: oklch(from var(--halo-green) l c h / 0.90);
+
+  /* Yellow (maps to warning) */
+  --halo-yellow: var(--halo-warning);
+  --halo-yellow-a05: oklch(from var(--halo-yellow) l c h / 0.05);
+  --halo-yellow-a08: oklch(from var(--halo-yellow) l c h / 0.08);
+  --halo-yellow-a10: oklch(from var(--halo-yellow) l c h / 0.10);
+  --halo-yellow-a15: oklch(from var(--halo-yellow) l c h / 0.15);
+  --halo-yellow-a20: oklch(from var(--halo-yellow) l c h / 0.20);
+  --halo-yellow-a30: oklch(from var(--halo-yellow) l c h / 0.30);
+  --halo-yellow-a50: oklch(from var(--halo-yellow) l c h / 0.50);
+  --halo-yellow-a80: oklch(from var(--halo-yellow) l c h / 0.80);
+  --halo-yellow-a90: oklch(from var(--halo-yellow) l c h / 0.90);
+
+  /* Red (maps to error) */
+  --halo-red: var(--halo-error);
+  --halo-red-a05: oklch(from var(--halo-red) l c h / 0.05);
+  --halo-red-a08: oklch(from var(--halo-red) l c h / 0.08);
+  --halo-red-a10: oklch(from var(--halo-red) l c h / 0.10);
+  --halo-red-a15: oklch(from var(--halo-red) l c h / 0.15);
+  --halo-red-a20: oklch(from var(--halo-red) l c h / 0.20);
+  --halo-red-a30: oklch(from var(--halo-red) l c h / 0.30);
+  --halo-red-a50: oklch(from var(--halo-red) l c h / 0.50);
+  --halo-red-a80: oklch(from var(--halo-red) l c h / 0.80);
+  --halo-red-a90: oklch(from var(--halo-red) l c h / 0.90);
+
+  /* Blue (maps to info) */
+  --halo-blue: var(--halo-info);
+  --halo-blue-a05: oklch(from var(--halo-blue) l c h / 0.05);
+  --halo-blue-a08: oklch(from var(--halo-blue) l c h / 0.08);
+  --halo-blue-a10: oklch(from var(--halo-blue) l c h / 0.10);
+  --halo-blue-a15: oklch(from var(--halo-blue) l c h / 0.15);
+  --halo-blue-a20: oklch(from var(--halo-blue) l c h / 0.20);
+  --halo-blue-a30: oklch(from var(--halo-blue) l c h / 0.30);
+  --halo-blue-a50: oklch(from var(--halo-blue) l c h / 0.50);
+  --halo-blue-a80: oklch(from var(--halo-blue) l c h / 0.80);
+  --halo-blue-a90: oklch(from var(--halo-blue) l c h / 0.90);
+
+  /* Purple (accent color for tips) */
+  --halo-purple: oklch(58% 0.25 295);
+  --halo-purple-a05: oklch(from var(--halo-purple) l c h / 0.05);
+  --halo-purple-a08: oklch(from var(--halo-purple) l c h / 0.08);
+  --halo-purple-a10: oklch(from var(--halo-purple) l c h / 0.10);
+  --halo-purple-a15: oklch(from var(--halo-purple) l c h / 0.15);
+  --halo-purple-a20: oklch(from var(--halo-purple) l c h / 0.20);
+  --halo-purple-a30: oklch(from var(--halo-purple) l c h / 0.30);
+  --halo-purple-a50: oklch(from var(--halo-purple) l c h / 0.50);
+  --halo-purple-a80: oklch(from var(--halo-purple) l c h / 0.80);
+  --halo-purple-a90: oklch(from var(--halo-purple) l c h / 0.90);
+
+  /* Darkgrey (for code blocks) */
+  --halo-darkgrey: oklch(20% 0.01 230);
+
+
+  /* ---- COMPOSITE STYLES ---- */
+
+  /* Glass & Surface Backgrounds */
+  --halo-glass-background: linear-gradient(135deg, var(--halo-white-a05) 0%, var(--halo-white-a02) 100%);
+  --halo-glass-background-hover: linear-gradient(135deg, var(--halo-white-a10) 0%, var(--halo-white-a05) 100%);
+  --halo-surface-subtle: linear-gradient(135deg, var(--halo-white-a03) 0%, var(--halo-white-a01) 100%);
+
+  /* Gradients */
+  --halo-primary-gradient: linear-gradient(135deg, var(--halo-accent) 0%, var(--halo-primary) 100%);
+  --halo-text-gradient: linear-gradient(135deg, var(--halo-accent) 0%, var(--halo-primary-text) 100%);
+  --halo-primary-gradient-subtle: linear-gradient(135deg, var(--halo-primary-a15) 0%, var(--halo-primary-a10) 100%);
+  --halo-bg-gradient: linear-gradient(135deg, var(--halo-bg-elevated) 0%, var(--halo-bg-dark) 100%);
+
+  /* Glass Pattern (inset highlights + subtle shadows) */
+  --halo-glass-pattern: inset 0 1px 0 var(--halo-white-a05),
+      inset 0 -0.5px 0 rgba(0, 0, 0, 0.03),
+      inset 1px 0 0 var(--halo-white-a02),
+      inset -0.5px 0 0 rgba(0, 0, 0, 0.015),
+      0 2px 8px var(--halo-accent-a05),
+      0 1px 3px var(--halo-black-a04),
+      0 0 0 0.5px var(--halo-white-a02);
+
+  /* Container Shadows */
+  --halo-container-shadow: 0 8px 32px var(--halo-black-a60),
+      0 0 0 1px var(--halo-black-a10),
+      inset 0 1px 0 var(--halo-black-a05);
+
+  --halo-card-shadow: 0 4px 20px var(--halo-black-a20),
+      0 0 0 1px var(--halo-black-a05),
+      inset 0 1px 0 var(--halo-black-a05);
+
+  /* Standard Shadows */
+  --halo-shadow-xs: 0 1px 2px oklch(from var(--halo-shadow) l c h / 0.04);
+  --halo-shadow-sm: 0 2px 8px oklch(from var(--halo-shadow) l c h / 0.08);
+  --halo-shadow-md: 0 8px 32px oklch(from var(--halo-shadow) l c h / 0.16);
+  --halo-shadow-lg: 0 12px 40px oklch(from var(--halo-shadow) l c h / 0.20);
+  --halo-shadow-xl: 0 20px 60px oklch(from var(--halo-shadow) l c h / 0.30);
+  --halo-shadow-inset: inset 0 1px 2px oklch(from var(--halo-shadow) l c h / 0.09);
+
+  /* Hover/Elevated shadows with brand color */
+  --halo-shadow-hover: 0 8px 25px var(--halo-accent-a20);
+  --halo-shadow-elevated: 0 12px 40px var(--halo-accent-a30);
+
+  /* Glow effects (spread without blur offset) */
+  --halo-glow-xs: 0 0 5px var(--halo-accent-a30);
+  --halo-glow-sm: 0 0 8px var(--halo-accent-a30);
+  --halo-glow-md: 0 0 12px var(--halo-accent-a50);
+  --halo-glow-lg: 0 0 20px var(--halo-accent-a50);
+  --halo-glow-xl: 0 0 40px var(--halo-accent-a60);
+
+  /* Filter drop-shadow for icons and SVG */
+  --halo-drop-glow-sm: drop-shadow(0 0 8px var(--halo-accent-a50));
+  --halo-drop-glow-md: drop-shadow(0 0 12px var(--halo-accent-a60));
+  --halo-drop-glow-lg: drop-shadow(0 0 20px var(--halo-accent-a30));
+
+  /* Focus rings */
+  --halo-focus-ring: 0 0 0 2px var(--halo-accent-a10);
+  --halo-focus-ring-lg: 0 0 0 3px var(--halo-accent-a10);
+
+  /* Text shadows/glows */
+  --halo-text-glow: 0 0 20px var(--halo-accent-a30);
+  --halo-text-glow-lg: 0 0 40px var(--halo-accent-a30);
+
+  /* Directional shadows */
+  --halo-shadow-side: 4px 0 32px var(--halo-black-a40);
+  --halo-shadow-bottom: 0 4px 32px var(--halo-black-a40);
+  --halo-shadow-top: 0 -4px 32px var(--halo-black-a40);
+}
+
+/* =====================================================
+   ALTERNATIVE PALETTE THEMES
+   Apply these classes to body or root element
+   ===================================================== */
+
+/* Sunset Warmth Theme */
+.halo-theme-sunset {
+  --halo-bg-dark: oklch(16% 0.02 30);
+  --halo-bg-elevated: oklch(20% 0.02 30);
+  --halo-primary: oklch(55% 0.15 30);
+  --halo-accent: oklch(70% 0.18 45);
+  --halo-accent-warm: oklch(68% 0.16 60);
+  --halo-text: oklch(94% 0.01 30);
+  --halo-text-secondary: oklch(68% 0.02 30);
+}
+
+/* Forest Deep Theme */
+.halo-theme-forest {
+  --halo-bg-dark: oklch(16% 0.03 160);
+  --halo-bg-elevated: oklch(20% 0.03 160);
+  --halo-primary: oklch(50% 0.12 160);
+  --halo-accent: oklch(68% 0.16 150);
+  --halo-accent-warm: oklch(72% 0.14 180);
+  --halo-text: oklch(94% 0.01 160);
+  --halo-text-secondary: oklch(68% 0.02 160);
+}
+
+/* Slate Pro Theme */
+.halo-theme-slate {
+  --halo-bg-dark: oklch(15% 0.01 240);
+  --halo-bg-elevated: oklch(19% 0.01 240);
+  --halo-primary: oklch(68% 0.04 240);
+  --halo-accent: oklch(70% 0.15 230);
+  --halo-accent-warm: oklch(68% 0.12 250);
+  --halo-text: oklch(92% 0.01 240);
+  --halo-text-secondary: oklch(65% 0.01 240);
+}

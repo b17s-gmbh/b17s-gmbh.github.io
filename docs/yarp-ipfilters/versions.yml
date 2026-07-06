@@ -1,0 +1,16 @@
+# Version manifest for the YARP IP Filters documentation.
+#
+# Each entry under `versions` maps a version id (which is also the name of the
+# subfolder holding that version's docs, e.g. src/docs/yarp-ipfilters/v1.4.0/)
+# to a label shown in the docs version selector. `latest` decides where
+# /docs/yarp-ipfilters/ redirects and which version supplies the library card
+# on the docs overview.
+#
+# To add a new version: copy the latest version folder to a new <id>/ folder,
+# update each page's content, set `base: /docs/yarp-ipfilters/<id>/` in its
+# docs-nav.yml, add an entry here, and (when ready) point `latest` at it.
+library: YARP IP Filters
+latest: v1.4.0
+versions:
+  - id: v1.4.0
+    label: "v1.4.0 (latest)"

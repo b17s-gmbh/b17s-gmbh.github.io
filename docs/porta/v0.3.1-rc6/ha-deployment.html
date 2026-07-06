@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>High Availability Deployment | b17s</title>
+<meta name="description" content="Running b17s.Porta behind a load balancer with multiple replicas, without sticky sessions.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/ha-deployment.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="High Availability Deployment">
+<meta property="og:description" content="Running b17s.Porta behind a load balancer with multiple replicas, without sticky sessions.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/ha-deployment.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High Availability Deployment">
+<meta name="twitter:description" content="Running b17s.Porta behind a load balancer with multiple replicas, without sticky sessions.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="ha-deployment" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html" aria-current="page">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>High Availability Deployment</h1>
+                <p class="docs-subtitle">Running multiple replicas without sticky sessions</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>How to run b17s.Porta behind a load balancer with multiple replicas, <strong>without sticky sessions</strong>.</p>
+<h2>What "HA" means here</h2>
+<ul><li>N replicas behind a load balancer.</li><li>Any request can land on any replica (round-robin, least-connections, ...).</li><li>Rolling deploys: old and new replicas serve simultaneously during a deploy.</li><li>Sign-in (OIDC redirect → callback) must work even when the callback lands on a different replica than the one that issued the redirect.</li></ul>
+<p>The library is designed to be HA-safe under those constraints, but <strong>you must wire three things</strong>. The defaults are dev-friendly, not HA-ready, and the auth pipeline emits a startup warning when an HA prerequisite is missing.</p>
+<h2>The three things you must share across replicas</h2>
+<div class="section">
+<h3>1. <code>IDistributedCache</code> - Redis or Valkey</h3>
+<p>The auth ticket store, session store, session-metadata index, and admin lookups all live in <code>IDistributedCache</code>. Without a real distributed cache, every replica falls back to its own in-memory cache and sessions become per-instance.</p>
+<p>Register Redis before or after <code>AddPortaAuthentication</code> - the order doesn't matter. A real registration always wins over the in-memory fallback, and the refresh-lock auto-pick and HA startup check both inspect the <em>effective</em> cache from the built container:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddStackExchangeRedisCache(opts =&gt;
+{
+    opts.Configuration = builder.Configuration[&quot;Redis:ConnectionString&quot;];
+});
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p>Or via .NET Aspire:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.AddRedisDistributedCache(&quot;cache&quot;);
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p>If no <code>IDistributedCache</code> is registered, the library logs a warning at startup (event id <code>14500</code>).</p>
+</div>
+<div class="section">
+<h3>2. Data Protection key ring - shared persistence <strong>and</strong> encryption at rest</h3>
+<p>ASP.NET Data Protection encrypts auth tickets, the OIDC correlation/nonce cookie, and the encrypted refresh tokens stored on session metadata. Without <strong>shared key persistence</strong>, every replica generates its own keys at startup. A cookie minted on replica A then fails to decrypt on replica B and the user gets thrown back to sign-in (or, during the OIDC redirect, the callback fails because the correlation cookie is unreadable).</p>
+<p>Persisted keys must also be <strong>encrypted at rest</strong>. The keys themselves are credential-equivalent - anyone who can read the storage row (DB row, Redis hash, blob) can decrypt every active session, every refresh token, and forge new tickets. The library refuses to start in non-Development environments if persistence is configured without a key encryptor (or an explicit acknowledgement, see below).</p>
+<p>The library does not pick a backend automatically because it doesn't know which database or cache you run. Pick <strong>one</strong> persistence backend and <strong>one</strong> key encryptor:</p>
+<p><strong>Option A - relational database (recommended if you already run one).</strong> Uses the bundled <code>DataProtectionDbContext</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">using var cert = new X509Certificate2(
+    builder.Configuration[&quot;DataProtection:CertPath&quot;]!,
+    builder.Configuration[&quot;DataProtection:CertPassword&quot;]);
+
+builder.Services.AddPortaDataProtectionWithEntityFrameworkStore(
+    opts =&gt; opts.UseNpgsql(builder.Configuration.GetConnectionString(&quot;dataprotection-db&quot;)),
+    dp =&gt; dp.ProtectKeysWithCertificate(cert));
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p>Run the EF migration once (the table is <code>DataProtectionKeys</code> by default) - any standard <code>dotnet ef database update</code> flow against <code>DataProtectionDbContext</code> will create it.</p>
+<p>To avoid colliding with other apps that also store Data Protection keys in the same database (shared / multi-tenant DBs), override the table name and/or schema:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaDataProtectionWithEntityFrameworkStore(
+    opts =&gt; opts.UseNpgsql(builder.Configuration.GetConnectionString(&quot;dataprotection-db&quot;)),
+    dp =&gt; dp.ProtectKeysWithCertificate(cert),
+    tableName: &quot;PortaDataProtectionKeys&quot;,
+    schema: &quot;porta&quot;);</code></pre>
+<p>The <code>protectKeys</code> argument is required. Pass any <code>ProtectKeysWith…</code> extension that fits your environment: <code>ProtectKeysWithCertificate</code>, <code>ProtectKeysWithAzureKeyVault</code> (<code>Azure.Extensions.AspNetCore.DataProtection.Keys</code>), <code>ProtectKeysWithAwsKms</code> (<code>AspNetCore.DataProtection.Aws.Kms</code>), <code>ProtectKeysWithDpapi</code> / <code>ProtectKeysWithDpapiNG</code> (Windows-only).</p>
+<p><strong>Option B - Redis / Azure Blob / file system / KMS.</strong> Use the open hook and call the standard ASP.NET extension methods for your persistence backend and your key encryptor:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var redis = ConnectionMultiplexer.Connect(builder.Configuration[&quot;Redis:ConnectionString&quot;]!);
+builder.Services.AddPortaDataProtectionPersistence(
+    persist: dp =&gt; dp.PersistKeysToStackExchangeRedis(redis, &quot;DataProtection-Keys&quot;),
+    protectKeys: dp =&gt; dp.ProtectKeysWithAzureKeyVault(
+        new Uri(builder.Configuration[&quot;KeyVault:KeyId&quot;]!),
+        new DefaultAzureCredential()));
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p>Other backends work the same way (<code>PersistKeysToAzureBlobStorage</code>, <code>PersistKeysToFileSystem(new DirectoryInfo(&quot;/mnt/keys&quot;))</code>, etc.).</p>
+<p>If no <code>AddPortaDataProtection*</code> helper is called, the library logs a warning at startup (event id <code>14501</code>). If persistence is configured but no <code>protectKeys</code> action is supplied (and no acknowledgement is registered), <code>AddPortaAuthentication</code> throws on startup in non-Development environments (event id <code>14503</code>); in Development it warns instead (event id <code>14502</code>).</p>
+<h4>Dev / single-box exception</h4>
+<p>For local development, or a single-box production deployment that relies on full-disk encryption and strict file-system permissions, you can opt out of key encryption explicitly:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaDataProtectionPersistence(
+    persist: dp =&gt; dp.PersistKeysToFileSystem(new DirectoryInfo(&quot;./.dp-keys&quot;)),
+    protectKeys: null);
+
+builder.Services.AcknowledgeUnencryptedDataProtectionKeys(
+    reason: &quot;local dev - keys live under ./.dp-keys, never leaves the box&quot;);
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p>The <code>reason</code> argument is required so the choice is visible in code review. The acknowledgement only suppresses the startup throw - it does not disable persistence or change any runtime behavior. Do not ship it to a multi-instance deployment: a single read of the key store at that point is enough to decrypt every active session.</p>
+</div>
+<div class="section">
+<h3>3. <code>DataProtection.ApplicationName</code> - identical on every replica</h3>
+<p>The <code>SessionAuthentication:DataProtection:ApplicationName</code> setting is the Data Protection application discriminator. Replicas sharing key storage but disagreeing on the application name can't read each other's keys. Set it explicitly:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;SessionAuthentication&quot;: {
+    &quot;DataProtection&quot;: {
+      &quot;ApplicationName&quot;: &quot;my-porta&quot;
+    }
+  }
+}</code></pre>
+<p>When left empty (the default), <code>ApplicationName</code> is derived at startup from the host's entry-assembly name plus <code>/Porta</code> (e.g. <code>MyApp.Api/Porta</code>), so two different apps don't accidentally share a key ring. Set it explicitly to pin a stable discriminator across deployments - or to <em>deliberately</em> share one key ring between apps that should decrypt each other's tickets. Two unrelated BFFs that you want isolated must not be given the same explicit <code>ApplicationName</code> against the same key store.</p>
+<h2>Why sticky sessions are not required</h2>
+<p>The OIDC sign-in flow goes:</p>
+<ol><li>Browser hits replica A → A redirects to the IdP and sets a <code>.AspNetCore.Correlation.*</code> cookie (encrypted with Data Protection).</li><li>Browser → IdP → browser → callback URL.</li><li>Callback lands on replica B (load balancer round-robin).</li><li>Replica B reads the correlation cookie <em>from the browser</em>, decrypts it (it can - DP keys are shared), validates the nonce, completes sign-in.</li></ol>
+<p>That works as long as steps 1 and 4 use the same DP key ring. With shared persistence, they do. <strong>No sticky sessions required.</strong></p>
+<p>The same logic applies to the auth cookie: it carries an opaque ticket id, the ticket itself is in Redis, both are encrypted/decrypted with the shared key ring.</p>
+<h2>Why sticky sessions can still help (performance, not correctness)</h2>
+<p>Sticky sessions are not necessary, but they can shave latency:</p>
+<ul><li>The cookie auth handler reads the ticket from Redis on every authenticated request. Sticky sessions don't change that - <code>ITicketStore</code> is hit either way.</li><li>The OIDC discovery cache (<code>IDiscoveryService</code>) is per-instance read-through. Sticky sessions keep one replica's cache hot for a given user; spreading evenly means each replica eventually fetches the metadata once. The freshness contract is identical; only the warm-up cost differs and it's tiny.</li><li>Refresh-token coordination (next section) is per-instance. Sticky sessions reduce cross-replica refresh races.</li></ul>
+<p>If your load balancer offers cheap session affinity (cookie-based, round-robin within affinity), turn it on for warm-cache wins. Don't <em>require</em> it.</p>
+<h2>Refresh-token race across replicas</h2>
+<p><code>IRefreshLock</code> coordinates concurrent token refreshes for the same user. In a multi-replica deployment two replicas can independently decide to refresh the same user's token at the same moment. What happens depends on your IdP:</p>
+<ul><li><strong>IdPs that allow refresh-token reuse during rotation</strong> (most): both refreshes succeed, the second one wins, the first replica's stale token is discarded on its next request. No user-visible effect.</li><li><strong>IdPs that enforce strict one-time-use rotation</strong> (some, e.g. some hardened OAuth 2.1 deployments): the loser's rotated-out refresh token is rejected with <code>invalid_grant</code>. The library <strong>fails closed</strong> rather than serving the stale access token: it invalidates the derived API tokens, signs the user out, logs a warning, and the current request proceeds unauthenticated. The user must re-authenticate. (Serving the stale token would let a session the IdP has already invalidated keep working, so this is deliberate - see <a href="https://github.com/b17s-gmbh/b17s-Porta/blob/main/src/Auth/Tokens/AccessTokenRefreshService.cs"><code>AccessTokenRefreshService</code></a>.) This is why <code>IRefreshLock</code> coordination matters under strict rotation: the goal is to avoid the race producing an <code>invalid_grant</code> at all.</li></ul>
+</div>
+<div class="section">
+<h3>Auto-pick - the default does the right thing</h3>
+<p><code>AddPortaAuthentication</code> picks an <code>IRefreshLock</code> implementation at first resolve, based on the effective registrations in the built container (registration order relative to <code>AddPortaAuthentication</code> doesn't matter):</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Effective registration</th><th>Auto-picked <code>IRefreshLock</code></th><th>When this is right</th><th></th></tr></thead><tbody><tr><td></td><td>Real <code>IDistributedCache</code> (Redis/Valkey)</td><td><code>DistributedCacheRefreshLock</code></td><td>Multi-replica deployment.</td><td></td></tr><tr><td></td><td>No <code>IDistributedCache</code></td><td><code>RefreshLockRegistry</code> (in-process)</td><td>Single-instance dev/test.</td><td></td></tr><tr><td></td><td>Consumer-provided <code>IRefreshLock</code></td><td>The consumer's</td><td>You know what you're doing.</td><td></td></tr></tbody></table></div>
+<p><code>DistributedCacheRefreshLock</code> uses the same <code>IDistributedCache</code> you registered for tickets and sessions - no extra dependency, no extra connection. It implements coordination via a get-then-set with a per-acquire fencing token and a best-effort compare-and-delete release. <code>IDistributedCache</code> exposes neither an atomic SET-NX nor an atomic check-and-delete, so the lock is best-effort under contention - and the release likewise narrows, but does not fully close, the window in which a delayed disposer could evict a newer holder's lock; for the refresh-coordination use case that narrows the race window to a small fraction of a refresh round-trip, which is enough to eliminate the strict-rotation <code>invalid_grant</code> symptom in practice. Consumers who need a true mutex (e.g. RedLock, a SQL row lock) can register their own <code>IRefreshLock</code> and the auto-pick steps aside.</p>
+</div>
+<div class="section">
+<h3>Single-box production with a remote cache</h3>
+<p>A single-replica deployment that uses a remote <code>IDistributedCache</code> (because some other component needs it) does not need cross-replica refresh coordination - but it doesn't have to do anything special. With a distributed cache registered, the auto-pick installs <code>DistributedCacheRefreshLock</code>, which is correct (and cheap) on a single replica too. Leave it alone.</p>
+<p>The startup check only refuses to boot in non-Development when the <strong>in-process</strong> <code>RefreshLockRegistry</code> is registered alongside a distributed cache, on the assumption that the combination is unintentional on what looks like an HA deployment. If you ever hit that throw and the in-process lock is genuinely what you want, acknowledge it:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AcknowledgeInProcessRefreshLock(
+    reason: &quot;single VM; remote cache only used by other components&quot;);
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<p>The <code>reason</code> argument is required so the choice is reviewable in code review. As with <code>AcknowledgeUnencryptedDataProtectionKeys</code>, the acknowledgement only suppresses the startup throw - it does not change runtime behavior. Do not use it on a real multi-replica deployment.</p>
+</div>
+<div class="section">
+<h3>Replacing the lock with your own implementation</h3>
+<p>The <code>IRefreshLock</code> contract is a single method, <code>Task&lt;RefreshLockHandle&gt; AcquireAsync(string lockKey, TimeSpan timeout, CancellationToken cancellationToken = default)</code>. The returned <code>RefreshLockHandle</code> is <code>IAsyncDisposable</code> (dispose it to release) and exposes an <code>Acquired</code> flag so callers can tell a real acquisition from a best-effort timeout. Register your implementation before or after <code>AddPortaAuthentication</code> - a consumer-provided <code>IRefreshLock</code> always wins over the auto-pick:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddSingleton&lt;IRefreshLock, MyRedLockRefreshLock&gt;();
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<h2>Sample HA configuration</h2>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+// 1. Distributed cache (order relative to AddPortaAuthentication doesn't matter).
+builder.Services.AddStackExchangeRedisCache(opts =&gt;
+{
+    opts.Configuration = builder.Configuration[&quot;Redis:ConnectionString&quot;];
+});
+
+// 2. Data Protection persistence + key encryption at rest - pick one persistence backend
+//    and one key encryptor. The protectKeys argument is required.
+using var dpCert = new X509Certificate2(
+    builder.Configuration[&quot;DataProtection:CertPath&quot;]!,
+    builder.Configuration[&quot;DataProtection:CertPassword&quot;]);
+
+builder.Services.AddPortaDataProtectionWithEntityFrameworkStore(
+    opts =&gt; opts.UseNpgsql(builder.Configuration.GetConnectionString(&quot;dataprotection-db&quot;)),
+    dp =&gt; dp.ProtectKeysWithCertificate(dpCert));
+
+// 3. Core BFF + auth.
+builder.Services.AddPortaCore(opts =&gt;
+{
+    opts.TrustedHosts = [&quot;https://api.internal.example.com&quot;];
+});
+
+builder.Services.AddPortaAuthentication(builder.Configuration);
+
+var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
+app.Run();</code></pre>
+<pre data-lang="jsonc"><code data-lang="jsonc" class="language-jsonc">// appsettings.Production.json
+{
+  &quot;ConnectionStrings&quot;: {
+    &quot;dataprotection-db&quot;: &quot;Host=...;Database=keys;Username=...;Password=...&quot;
+  },
+  &quot;Redis&quot;: {
+    &quot;ConnectionString&quot;: &quot;redis-primary:6379,password=...,ssl=true&quot;
+  },
+  &quot;SessionAuthentication&quot;: {
+    &quot;Authority&quot;: &quot;https://auth.example.com&quot;,
+    &quot;ClientId&quot;: &quot;my-porta&quot;,
+    &quot;ClientSecret&quot;: &quot;...&quot;,
+    &quot;Cookie&quot;: {
+      &quot;SameSite&quot;: &quot;Lax&quot;,
+      &quot;SecurePolicy&quot;: &quot;Always&quot;
+    },
+    &quot;DataProtection&quot;: {
+      &quot;ApplicationName&quot;: &quot;my-porta&quot;,
+      &quot;KeyLifetimeDays&quot;: 90
+    },
+    &quot;SessionKeys&quot;: {
+      &quot;Prefix&quot;: &quot;my-porta&quot;
+    }
+  }
+}</code></pre>
+<p><code>SessionKeys.Prefix</code> should be unique per BFF instance group when multiple BFFs share Redis (otherwise their session keys collide). Inside a single replica set, all replicas use the same prefix.</p>
+<p><code>Cookie.SameSite</code> should be <code>Lax</code> for the OIDC redirect-back flow to set cookies. <code>Strict</code> (the library default) blocks the OIDC callback on some IdPs because the browser treats the post-redirect navigation as cross-site.</p>
+<h2>Failure modes - what each missing piece looks like</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Symptom</th><th>Likely cause</th><th></th></tr></thead><tbody><tr><td></td><td>Sign-in fails with <code>Correlation failed</code> after IdP callback</td><td>Replica B can't decrypt the correlation cookie set by replica A → DP keys not shared.</td><td></td></tr><tr><td></td><td>Auth cookie present but user appears logged out on every other request</td><td>Ticket store is per-instance → no shared <code>IDistributedCache</code>.</td><td></td></tr><tr><td></td><td><code>Failed to decrypt auth ticket ... (data protection key rotation?)</code> warnings</td><td>DP keys rotated while old keys not in shared store, or replicas have divergent key rings.</td><td></td></tr><tr><td></td><td>Sporadic <code>invalid_grant</code> on token refresh</td><td>Strict-rotation IdP + in-process refresh lock on a multi-replica deployment. The default auto-pick installs <code>DistributedCacheRefreshLock</code> when a distributed cache is registered; if you're seeing this anyway, check whether something is registering <code>RefreshLockRegistry</code> explicitly. See <a href="#refresh-token-race-across-replicas">Refresh-token race</a>.</td><td></td></tr><tr><td></td><td><code>Skipping IdP-side revocation ... no encrypted refresh token on metadata</code> on logout</td><td>Refresh-token rotation didn't sync to session metadata, usually because the original sign-in landed on a replica with a different key ring. Resolve DP persistence first.</td><td></td></tr><tr><td></td><td><code>AddPortaAuthentication</code> throws <code>InvalidOperationException</code> referencing event id <code>14503</code></td><td>DP persistence is configured but no <code>protectKeys</code> action and no <code>AcknowledgeUnencryptedDataProtectionKeys</code> call. Pass a <code>ProtectKeysWith…</code> callback or, for dev / single-box, register the acknowledgement.</td><td></td></tr></tbody></table></div>
+<p>Startup diagnostics emitted by the library:</p>
+<ul><li><code>Porta: no real IDistributedCache is registered; using the in-memory fallback</code> - warning, event id <code>14500</code>. Fine for single-instance dev; HA-fatal in production.</li><li><code>Porta: Data Protection key persistence is not configured</code> - warning, event id <code>14501</code>. HA-fatal in production.</li><li><code>Porta: Data Protection keys are persisted without encryption at rest</code> (Development only) - warning, event id <code>14502</code>. Acceptable for dev loops; in non-Development it becomes a startup throw instead.</li><li><code>Porta: Data Protection keys are persisted without encryption at rest and no explicit acknowledgement</code> - critical log + thrown <code>InvalidOperationException</code>, event id <code>14503</code>. Refuses to start.</li><li><code>Porta: a distributed cache is registered but the in-process RefreshLockRegistry was registered explicitly</code> (Development only) - warning, event id <code>14504</code>. In non-Development it becomes a startup throw instead.</li><li><code>Porta: a distributed cache is registered but the in-process RefreshLockRegistry was registered explicitly and no acknowledgement was provided</code> - critical log + thrown <code>InvalidOperationException</code>, event id <code>14505</code>. Refuses to start.</li><li><code>Porta: a Data Protection protectKeys action was supplied but registered no IXmlEncryptor (e.g. an empty lambda), so keys are still persisted in plaintext</code> (Development only) - warning, event id <code>14506</code>. The attestation is hollow; in non-Development it becomes a startup throw instead.</li><li><code>Porta: a Data Protection protectKeys action was supplied but registered no IXmlEncryptor</code> - critical log + thrown <code>InvalidOperationException</code>, event id <code>14507</code>. Refuses to start (a hollow <code>protectKeys</code> attestation outside Development).</li></ul>
+<p>If you see <code>14500</code> or <code>14501</code> in production logs, your deployment is not HA-safe. If you see <code>14502</code>, <code>14504</code>, or <code>14506</code>, you have a configuration that will become a startup failure as soon as the environment isn't Development.</p>
+<h2>Rolling deploys and key rotation</h2>
+<p><code>KeyLifetimeDays</code> (default 90) controls when DP generates a new key. Rotation is automatic and old keys remain in the store until they expire - a rolling deploy where some replicas have v1 and others have v2 of the keyring is fine as long as both versions are still in shared storage. Don't truncate the <code>DataProtectionKeys</code> table or delete the Redis hash; you'll invalidate every active session.</p>
+<p>When you rotate <code>DataProtection.ApplicationName</code>, you invalidate every active session (which is the point - that's the documented reset switch).</p>
+<h2>Related</h2>
+<ul><li><a href="configuration.html">Configuration</a> - full options reference.</li><li><a href="authentication.html">Authentication</a> - session, reference token, JWT providers.</li><li><a href="oidc.html">OIDC Endpoints</a> - login/logout/back-channel logout middleware.</li></ul>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

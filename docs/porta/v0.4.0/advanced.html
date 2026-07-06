@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Advanced Topics | b17s</title>
+<meta name="description" content="Advanced b17s.Porta topics: API versioning, MapGroup, OpenAPI metadata, and composing standard ASP.NET Core features.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.4.0/advanced.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Advanced Topics">
+<meta property="og:description" content="Advanced b17s.Porta topics: API versioning, MapGroup, OpenAPI metadata, and composing standard ASP.NET Core features.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.4.0/advanced.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Topics">
+<meta name="twitter:description" content="Advanced b17s.Porta topics: API versioning, MapGroup, OpenAPI metadata, and composing standard ASP.NET Core features.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.4.0/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="advanced" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0" selected>v0.4.0 (latest)</option><option value="v0.3.1-rc6">v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/health-checks.html">Health Checks</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.4.0/advanced.html" aria-current="page">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Advanced Topics</h1>
+                <p class="docs-subtitle">API versioning, MapGroup, OpenAPI metadata, and composing framework features</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>Porta hooks into ASP.NET Core's minimal API design rather than replacing it. Two facts make everything in this guide possible:</p>
+<ol><li><code>MapTransformer&lt;...&gt;()</code>, <code>MapPassThrough&lt;T&gt;()</code>, and <code>MapRawForward()</code> are extension methods on</li></ol>
+<p>   <strong><code>IEndpointRouteBuilder</code></strong> — the same receiver <code>MapGet</code>/<code>MapPost</code> use. So anything that produces    an <code>IEndpointRouteBuilder</code> (the app, or a <code>MapGroup(...)</code> group) can host Porta endpoints.</p>
+<ol><li><code>.Build()</code> returns a stock <strong><code>RouteHandlerBuilder</code></strong> (an <code>IEndpointConventionBuilder</code>). So after</li></ol>
+<p>   you build a Porta endpoint, you can keep chaining the standard minimal-API conventions onto it —    <code>.WithName(...)</code>, <code>.WithTags(...)</code>, <code>.Produces&lt;T&gt;(...)</code>, <code>.RequireRateLimiting(...)</code>,    <code>.CacheOutput(...)</code>, <code>.RequireCors(...)</code>, and <code>.WithApiVersionSet(...)</code>.</p>
+<p>That second point is the escape hatch: Porta gives you the BFF behaviour (auth context, backend calls, token exchange, telemetry), and the returned builder lets you bolt on any framework feature Porta doesn't model itself.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .AllowAnonymous()
+    .Build()                     // &lt;-- RouteHandlerBuilder from here on
+    .WithName(&quot;ListProducts&quot;)
+    .WithTags(&quot;Catalog&quot;)
+    .Produces&lt;ProductsResponse&gt;(StatusCodes.Status200OK);</code></pre>
+<hr>
+<h2>API Versioning</h2>
+<p>Because Porta builders host on any <code>IEndpointRouteBuilder</code> (and <code>.Build()</code> returns a <code>RouteHandlerBuilder</code>), the standard <a href="https://github.com/dotnet/aspnet-api-versioning">Asp.Versioning</a> library composes directly onto Porta endpoints. Use <strong><code>Asp.Versioning</code> 10.0.0</strong> — the first release to officially support ASP.NET Core 10 and the built-in OpenAPI library — whose idiomatic minimal-API shape is a <em>versioned group</em> created with <code>NewVersionedApi()</code>.</p>
+<p><strong>1. Add the package.</strong> With central package management, add the version to <code>Directory.Packages.props</code>:</p>
+<pre data-lang="xml"><code data-lang="xml" class="language-xml">&lt;PackageVersion Include=&quot;Asp.Versioning.Http&quot; Version=&quot;10.0.0&quot; /&gt;
+&lt;!-- For per-version OpenAPI documents, also add: --&gt;
+&lt;!-- &lt;PackageVersion Include=&quot;Asp.Versioning.Mvc.ApiExplorer&quot; Version=&quot;10.0.0&quot; /&gt; --&gt;</code></pre>
+<p>…and reference it (no <code>Version</code> attribute) in your BFF's <code>.csproj</code>:</p>
+<pre data-lang="xml"><code data-lang="xml" class="language-xml">&lt;PackageReference Include=&quot;Asp.Versioning.Http&quot; /&gt;</code></pre>
+<p><strong>2. Register the service.</strong></p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddApiVersioning(options =&gt;
+{
+    options.DefaultApiVersion = new ApiVersion(1.0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;                       // emits api-supported-versions / api-deprecated-versions
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    // Or read it elsewhere:
+    //   new HeaderApiVersionReader(&quot;X-Api-Version&quot;)
+    //   new QueryStringApiVersionReader(&quot;api-version&quot;)
+    //   ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader(&quot;X-Api-Version&quot;))
+});
+// Per-version OpenAPI (needs Asp.Versioning.Mvc.ApiExplorer) — one call, not one per version:
+//   .AddApiExplorer(o =&gt; o.GroupNameFormat = &quot;'v'VVV&quot;).AddOpenApi();
+// then: app.MapOpenApi().WithDocumentPerVersion();  // -&gt; /openapi/v1.json, /openapi/v2.json</code></pre>
+<p><strong>3. Map Porta endpoints onto a versioned group.</strong> <code>NewVersionedApi(...)</code> returns an <code>IEndpointRouteBuilder</code>, and so does the <code>MapGroup(...).HasApiVersion(...)</code> chain — both are valid Porta hosts, so the Porta builders chain straight off the group.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var catalog = app.NewVersionedApi(&quot;Catalog&quot;);
+
+// v1 — note the {version:apiVersion} segment in the group route for URL-segment versioning
+var v1 = catalog.MapGroup(&quot;/api/v{version:apiVersion}&quot;).HasApiVersion(1.0);
+v1.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();
+
+// v2 — different transformer, different backend, same public route shape
+var v2 = catalog.MapGroup(&quot;/api/v{version:apiVersion}&quot;).HasApiVersion(2.0);
+v2.MapTransformer&lt;ProductsV2Transformer, ProductsResponse&gt;()
+    .FromGet(&quot;/products&quot;)
+    .ToGet(&quot;https://products-v2.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<p>A request to <code>/api/v1/products</code> hits the first endpoint; <code>/api/v2/products</code> hits the second; an unknown version yields a <code>400</code> from Asp.Versioning before Porta runs.</p>
+<p><strong>Header / query-string versioning</strong> works the same way — drop the <code>{version:apiVersion}</code> route segment (group on <code>/api/products</code> directly), set the matching <code>ApiVersionReader</code>, and the client selects the version via the header or query parameter instead of the path.</p>
+<p><strong>Deprecation</strong> is declarative; combined with <code>ReportApiVersions = true</code> it advertises sunset info:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var catalog = app.NewVersionedApi(&quot;Catalog&quot;);
+catalog.MapGroup(&quot;/api/v{version:apiVersion}&quot;).HasDeprecatedApiVersion(1.0);   // -&gt; api-deprecated-versions: 1.0
+catalog.MapGroup(&quot;/api/v{version:apiVersion}&quot;).HasApiVersion(2.0);</code></pre>
+<blockquote><p><strong>Coexistence:</strong> Asp.Versioning selects endpoints through its own <code>ApiVersionMatcherPolicy</code>, and Porta's <code>.When()</code> uses <code>WhenPredicateMatcherPolicy</code>. Both are registered <code>MatcherPolicy</code> services, so ASP.NET Core runs both and they compose. Just don't gate the <em>same</em> dimension twice (e.g. don't <code>.When(header == &quot;2&quot;)</code> <strong>and</strong> <code>HasApiVersion(2.0)</code> off the same header) — pick one mechanism per version axis.</p></blockquote>
+<hr>
+<h2>Grouping endpoints with <code>MapGroup</code></h2>
+<p>Because the builders extend <code>IEndpointRouteBuilder</code>, a <code>RouteGroupBuilder</code> from <code>MapGroup(...)</code> is a valid host. Use it to share a route prefix and non-auth conventions across a batch of BFF endpoints:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var catalog = app.MapGroup(&quot;/api/catalog&quot;)
+    .WithTags(&quot;Catalog&quot;);             // tags, CORS, rate limiting, etc. flow down to each endpoint
+
+catalog.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/products&quot;)             // -&gt; /api/catalog/products
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .Build();
+
+catalog.MapTransformer&lt;ProductDetailTransformer, ProductDetail&gt;()
+    .FromGet(&quot;/products/{id}&quot;)        // -&gt; /api/catalog/products/{id} ({id} is interpolated into the backend URL)
+    .ToGet(&quot;https://products.internal/products/{id}&quot;)
+    .Build();</code></pre>
+<p>The route prefix and group-level conventions like tags, CORS, and rate limiting flow down to each endpoint.</p>
+<blockquote><p><strong>Don't authorize on the group.</strong> Porta owns auth per endpoint: <code>.Build()</code> always stamps explicit <code>RequireAuthorization()</code> or <code>AllowAnonymous()</code> metadata based on the endpoint's effective requirement (which defaults to <em>required</em> via <code>RequireAuthorizationByDefault</code>). Because an endpoint-level <code>AllowAnonymous()</code> overrides a group requirement, a Porta endpoint that resolves to anonymous <strong>silently defeats</strong> a group-level <code>.RequireAuthorization()</code> — making it redundant at best and a security gap at worst. Set auth on the endpoint instead: lean on the <code>RequireAuthorizationByDefault</code> default, or call <code>.RequireAuth(&quot;policy&quot;)</code> / <code>.AllowAnonymous()</code> per endpoint.</p></blockquote>
+<hr>
+<h2>OpenAPI / documentation metadata</h2>
+<p>Porta's handler serializes the transformer result to JSON at runtime, but it does not infer an OpenAPI response schema for you. If you expose a Swagger/OpenAPI document, describe the contract explicitly on the returned builder:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;UserDashboardTransformer, DashboardResponse&gt;()
+    .FromGet(&quot;/api/dashboard&quot;)
+    .ToBackends(/* ... */)
+    .Build()
+    .WithName(&quot;GetDashboard&quot;)
+    .WithSummary(&quot;Aggregated user dashboard&quot;)
+    .WithDescription(&quot;Fans out to the profile, orders, and notifications backends.&quot;)
+    .Produces&lt;DashboardResponse&gt;(StatusCodes.Status200OK)
+    .ProducesProblem(StatusCodes.Status401Unauthorized)
+    .ProducesProblem(StatusCodes.Status502BadGateway);   // Porta returns 502 on backend failure</code></pre>
+<p>The status codes Porta can emit from the transformer pipeline are worth documenting: <code>400</code> (invalid request body / route value), <code>401</code>/<code>403</code> (auth), <code>500</code> (transformer error), and <code>502</code> (backend unavailable). See <a href="../src/Transformers/TransformerEndpointBuilder.cs"><code>TransformerEndpointBuilder</code></a> for the exact mapping.</p>
+<hr>
+<h2>Composing other framework features</h2>
+<p>Anything that attaches to a <code>RouteHandlerBuilder</code> or <code>RouteGroupBuilder</code> works. A few that pair well with a BFF:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Rate limiting (per-endpoint policy registered via AddRateLimiter)
+app.MapPassThrough&lt;SearchResponse&gt;()
+    .FromGet(&quot;/api/search&quot;)
+    .ToGet(&quot;https://search.internal/search&quot;)
+    .AllowAnonymous()
+    .Build()
+    .RequireRateLimiting(&quot;search&quot;);
+
+// Output caching for cacheable, anonymous reads (AddOutputCache + app.UseOutputCache())
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .AllowAnonymous()
+    .Build()
+    .CacheOutput(p =&gt; p.Expire(TimeSpan.FromSeconds(30)));
+
+// CORS for a specific endpoint (AddCors + named policy)
+app.MapPassThrough&lt;PublicConfig&gt;()
+    .FromGet(&quot;/api/config&quot;)
+    .ToGet(&quot;https://config.internal/public&quot;)
+    .AllowAnonymous()
+    .Build()
+    .RequireCors(&quot;spa&quot;);</code></pre>
+<blockquote><p><strong>Caching caveat:</strong> only cache endpoints whose response does not depend on the user. Anything that forwards the user's token (<code>BackendAuthPolicies.BearerToken</code>, token exchange) or returns per-identity data must not be output-cached at the BFF, or one user can be served another's response. Key the cache by the varying dimension, or don't cache it. See <a href="caching.html">Caching</a> for the full guide — distributed (HA) cache stores, tag-based invalidation, and caching one leg of an aggregation.</p></blockquote>
+<hr>
+<h2>Readiness and health</h2>
+<p>When running multiple replicas behind a load balancer, expose health endpoints so the balancer routes only to ready instances. These are stock ASP.NET Core health checks — Porta doesn't wrap them:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddHealthChecks();
+// ...
+app.MapHealthChecks(&quot;/healthz&quot;);</code></pre>
+<p>For the full multi-replica story (no sticky sessions, shared data-protection keys, distributed session store), see <a href="ha-deployment.html">HA Deployment</a>.</p></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

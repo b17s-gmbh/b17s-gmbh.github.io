@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="arctic" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>About Us | b17s</title>
+<meta name="description" content="Learn more about Belikov IT Solutions GmbH (b17s) - our story, mission, and values.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/about/">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="About Us">
+<meta property="og:description" content="Learn more about Belikov IT Solutions GmbH (b17s) - our story, mission, and values.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/about/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About Us">
+<meta name="twitter:description" content="Learn more about Belikov IT Solutions GmbH (b17s) - our story, mission, and values.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-arctic.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+
+    <style>
+        /* Hero with the Löhne valley landscape dissolving into the page background. */
+        .about-hero {
+            min-height: 78vh;
+            /* Anchor the heading in the top third of the hero instead of
+               vertically centering it. */
+            align-items: flex-start;
+            padding-top: 16vh;
+            padding-bottom: 4rem;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        /* The painted landscape, anchored to the bottom of the hero. */
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background: url('/img/about/image.webp') center bottom / cover no-repeat;
+            opacity: 0.5;
+            /* Feather every edge so the artwork has no hard borders. */
+            -webkit-mask-image:
+                linear-gradient(to bottom, transparent 0%, #000 28%, #000 70%, transparent 100%),
+                linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-image:
+                linear-gradient(to bottom, transparent 0%, #000 28%, #000 70%, transparent 100%),
+                linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+            mask-composite: intersect;
+        }
+        /* Bleed the artwork into the page background at top and bottom. */
+        .about-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(
+                to bottom,
+                var(--bg-dark) 0%,
+                rgba(0, 0, 0, 0) 32%,
+                rgba(0, 0, 0, 0) 58%,
+                var(--bg-dark) 100%
+            );
+        }
+        .about-hero .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* The wordmark is a single text node animated by JS (see end of body):
+           "Belikov IT-Solutions" crushes its middle into a growing number until
+           it lands on "b17s" (cf. k8s / k9s). Keep it on one line so the text
+           doesn't reflow as it shrinks. */
+        .wordmark {
+            white-space: nowrap;
+            /* Monospace keeps the scrambling glyphs a constant width so the
+               wordmark doesn't jitter as letters change. */
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-variant-ligatures: none;
+        }
+
+        /* The story reads better as open page text than as a glass box —
+           drop the card chrome but keep the comfortable measure. */
+        .content-card--flat {
+            background: none;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+        }
+        .story-section {
+            padding-top: 2rem;
+        }
+
+        .about-lead {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+        }
+        .about-lead:last-child {
+            margin-bottom: 0;
+        }
+        /* Calm down the design-system capability cards: the shared style lifts
+           each card 10px, sweeps a radial glow, animates a gradient top-bar and
+           re-blurs the backdrop. Here we want a flat, quiet grid — just a gentle
+           border/background shift on hover, no motion. */
+        .capabilities-grid {
+            gap: 1.5rem;
+        }
+        .capability-card {
+            padding: 2rem;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .capability-card::before,
+        .capability-card::after {
+            display: none;
+        }
+        .capability-card:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--accent-a30);
+            background: rgba(255, 255, 255, 0.07);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            backdrop-filter: blur(12px) saturate(120%);
+        }
+        .capability-icon {
+            box-shadow: none;
+            margin-bottom: 1.25rem;
+        }
+
+        .about-cta {
+            text-align: center;
+        }
+        .about-cta .section-header {
+            margin-bottom: 1rem;
+        }
+        .about-cta .hero-buttons {
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body data-page="about">
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation Placeholder (loaded dynamically) -->
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero about-hero">
+        <div class="hero-content">
+            <h1>
+                <span id="wordmark" class="gradient-text wordmark" aria-label="b17s" title="Belikov IT-Solutions">b17s</span>
+            </h1>
+        </div>
+    </section>
+</br>
+    <div class="container">
+
+        <!-- Story -->
+        <section class="article-section story-section">
+            <div class="content-card content-card--flat">
+                <div class="section-header">
+                    <h2>Who We Are</h2>
+                </div>
+                <p class="about-lead">
+                    At <b>b17s</b> (pronounced bits), we plan, architect and execute customer projects.
+                    Years of freelance work taught us to start with how a business actually operates, then build the smallest reliable thing that solves it.
+                    Our focus is on technology that creates lasting value - designed around the way your business actually works.
+                </p>
+                <p class="about-lead">
+                    Based in the idyllic East Westphalia region of Germany, we work with an international team of experts across the European Union.
+                </p>
+            </div>
+        </section>
+
+        <!-- What we do -->
+        <section class="capabilities-section">
+            <div class="section-header">
+                <h2>What We Do</h2>
+            </div>
+            <div class="capabilities-grid">
+                <div class="capability-card">
+                    <div class="capability-icon"><i data-lucide="hard-hat" class="lucide"></i></div>
+                    <h3>Software Architecture</h3>
+                    <p>Identifying needs, design solutions, and support implementation.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon"><i data-lucide="code-2" class="lucide"></i></div>
+                    <h3>Software Engineering</h3>
+                    <p>Pragmatic, problem-solving software built around your real requirements.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon"><i data-lucide="life-buoy" class="lucide"></i></div>
+                    <h3>Consulting &amp; Support</h3>
+                    <p>Embedded expertise that extends your team when and where you need it.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to action -->
+        <section class="article-section">
+            <div class="content-card about-cta">
+                <div class="section-header">
+                    <h2>Let's Build Something</h2>
+                </div>
+                <p class="about-lead">
+                    Have a project in mind or just want to say hello? We'd love to
+                    hear from you.
+                </p>
+                <div class="hero-buttons">
+                    <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t" class="btn btn-primary">Get in touch</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+    <!-- Wordmark crush: "Belikov IT-Solutions" -> "b17s".
+         Hold the full name, then progressively crush the middle letters into a
+         growing number (3, 5, 7, ...) until only "b" + 17 + "s" remain. Each
+         batch of letters spins through random glyphs before being squashed. The
+         element keeps a single text node throughout. -->
+    <script>
+    (function () {
+        var el = document.getElementById('wordmark');
+        if (!el) return;
+
+        var brand = 'b17s';
+        // Lower-case 'b' so the first glyph already matches the brand — the
+        // reveal settles straight onto b17s with no B→b flip at the end.
+        var full = 'belikov IT-Solutions';
+        var first = full.charAt(0);
+        var last = full.charAt(full.length - 1);
+        var middle = full.slice(1, -1);
+        var len = middle.length;
+        var glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        // Indices of the crushable glyphs in `middle`, in order — every
+        // non-space char, so the dash in "IT-Solutions" counts but the two
+        // spaces are skipped. The crush is driven off these, so whitespace is
+        // ignored entirely: every step eats one glyph from each inner edge
+        // (two per step), never stalling on a space. The 17 crushable glyphs
+        // are what make the wordmark land exactly on b17s.
+        var letters = [];
+        for (var li = 0; li < len; li++) if (middle.charAt(li) !== ' ') letters.push(li);
+        var L = letters.length;   // crushable glyphs between the b…s (17)
+
+        // Reduced-motion users keep the final brand already in the DOM.
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        function rand() { return glyphs.charAt(Math.floor(Math.random() * glyphs.length)); }
+        function glyphAt(idx, doomed) {
+            var ch = middle.charAt(idx);
+            return (ch !== ' ' && doomed && doomed.indexOf(idx) !== -1) ? rand() : ch;
+        }
+
+        // Render the crushed name: first letter, `keepL` real letters kept from
+        // the left, the number `label` in the crushed centre, `keepR` real
+        // letters from the right, last letter. Indices in `doomed` spin as
+        // random glyphs. A '' label means nothing is crushed yet, so the whole
+        // name (spaces included) is rendered as-is.
+        function layout(keepL, keepR, label, doomed) {
+            var s = first, i;
+            if (label === '') {
+                for (i = 0; i < len; i++) s += glyphAt(i, doomed);
+                return s + last;
+            }
+            var leftEnd = keepL > 0 ? letters[keepL - 1] : -1;
+            var rightStart = keepR > 0 ? letters[L - keepR] : len;
+            for (i = 0; i <= leftEnd; i++) s += glyphAt(i, doomed);
+            s += label;
+            for (i = rightStart; i < len; i++) s += glyphAt(i, doomed);
+            return s + last;
+        }
+
+        // Frame timeline. The crush grows outward from the centre letter: step 1
+        // eats that single letter into "1"; every later step eats one more real
+        // letter on each side (two per step), so the number climbs 1, 3, 5 ….
+        // Spaces are never counted or stranded because every index comes from
+        // `letters`. Each step spins the doomed letters for
+        // SCRAMBLE_FRAMES*SCRAMBLE_MS (~0.6s) before the crush commits.
+        var SCRAMBLE_FRAMES = 19, SCRAMBLE_MS = 25.5, SETTLE_MS = 60, HOLD_MS = 2000;
+        var brandNum = brand.replace(/\D/g, '');   // "17" — the brand reveal label
+        var center = (L - 1) >> 1;
+        var queue = [{ text: full, ms: HOLD_MS }];
+        var prev = { keepL: 0, keepR: 0, label: '' };
+        var lo = center, hi = center;
+
+        // Symmetric crush while a full window edge is still in range. With an
+        // even letter count one side runs out first, leaving a short tail that
+        // the brand reveal below cleans up — so no letter is ever stranded.
+        for (var k = 1; lo >= 0 && hi <= L - 1; k++) {
+            var doomed = [];
+            if (k === 1) { doomed.push(letters[center]); }
+            else { doomed.push(letters[lo]); doomed.push(letters[hi]); }
+            var n = hi - lo + 1;                 // real letters crushed so far
+            var keepL = lo, keepR = L - 1 - hi;
+
+            for (var f = 0; f < SCRAMBLE_FRAMES; f++) {
+                queue.push({ text: layout(prev.keepL, prev.keepR, prev.label, doomed), ms: SCRAMBLE_MS });
+            }
+            queue.push({ text: layout(keepL, keepR, String(n), null), ms: SETTLE_MS });
+            prev = { keepL: keepL, keepR: keepR, label: String(n) };
+            lo--; hi++;
+        }
+
+        // Brand reveal: spin whatever real letters survived the symmetric pass
+        // (the even-count tail) with the number already snapped to the brand's
+        // "17", then settle on b17s — a smooth hand-off instead of a hard cut.
+        var tail = [];
+        for (var tl = 0; tl < prev.keepL; tl++) tail.push(letters[tl]);
+        for (var tr = L - prev.keepR; tr < L; tr++) tail.push(letters[tr]);
+        if (tail.length) {
+            for (var ff = 0; ff < SCRAMBLE_FRAMES; ff++) {
+                queue.push({ text: layout(prev.keepL, prev.keepR, brandNum, tail), ms: SCRAMBLE_MS });
+            }
+        }
+        queue.push({ text: brand, ms: HOLD_MS });
+
+        var i = 0;
+        (function play() {
+            if (i >= queue.length) return;
+            el.textContent = queue[i].text;
+            setTimeout(play, queue[i++].ms);
+        })();
+    })();
+    </script>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

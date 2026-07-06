@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Using Porta as an API Gateway | b17s</title>
+<meta name="description" content="An opinionated take on when to use b17s.Porta as an API gateway, and when another tool is the better choice.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/api-gateway.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Using Porta as an API Gateway">
+<meta property="og:description" content="An opinionated take on when to use b17s.Porta as an API gateway, and when another tool is the better choice.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/api-gateway.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Using Porta as an API Gateway">
+<meta name="twitter:description" content="An opinionated take on when to use b17s.Porta as an API gateway, and when another tool is the better choice.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="api-gateway" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html" aria-current="page">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Using Porta as an API Gateway</h1>
+                <p class="docs-subtitle">When to use Porta as a gateway, and when to pick something else</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>b17s.Porta is, as the name says, primarily a Backend-For-Frontend library. But the same building blocks - typed pass-through, raw forwarding, per-backend auth, header manipulation - also cover a meaningful slice of the "API gateway" problem. This page is an opinionated take on when reaching for this library as a gateway is a good fit, and when you should pick something else.</p>
+<h2>TL;DR</h2>
+<p>Use b17s.Porta as a gateway when you want a <strong>small, code-first, opinionated edge</strong> in front of a known set of internal services - especially if you're already running it as a BFF for a frontend and want to consolidate. Most "missing" gateway features (rate limiting, circuit breaking, etc.) can be added as ASP.NET Core middleware, and you can also place b17s.Porta <strong>behind</strong> another gateway like YARP if you want each tool doing what it's best at. Only switch tools entirely when something fundamental is missing - see <a href="#when-another-tool-is-the-better-choice">When another tool is the better choice</a>.</p>
+<h2>Where it fits well</h2>
+<div class="section">
+<h3>1. Auth translation at the edge</h3>
+<p>This is the strongest gateway use case. Each route can declare its own backend auth policy:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapPassThrough&lt;OrderResponse&gt;()
+    .FromGet(&quot;/api/orders/{id}&quot;)
+    .ToGet(&quot;https://orders.internal/orders/{id}&quot;)
+    .WithTokenExchange(&quot;orders-api&quot;)
+    .Build();
+
+app.MapRawForward()
+    .FromGet(&quot;/api/legacy/{**path}&quot;)
+    .ToGet(&quot;https://legacy.internal/{**path}&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BasicAuth)
+    .Build();</code></pre>
+<p>The caller authenticates once (session cookie or reference token); the gateway swaps in whatever each backend expects (bearer, exchanged token, basic auth, none). See <a href="authentication.html">Authentication</a> and <a href="endpoints.html">Endpoints</a> for the full set of policies.</p>
+</div>
+<div class="section">
+<h3>2. Zero-code proxying for files and binary content</h3>
+<p><a href="raw-forwarding.html"><code>MapRawForward()</code></a> gives you a streaming proxy without a transformer class - useful for file downloads, uploads, XML APIs, and any non-JSON traffic that would otherwise pay a serialization tax in a typed BFF.</p>
+</div>
+<div class="section">
+<h3>3. Header rewriting and request enrichment</h3>
+<p>Extending <code>RawForwardTransformer</code> lets you strip internal headers (<code>X-Backend-Server</code>, debug headers) and inject things like tenant IDs or correlation IDs - a classic gateway responsibility. See <a href="raw-forwarding.html#custom-raw-forwarding-with-header-manipulation">Custom Raw Forwarding with Header Manipulation</a>.</p>
+</div>
+<div class="section">
+<h3>4. Aggregation that a normal gateway can't do</h3>
+<p>Most gateways forward 1:1. b17s.Porta can fan out to several backends and return a single composed response via <code>AggregatingTransformer&lt;T&gt;</code>. If your "gateway" needs are really "I want a typed facade that hides three services behind one endpoint," this is the sweet spot.</p>
+</div>
+<div class="section">
+<h3>5. OpenTelemetry out of the box</h3>
+<p>All transformers and backend calls are auto-instrumented (<a href="telemetry.html">Telemetry</a>). You get distributed traces across the edge without wiring anything up - comparable to what a real gateway gives you.</p>
+</div>
+<div class="section">
+<h3>6. Consolidating with an existing BFF</h3>
+<p>If you're already running b17s.Porta for a frontend and have a small handful of additional service-to-service routes that need auth translation or aggregation, adding them as gateway-style endpoints is cheaper than introducing a second piece of infrastructure.</p>
+<h2>Extending b17s.Porta to cover more gateway concerns</h2>
+<p>If b17s.Porta fits 90% of what you need, don't switch tools for the last 10%. The library is a normal ASP.NET Core app, so most classic gateway features can be layered on without giving up what you already have.</p>
+</div>
+<div class="section">
+<h3>Add rate limiting with ASP.NET Core middleware</h3>
+<p><code>Microsoft.AspNetCore.RateLimiting</code> (built into .NET 7+) plugs in cleanly:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddRateLimiter(options =&gt;
+{
+    options.AddFixedWindowLimiter(&quot;per-user&quot;, opts =&gt;
+    {
+        opts.PermitLimit = 100;
+        opts.Window = TimeSpan.FromMinutes(1);
+    });
+});
+
+var app = builder.Build();
+
+app.UseRateLimiter();
+app.UseSession();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .Build()
+    .RequireRateLimiting(&quot;per-user&quot;);</code></pre>
+<p>Apply globally, per route group, or per endpoint - same as any ASP.NET Core app.</p>
+</div>
+<div class="section">
+<h3>Add circuit breaking and retries with Polly</h3>
+<p>The backend caller already has timeouts and basic retries (see <a href="configuration.html">Configuration</a>). For richer policies - circuit breakers, bulkheads, jittered retries - register <code>Microsoft.Extensions.Http.Resilience</code> handlers on the named HttpClients the library uses, or wrap your own <code>IBackendCaller</code> decorator.</p>
+</div>
+<div class="section">
+<h3>Add request validation, IP allowlisting, or custom auth</h3>
+<p>Standard ASP.NET Core middleware applies. Drop it into the pipeline before the BFF endpoints; nothing in the library prevents it.</p>
+</div>
+<div class="section">
+<h3>Put b17s.Porta behind YARP (or any reverse proxy)</h3>
+<p>When you want <strong>dynamic routing for many services</strong> <em>and</em> the typed composition b17s.Porta gives you for a few key endpoints, run them as a pair. YARP at the edge handles wildcard routing, load balancing across replicas, and traffic shaping. b17s.Porta runs behind it as one of the upstreams, owning the routes that need auth translation, aggregation, or a typed facade.</p>
+<pre><code>┌──────────┐      ┌──────────────┐      ┌────────────────┐
+│ Clients  │ ───▶ │   YARP / APIM │ ───▶ │ b17s.Porta       │ ──▶ backends
+└──────────┘      │ (wildcards,  │      │ (typed/aggreg.)│
+                  │  rate limit, │      └────────────────┘
+                  │  LB, quotas) │ ───▶ ┌────────────────┐
+                  └──────────────┘      │ other services │
+                                        └────────────────┘</code></pre>
+<p>This is also the right shape if a platform team owns the edge and wants config-driven routing, while application teams own the BFF.</p>
+</div>
+<div class="section">
+<h3>Use a service mesh for cross-cutting infra concerns</h3>
+<p>mTLS, retries, circuit breaking, and observability between services are well-handled by <strong>Linkerd</strong> or <strong>Istio</strong> - and they don't conflict with running b17s.Porta as the API surface.</p>
+<h2>When another tool is the better choice</h2>
+<p>These are the cases where extending or fronting b17s.Porta doesn't really help - the mismatch is fundamental.</p>
+</div>
+<div class="section">
+<h3>You need a public, multi-tenant edge with API products, quotas, and a developer portal</h3>
+<p>That's API-Management territory: API products, plans, self-service onboarding, key management, billing. <strong>Kong</strong>, <strong>Azure API Management</strong>, <strong>Apigee</strong>, <strong>AWS API Gateway</strong>, <strong>Tyk</strong> are built for this. You could put one in front of b17s.Porta, but if API management <em>is</em> the primary requirement, the BFF role is secondary and you should start from the APIM side.</p>
+</div>
+<div class="section">
+<h3>You need protocol bridging beyond HTTP</h3>
+<p>gRPC, WebSockets-as-first-class, MQTT, AMQP - none of these are in scope. b17s.Porta is HTTP/JSON-first, with raw HTTP pass-through for non-JSON payloads. Use a protocol-aware gateway (<strong>Envoy</strong>, <strong>Kong</strong>) or terminate those protocols elsewhere.</p>
+</div>
+<div class="section">
+<h3>Your edge config must be owned and changed by an ops team without redeploys</h3>
+<p>Routes, auth policies, and transformers live in C#. If the operating model requires YAML, a UI, or hot reload, you'll fight the library. Either run a real gateway at the edge (with b17s.Porta behind it for the parts where typed composition still pays off), or pick a config-driven gateway outright.</p>
+<h2>Decision checklist</h2>
+<p>Pick b17s.Porta as a gateway if <strong>most</strong> of these are true:</p>
+<ul class="task-list"><li class="task-item"><span class="task-checkbox task-unchecked"></span>Your routes are known at build time and change with code, not config.</li><li class="task-item"><span class="task-checkbox task-unchecked"></span>You have a small-to-medium number of backends (roughly: tens, not hundreds).</li><li class="task-item"><span class="task-checkbox task-unchecked"></span>Your edge concerns are auth translation, header rewriting, and optional aggregation.</li><li class="task-item"><span class="task-checkbox task-unchecked"></span>Reference tokens (or anonymous) are acceptable for caller auth.</li><li class="task-item"><span class="task-checkbox task-unchecked"></span>You're comfortable adding rate limiting / circuit breaking via ASP.NET Core middleware, or fronting with YARP / APIM.</li><li class="task-item"><span class="task-checkbox task-unchecked"></span>You're already running it as a BFF and want to avoid a second piece of infrastructure.</li></ul>
+<p>Missing one or two of these usually means <strong>add middleware or a proxy in front</strong>, not switch tools. Switch only when one of the <a href="#when-another-tool-is-the-better-choice">fundamental mismatches</a> above applies.</p>
+<h2>Related</h2>
+<ul><li><a href="endpoints.html">Endpoints</a> - routing, builders, authorization</li><li><a href="raw-forwarding.html">Raw Forwarding</a> - zero-code proxying and header manipulation</li><li><a href="authentication.html">Authentication</a> - backend auth policies</li><li><a href="telemetry.html">Telemetry</a> - tracing across the edge</li></ul>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

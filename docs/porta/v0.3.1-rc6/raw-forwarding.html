@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Raw Forwarding | b17s</title>
+<meta name="description" content="Raw forwarding in b17s.Porta for binary content, file proxying, and streaming responses without JSON parsing.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/raw-forwarding.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Raw Forwarding">
+<meta property="og:description" content="Raw forwarding in b17s.Porta for binary content, file proxying, and streaming responses without JSON parsing.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/raw-forwarding.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Raw Forwarding">
+<meta name="twitter:description" content="Raw forwarding in b17s.Porta for binary content, file proxying, and streaming responses without JSON parsing.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="raw-forwarding" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html" aria-current="page">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Raw Forwarding</h1>
+                <p class="docs-subtitle">Binary content, file proxying, and streaming</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>For endpoints that need to forward responses without JSON parsing (binary files, XML, streaming), use raw forwarding.</p>
+<h2>When to Use Raw Forwarding</h2>
+<p><strong>Use raw forwarding for:</strong></p>
+<ul><li>File uploads/downloads (binary content)</li><li>Proxying XML APIs without transformation</li><li>Streaming responses (video, large files)</li><li>Performance-critical pass-through endpoints</li></ul>
+<p><strong>Don't use raw forwarding when:</strong></p>
+<ul><li>You need to transform the response data</li><li>You need to aggregate multiple backends</li><li>You need to validate or enrich the response</li></ul>
+<h2>CallRawAsync</h2>
+<p>For custom raw forwarding logic in a transformer:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class FileDownloadTransformer : TransformerBase&lt;object&gt;
+{
+    public override async Task&lt;object&gt; TransformAsync(TransformerContext context)
+    {
+        var fileId = GetRouteValue(context, &quot;id&quot;);
+
+        // The configured backend (from ToBackend(...)/ToAny(...)) is exposed on the
+        // context under the &quot;BackendRequest&quot; property; override its Url as needed.
+        var backendRequest = (BackendRequest)context.Properties[&quot;BackendRequest&quot;];
+        var request = backendRequest with
+        {
+            Url = $&quot;{backendRequest.Url}/files/{fileId}&quot;
+        };
+
+        using var result = await context.BackendCaller.CallRawAsync(request, context.CancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            await WriteErrorResponseAsync(context, result.StatusCode, result.Error!);
+            return default!;
+        }
+
+        // Stream response directly to client
+        context.HttpContext.Response.StatusCode = result.StatusCode;
+        context.HttpContext.Response.ContentType = result.ContentType ?? &quot;application/octet-stream&quot;;
+
+        if (result.ContentLength.HasValue)
+            context.HttpContext.Response.ContentLength = result.ContentLength;
+
+        await result.Response!.Content.CopyToAsync(context.HttpContext.Response.Body);
+        return default!;
+    }
+}</code></pre>
+<div class="section">
+<h3>With Request Body (File Upload)</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class FileUploadTransformer : TransformerBase&lt;object&gt;
+{
+    public override async Task&lt;object&gt; TransformAsync(TransformerContext context)
+    {
+        var request = (BackendRequest)context.Properties[&quot;BackendRequest&quot;];
+        var contentType = context.HttpContext.Request.ContentType ?? &quot;application/octet-stream&quot;;
+
+        using var result = await context.BackendCaller.CallRawAsync(
+            request,
+            context.HttpContext.Request.Body,
+            contentType,
+            context.CancellationToken);
+
+        // Forward response...
+    }
+}</code></pre>
+</div>
+<div class="section">
+<h3>RawBackendResult Properties</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Property</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>IsSuccess</code></td><td>True if transport succeeded (a response was received); not necessarily 2xx</td><td></td></tr><tr><td></td><td><code>StatusCode</code></td><td>HTTP status code from backend</td><td></td></tr><tr><td></td><td><code>Response</code></td><td>Raw <code>HttpResponseMessage</code> (dispose after use)</td><td></td></tr><tr><td></td><td><code>ContentType</code></td><td>Content-Type header from response</td><td></td></tr><tr><td></td><td><code>ContentLength</code></td><td>Content-Length header if available</td><td></td></tr><tr><td></td><td><code>Error</code></td><td>Error message on failure</td><td></td></tr><tr><td></td><td><code>ErrorType</code></td><td>Type of error (Network, Timeout, Auth, etc.)</td><td></td></tr></tbody></table></div>
+<h2>Zero-Code Raw Forwarding with MapRawForward</h2>
+<p>For simple proxy endpoints without any transformation, use <code>MapRawForward()</code> - no transformer class needed:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Zero-code file proxy
+app.MapRawForward()
+    .FromGet(&quot;/api/files/{id}&quot;)
+    .ToGet(&quot;https://files.internal/files/{id}&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BasicAuth)
+    .AllowAnonymous()
+    .Build();
+
+// File upload proxy
+app.MapRawForward()
+    .FromPost(&quot;/api/uploads&quot;)
+    .ToPost(&quot;https://uploads.internal/files&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build();</code></pre>
+<h2>Custom Raw Forwarding with Header Manipulation</h2>
+<p>For raw forwarding with custom header manipulation, extend <code>RawForwardTransformer</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Require authentication for this endpoint via the type-level attribute
+[RequiresAuthentication]
+public class SecureFileTransformer : RawForwardTransformer
+{
+    // Modify request before sending to backend
+    protected override void ModifyRequest(HttpRequestMessage request, TransformerContext context)
+    {
+        // Add tenant ID from claims
+        var tenantId = context.GetClaim(&quot;tenant_id&quot;);
+        if (!string.IsNullOrEmpty(tenantId))
+            request.Headers.Add(&quot;X-Tenant-Id&quot;, tenantId);
+
+        // Add correlation ID
+        request.Headers.Add(&quot;X-Correlation-Id&quot;, Activity.Current?.Id ?? Guid.NewGuid().ToString());
+    }
+
+    // Modify response headers before returning to client
+    protected override void ModifyResponseHeaders(HttpResponseHeaders headers, TransformerContext context)
+    {
+        // Strip internal debug headers
+        headers.Remove(&quot;X-Internal-Debug&quot;);
+        headers.Remove(&quot;X-Backend-Server&quot;);
+
+        // Add security headers
+        headers.Add(&quot;X-Content-Type-Options&quot;, &quot;nosniff&quot;);
+    }
+}
+
+// Registration
+builder.Services.AddRawForwardTransformer&lt;SecureFileTransformer&gt;();
+
+// Endpoint
+app.MapRawForward&lt;SecureFileTransformer&gt;()
+    .FromGet(&quot;/api/secure-files/{id}&quot;)
+    .ToGet(&quot;https://files.internal/files/{id}&quot;)
+    .Build();</code></pre>
+</div>
+<div class="section">
+<h3>RawForwardTransformer Hooks</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Method</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>[RequiresAuthentication]</code> (class attribute)</td><td>Require auth on the endpoint (default: anonymous). Read at endpoint-build time without instantiating the transformer, so it is safe with scoped or <code>HttpContext</code>-bound dependencies.</td><td></td></tr><tr><td></td><td><code>ModifyRequest()</code></td><td>Add headers, modify URL before sending</td><td></td></tr><tr><td></td><td><code>ModifyResponseHeaders()</code></td><td>Strip/add headers before returning</td><td></td></tr></tbody></table></div>
+<p><code>ModifyRequest()</code> may rewrite <code>request.RequestUri</code> to redirect the backend call (e.g. routing to a different upstream per tenant). The rewritten URL is what is actually sent. Two safeguards still apply to the final URL: when the endpoint forwards the user's identity (<code>WithBackendAuth(BearerToken | TokenExchange)</code>), the rewritten host is re-validated against <code>PortaCore:TrustedHosts</code> before the token is attached - a rewrite to an untrusted host fails closed. And if the rewrite changes the destination <em>host</em>, sensitive client headers that were allow-listed via <code>AllowForwardingHeaders(...)</code> for the original host are re-scoped and stripped if the new host is not allow-listed for them.</p>
+<h2>Header Forwarding & Sensitive Header Stripping</h2>
+<p>To prevent leaking the BFF's session cookie or client credentials to backends, raw forwarding strips the following headers from the outbound request by default:</p>
+<ul><li><code>Cookie</code>, <code>Set-Cookie</code></li><li><code>Authorization</code></li><li><code>Forwarded</code> (the standard RFC 7239 header)</li><li><code>X-Forwarded-*</code> (any header starting with this prefix)</li></ul>
+<p>Standard hop-by-hop headers (<code>Connection</code>, <code>Host</code>, <code>Transfer-Encoding</code>, etc.) are also stripped. The BFF's session cookie should never reach a backend; the backend should only see access tokens issued via <code>WithBackendAuth(...)</code>.</p>
+<p><strong>WebSockets are not proxied.</strong> <code>Upgrade</code> and <code>Connection</code> are hop-by-hop headers and are stripped (correctly, per RFC 9110 §7.6.1), so a WebSocket handshake arriving at a raw-forward endpoint silently degrades to a plain HTTP exchange - the backend never sees the upgrade request, and the client typically receives a <code>200</code>/<code>426</code> instead of a <code>101 Switching Protocols</code>. If you need WebSocket proxying, route those paths through a dedicated reverse proxy (e.g. YARP) instead of a raw-forward endpoint.</p>
+<p>The forwarding-metadata headers (<code>Forwarded</code>, <code>X-Forwarded-*</code>) are stripped because a client can spoof them: a backend (or its forwarded-header middleware) that trusts them would otherwise see an attacker-chosen client IP, host, or scheme. See <a href="#trusting-a-front-reverse-proxy">Trusting a Front Reverse Proxy</a> below to relay them when the BFF genuinely sits behind one.</p>
+<p><code>Content-Length</code> and <code>Transfer-Encoding</code> are additionally stripped from the <em>outbound request</em> - <code>StreamContent</code> will re-assert the correct framing for the body the BFF actually sends. Carrying the inbound values forward would create a request-smuggling primitive (CL.TE / CL.CL) where the BFF and backend disagree on where the request ends. Response-side <code>Content-Length</code> is left intact and flows back to the client normally.</p>
+<p>Entity (content) headers other than the framing pair above are <strong>preserved</strong> on the forwarded body: <code>Content-Type</code>, <code>Content-Encoding</code>, <code>Content-Disposition</code>, <code>Content-Language</code>, <code>Content-Range</code>, <code>Content-Location</code>, <code>Content-MD5</code>, <code>Allow</code>, <code>Expires</code>, and <code>Last-Modified</code> are carried onto the outbound request content rather than dropped, so uploads (e.g. a <code>gzip</code>-encoded or ranged body) reach the backend intact.</p>
+<p>The request body is forwarded for <strong>any</strong> HTTP method that actually carries one - detected via <code>Content-Length</code> or a chunked <code>Transfer-Encoding</code>, not an allowlist of verbs - so a <code>DELETE</code> or <code>OPTIONS</code> with a body (e.g. a bulk-delete payload) is proxied just like <code>POST</code>/<code>PUT</code>/<code>PATCH</code>. A bodyless request (e.g. a plain <code>GET</code>) sends no request content.</p>
+<h2>Response Size and Idle Timeouts</h2>
+<p>To bound BFF egress and defeat slow-loris backends, raw-forward responses are subject to two limits configured on <code>PortaCoreOptions</code>:</p>
+<ul><li><code>MaxRawForwardResponseBytes</code> (default 100 MiB) - total bytes the BFF will stream from a backend before aborting with <code>502 Backend response too large</code>. Set to a non-positive value to disable.</li><li><code>RawForwardReadIdleTimeout</code> (default 30s) - maximum time between successive reads. A backend that pauses longer (drip-feeding bytes to pin a worker) gets <code>504 Backend response stalled</code>.</li></ul>
+<p>Both limits abort mid-stream if they trip after headers have been written, which intentionally tears the connection rather than presenting the client with a silently truncated body.</p>
+<blockquote><p><strong>Long-lived streams (SSE, long polling):</strong> the idle timeout applies to <em>any</em> streamed response, so a Server-Sent Events stream that goes quiet for more than 30 seconds is torn down with <code>504 Backend response stalled</code>. If you forward SSE through a raw-forward endpoint, either raise <code>RawForwardReadIdleTimeout</code> above the longest expected gap between events, or have the backend emit periodic keep-alive comments (<code>: ping\n\n</code>) inside the timeout window.</p></blockquote>
+<h2>Backend Error Mapping</h2>
+<p>Built-in raw-forward endpoints (<code>MapRawForward</code> / <code>AddRawForwardTransformer</code>) apply the same <code>IBackendErrorMapper</code> as the typed transformer routes. By default a <strong>backend</strong> <code>401</code>/<code>403</code> is mapped to <code>502 Bad Gateway</code> <em>before</em> the response is relayed: a backend credential failure means the BFF's credentials to the backend are wrong, not that the user's session is invalid, so streaming the raw <code>401</code> would wrongly sign the user out on the frontend. When a status is remapped, the backend body is <strong>not</strong> streamed; the client receives a clean <code>{ &quot;error&quot;: &quot;...&quot; }</code> JSON payload with the mapped status.</p>
+<p>Statuses the mapper passes through (e.g. <code>404</code>, <code>409</code>, <code>500</code>) are relayed verbatim — raw forward is a proxy and those are legitimate to surface to the client. Register a custom <code>IBackendErrorMapper</code> (or <code>PassThroughBackendErrorMapper</code> to relay <code>401</code>/<code>403</code> unchanged) to override this; see <a href="transformers.html">transformers.md</a> for the contract.</p>
+<blockquote><p>This mapping applies to the built-in pipeline. A custom transformer that calls <code>CallRawAsync</code> directly (see <a href="#callrawasync">CallRawAsync</a> above) owns its own status handling — <code>RawBackendResult.IsSuccess</code> reflects transport success, not the backend HTTP status.</p></blockquote>
+</div>
+<div class="section">
+<h3>Request Direction — Kestrel Reliance</h3>
+<p>The two limits above guard the <strong>response</strong> direction (backend → BFF → client) only. Porta deliberately does <strong>not</strong> add a per-endpoint cap on the <strong>request</strong> direction (client → BFF → backend); raw-forward streams the incoming request body straight through to the backend. Protection against an over-large or slow-loris <strong>upload</strong> is delegated to Kestrel's global server limits, which you should configure for your deployment:</p>
+<ul><li><code>KestrelServerLimits.MaxRequestBodySize</code> (default 30 MiB) — rejects an over-large upload with <code>413 Payload Too Large</code>. Set it to match the largest legitimate raw-forward upload (or <code>null</code> to disable, only behind another bound).</li><li><code>KestrelServerLimits.MinRequestBodyDataRate</code> (default 240 bytes/s with a 5s grace) — aborts a client that dribbles the request body to pin a worker (slow-loris upload).</li><li><code>KestrelServerLimits.RequestHeadersTimeout</code> (default 30s) — bounds how long a client may take to send request headers.</li></ul>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.WebHost.ConfigureKestrel(o =&gt;
+{
+    o.Limits.MaxRequestBodySize = 50 * 1024 * 1024; // 50 MiB
+    o.Limits.MinRequestBodyDataRate = new MinDataRate(bytesPerSecond: 240, gracePeriod: TimeSpan.FromSeconds(5));
+});</code></pre>
+<p>These limits are process-global rather than per-endpoint. If a single raw-forward route needs a different upload ceiling than the rest of the app, scope it with <code>[RequestSizeLimit(...)]</code>-style metadata or a dedicated middleware in front of that route. There is no <code>MaxRawForwardRequestBytes</code> option; the request-direction posture is intentionally the host's Kestrel configuration, documented here so the asymmetry with the response caps is explicit rather than an oversight.</p>
+</div>
+<div class="section">
+<h3>Opting Headers Back In</h3>
+<p>If a specific endpoint needs a sensitive header to pass through (e.g. forwarding a client's <code>Authorization</code> to a trusted internal service), use <code>AllowForwardingHeaders()</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Forward Authorization header - to ANY destination
+app.MapRawForward()
+    .FromGet(&quot;/api/proxy/{*path}&quot;)
+    .ToGet(&quot;https://internal.example.com/{**path}&quot;)
+    .AllowForwardingHeaders([&quot;Authorization&quot;])
+    .Build();
+
+// Forward Authorization header - only when the destination host is trusted
+app.MapRawForward()
+    .FromGet(&quot;/api/proxy/{*path}&quot;)
+    .ToGet(&quot;https://internal.example.com/{**path}&quot;)
+    .AllowForwardingHeaders(
+        headers: [&quot;Authorization&quot;, &quot;X-Tenant-Id&quot;],
+        destinationHosts: [&quot;internal.example.com&quot;])
+    .Build();</code></pre>
+<blockquote><p><strong>Subtree proxying:</strong> to forward a whole nested path, use a <strong>catch-all</strong> placeholder (<code>{**path}</code> or <code>{*path}</code>) in <em>both</em> the route and the backend template. A catch-all backend placeholder preserves the <code>/</code> separators in the matched value, so <code>/api/proxy/a/b/c</code> forwards to <code>{internalApi}/a/b/c</code>. A plain single-segment placeholder (<code>{path}</code>) instead percent-encodes the separators (<code>a%2Fb%2Fc</code>) — by design, so an <code>{id}</code>-style value can never inject extra path segments. <code>.</code>/<code>..</code> traversal segments are rejected in both modes. See <a href="endpoints.html#route-parameter-interpolation">Route Parameter Interpolation</a> for the full encoding and validation rules (shared by all endpoint builders).</p></blockquote>
+</div>
+<div class="section">
+<h3>Global Defaults</h3>
+<p>Set a default allow-list for all raw-forward endpoints via <code>PortaCoreOptions</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore(opts =&gt;
+{
+    opts.DefaultRawForwardHeaderPassThrough.AllowedHeaders.Add(&quot;X-Tenant-Id&quot;);
+    opts.DefaultRawForwardHeaderPassThrough.AllowedDestinationHosts.Add(&quot;internal.example.com&quot;);
+});</code></pre>
+<p>A per-endpoint <code>AllowForwardingHeaders()</code> call replaces the global defaults for that endpoint.</p>
+</div>
+<div class="section">
+<h3>Trusting a Front Reverse Proxy</h3>
+<p>When the BFF itself sits behind a reverse proxy (nginx, an ingress controller, a load balancer), that proxy legitimately sets <code>Forwarded</code> / <code>X-Forwarded-*</code> describing the <em>real</em> client, and backends often need that chain intact. Stripping these headers unconditionally (see above) would break that.</p>
+<p>List the proxy's address (or CIDR range) in <code>TrustedForwardingProxies</code>. When the <strong>inbound connection's remote IP</strong> matches, the forwarding-metadata headers (<code>Forwarded</code> and the <code>X-Forwarded-*</code> family) are relayed to the backend instead of being stripped. A request from any other source still has them stripped, so a direct client cannot spoof them:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore(opts =&gt;
+{
+    // Single proxy address, or a CIDR range for a pool of proxies.
+    opts.DefaultRawForwardHeaderPassThrough.TrustedForwardingProxies.Add(&quot;10.0.0.5&quot;);
+    opts.DefaultRawForwardHeaderPassThrough.TrustedForwardingProxies.Add(&quot;10.0.0.0/8&quot;);
+});</code></pre>
+<p>Notes:</p>
+<ul><li>Entries may be single IPs (<code>10.0.0.5</code>, <code>::1</code>) or CIDR ranges (<code>10.0.0.0/8</code>, <code>fd00::/8</code>). IPv4-mapped IPv6 peers (<code>::ffff:10.0.0.5</code>, the form Kestrel reports on a dual-stack socket) are normalized before matching, so an IPv4 entry still matches.</li><li>This gate covers <strong>only</strong> the forwarding-metadata family. <code>Cookie</code>, <code>Set-Cookie</code>, and <code>Authorization</code> are never unlocked by proxy trust — opt those in explicitly with <code>AllowForwardingHeaders(...)</code> / <code>AllowedHeaders</code> if a trusted backend truly needs them.</li><li>The remote IP is the <em>immediate</em> TCP peer. If multiple proxy hops sit in front of the BFF, trust the hop that actually connects to it.</li><li><strong>Security:</strong> any host listed here is fully trusted to dictate the forwarded client IP, host, and scheme. Keep the list as narrow as the deployment allows; never list a broad public range.</li></ul>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

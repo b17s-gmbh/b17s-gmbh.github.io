@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Configuration | b17s</title>
+<meta name="description" content="Service registration, options, and production settings for b17s.Porta, including AddPortaCore and authentication wiring.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.4.0/configuration.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Configuration">
+<meta property="og:description" content="Service registration, options, and production settings for b17s.Porta, including AddPortaCore and authentication wiring.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.4.0/configuration.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Configuration">
+<meta name="twitter:description" content="Service registration, options, and production settings for b17s.Porta, including AddPortaCore and authentication wiring.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.4.0/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="configuration" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0" selected>v0.4.0 (latest)</option><option value="v0.3.1-rc6">v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/">Overview</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.4.0/configuration.html" aria-current="page">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/health-checks.html">Health Checks</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Configuration</h1>
+                <p class="docs-subtitle">Service registration, options, and production settings</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<h2>Service Registration</h2>
+<p>The BFF library uses a modular registration approach with opt-in authentication.</p>
+<div class="section">
+<h3>AddPortaCore() - Core Services</h3>
+<p>Registers the minimum required services for transformer-based API aggregation. <strong>This is always required.</strong></p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore(options =&gt; {
+    // Trusted hosts for user token forwarding (WithUserToken())
+    options.TrustedHosts = [&quot;https://api.example.com&quot;, &quot;https://*.internal.example.com&quot;];
+
+    // Default timeout for backend calls (default: 30 seconds)
+    options.DefaultTimeout = TimeSpan.FromSeconds(30);
+
+    // App-wide ceiling for per-endpoint .WithRetries(n). Each endpoint retries
+    // min(n, MaxRetryAttempts) times; endpoints that never call .WithRetries(...)
+    // do not retry. Set to 0 to disable retries app-wide, including for endpoints
+    // that opt in via .WithRetries(...) (default: 3).
+    options.MaxRetryAttempts = 3;
+
+    // Refresh the user token and retry once on a backend 401 (default: true)
+    options.RefreshBackendTokenOn401 = true;
+
+    // Require authorization by default (default: true)
+    options.RequireAuthorizationByDefault = true;
+
+    // Enable OpenTelemetry instrumentation (default: true)
+    options.EnableTelemetry = true;
+
+    // Cap on backend response body characters written to Trace logs (default: 512).
+    // -1 = unlimited; 0 = disable body logs entirely. See docs/telemetry.md.
+    options.MaxBodyLogLength = 512;
+
+    // Max bytes BFF will buffer from a backend response before failing the call
+    // with InvalidResponse (default: 10 MiB). Applies to JSON/XML/form
+    // deserialization. &lt;= 0 disables the cap. See docs/raw-forwarding.md for the
+    // separate raw-forward cap.
+    options.MaxBackendResponseBytes = 10 * 1024 * 1024;
+
+    // Raw-forward egress ceiling. Separate from MaxBackendResponseBytes because
+    // raw forwards (file downloads, etc.) legitimately stream larger payloads
+    // (default: 100 MiB). &lt;= 0 disables the cap.
+    options.MaxRawForwardResponseBytes = 100L * 1024 * 1024;
+
+    // Max time between successive reads from a raw-forward backend before the
+    // call is aborted (default: 30s). Defeats slow-loris backends that dribble
+    // bytes to pin a BFF worker.
+    options.RawForwardReadIdleTimeout = TimeSpan.FromSeconds(30);
+
+    // Clock skew applied when deciding whether an access token is &quot;near expiry&quot;
+    // and should be proactively refreshed (default: 60 seconds). Used by both
+    // AccessTokenRefreshService and the ApiTokenService cache.
+    options.TokenRefreshSkew = TimeSpan.FromSeconds(60);
+
+    // Whether to log raw IdP error response bodies on token exchange/refresh/
+    // revocation/introspection failures (default: false). Verbose IdPs frequently
+    // echo the submitted refresh token / client secret / PII back inside the error
+    // JSON - leave this off in production.
+    options.LogIdpErrorBodies = false;
+
+    // Max bytes of an IdP error response body that may be logged when
+    // LogIdpErrorBodies is enabled (default: 512). Larger bodies are truncated.
+    options.IdpErrorBodyMaxBytes = 512;
+
+    // Default raw-forward header pass-through allow-list. By default the BFF strips
+    // Cookie, Authorization, and X-Forwarded-* headers from raw-forwarded requests.
+    // Add header names here to opt them back in globally (see docs/raw-forwarding.md).
+    // options.DefaultRawForwardHeaderPassThrough.AllowedHeaders.Add(&quot;X-Foo&quot;);
+});</code></pre>
+<p>Or bind from configuration:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaCore(builder.Configuration);</code></pre>
+<pre data-lang="json"><code data-lang="json" class="language-json">// appsettings.json
+{
+  &quot;PortaCore&quot;: {
+    &quot;TrustedHosts&quot;: [&quot;https://api.example.com&quot;],
+    &quot;DefaultTimeout&quot;: &quot;00:00:30&quot;,
+    &quot;MaxRetryAttempts&quot;: 3,
+    &quot;RefreshBackendTokenOn401&quot;: true,
+    &quot;RequireAuthorizationByDefault&quot;: true,
+    &quot;EnableTelemetry&quot;: true,
+    &quot;MaxBodyLogLength&quot;: 512,
+    &quot;MaxBackendResponseBytes&quot;: 10485760,
+    &quot;MaxRawForwardResponseBytes&quot;: 104857600,
+    &quot;RawForwardReadIdleTimeout&quot;: &quot;00:00:30&quot;,
+    &quot;TokenRefreshSkew&quot;: &quot;00:01:00&quot;,
+    &quot;LogIdpErrorBodies&quot;: false,
+    &quot;IdpErrorBodyMaxBytes&quot;: 512
+  }
+}</code></pre>
+<p><strong>What it registers:</strong></p>
+<ul><li>Backend caller infrastructure (HttpClients with resilience)</li><li>Backend auth handler registry with built-in handlers (<code>None</code>, <code>BearerToken</code>, <code>BasicAuth</code>, <code>TokenExchange</code>)</li><li>Trusted host validation for secure token forwarding</li><li>Transformer routing support</li></ul>
+</div>
+<div class="section">
+<h3>AddPortaAuthentication() - OIDC Authentication (Opt-in)</h3>
+<p>Adds the full BFF OIDC pipeline: framework cookie + OpenIdConnect handlers, server-side ticket store, automatic refresh, RFC 7009 token revocation, and admin/back-channel session management. <strong>Only call this if you need user authentication.</strong></p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<pre data-lang="json"><code data-lang="json" class="language-json">// appsettings.json - section name defaults to &quot;SessionAuthentication&quot;
+{
+  &quot;SessionAuthentication&quot;: {
+    &quot;Authority&quot;: &quot;https://auth.example.com&quot;,
+    &quot;RequireHttpsMetadata&quot;: true,
+    &quot;ClientId&quot;: &quot;my-porta&quot;,
+    &quot;ClientSecret&quot;: &quot;secret&quot;,
+    &quot;Scope&quot;: &quot;openid profile email api&quot;,
+    &quot;CookieName&quot;: &quot;__Porta&quot;,
+    &quot;UsePkce&quot;: true,
+    &quot;QueryUserInfoEndpoint&quot;: true,
+    &quot;SessionTimeoutInMin&quot;: 60,
+    &quot;TokenExchangeStrategy&quot;: &quot;default&quot;,
+    &quot;Cookie&quot;: {
+      &quot;SameSite&quot;: &quot;Lax&quot;,
+      &quot;HttpOnly&quot;: true,
+      &quot;SecurePolicy&quot;: &quot;Always&quot;,
+      &quot;ExpireTimeSpanMinutes&quot;: 60,
+      &quot;SlidingExpiration&quot;: false
+    },
+    &quot;DataProtection&quot;: {
+      &quot;ApplicationName&quot;: &quot;my-porta&quot;,
+      &quot;KeyLifetimeDays&quot;: 90
+    },
+    &quot;Resilience&quot;: {
+      &quot;EnableRetry&quot;: true,
+      &quot;MaxRetryAttempts&quot;: 3,
+      &quot;InitialDelaySeconds&quot;: 1.0,
+      &quot;UseJitter&quot;: true,
+      &quot;EnableCircuitBreaker&quot;: true,
+      &quot;CircuitBreakerFailureRatio&quot;: 0.5,
+      &quot;CircuitBreakerSamplingDurationSeconds&quot;: 30.0,
+      &quot;CircuitBreakerMinimumThroughput&quot;: 10,
+      &quot;CircuitBreakerBreakDurationSeconds&quot;: 30.0,
+      &quot;RequestTimeoutSeconds&quot;: 10.0
+    },
+    &quot;SessionKeys&quot;: {
+      &quot;Prefix&quot;: &quot;porta&quot;
+    }
+  }
+}</code></pre>
+<p>Custom section name:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaAuthentication(builder.Configuration, configSectionName: &quot;MyAuth&quot;);</code></pre>
+<p><strong>Section name duality - <code>SessionAuthentication</code> vs <code>OidcAuth</code>.</strong> <code>AddPortaAuthentication(IConfiguration)</code> defaults to the <code>&quot;SessionAuthentication&quot;</code> section and binds it onto <code>SessionAuthenticationConfiguration</code>. The <code>AddPortaOidcAuth(IConfiguration)</code> counterpart defaults to <code>&quot;OidcAuth&quot;</code> (the <code>OidcAuthOptions.SectionName</code> constant) and binds the same shape onto <code>OidcAuthOptions : SessionAuthenticationConfiguration</code>. Pick one section name in your <code>appsettings.json</code> and call the matching overload; the two are interchangeable, but the BFF will not read both. New code should prefer <code>AddPortaAuthentication</code> with the <code>SessionAuthentication</code> section.</p>
+<p><strong>Alternate entry point.</strong> <code>AddPortaOidcAuth</code> (taking either <code>Action&lt;OidcAuthOptions&gt;</code> or <code>IConfiguration</code>) binds the <code>OidcAuth</code> section and delegates to <code>AddPortaAuthentication</code>. Both are fully supported; prefer <code>AddPortaAuthentication</code> with the <code>SessionAuthentication</code> section for new code, for consistency with the rest of the docs.</p>
+</div>
+<div class="section">
+<h3>Token refresh resilience - <code>SessionAuthentication.Resilience</code></h3>
+<p><code>Resilience</code> controls how the BFF retries and circuit-breaks the IdP token endpoint when refreshing access tokens via <code>ITokenRefreshService</code> / <code>IAccessTokenRefreshService</code>. The defaults are reasonable for most IdPs; tune only if your IdP is rate-limited, slow, or you've measured circuit-breaker false trips.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Key</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>EnableRetry</code></td><td><code>true</code></td><td>Retry transient token-endpoint failures with exponential backoff. Set to <code>false</code> to disable retries.</td><td></td></tr><tr><td></td><td><code>MaxRetryAttempts</code></td><td><code>3</code></td><td>Max retry attempts. Must be ≥ 1 when <code>EnableRetry</code> is <code>true</code> (validated at startup).</td><td></td></tr><tr><td></td><td><code>InitialDelaySeconds</code></td><td><code>1.0</code></td><td>Base for exponential backoff (<code>delay = InitialDelaySeconds * 2^attempt</code>).</td><td></td></tr><tr><td></td><td><code>UseJitter</code></td><td><code>true</code></td><td>Add randomization to backoff to spread thundering-herd retries.</td><td></td></tr><tr><td></td><td><code>EnableCircuitBreaker</code></td><td><code>true</code></td><td>Open the breaker when the IdP is consistently failing.</td><td></td></tr><tr><td></td><td><code>CircuitBreakerFailureRatio</code></td><td><code>0.5</code></td><td>Failure ratio in the sampling window that trips the breaker.</td><td></td></tr><tr><td></td><td><code>CircuitBreakerSamplingDurationSeconds</code></td><td><code>30.0</code></td><td>Window over which <code>CircuitBreakerFailureRatio</code> is measured.</td><td></td></tr><tr><td></td><td><code>CircuitBreakerMinimumThroughput</code></td><td><code>10</code></td><td>Minimum requests in the window before the breaker may trip.</td><td></td></tr><tr><td></td><td><code>CircuitBreakerBreakDurationSeconds</code></td><td><code>30.0</code></td><td>How long the breaker stays open before transitioning to half-open.</td><td></td></tr><tr><td></td><td><code>RequestTimeoutSeconds</code></td><td><code>10.0</code></td><td>Per-request timeout on calls to the IdP token endpoint.</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Session key namespace - <code>SessionAuthentication.SessionKeys</code></h3>
+<p><code>SessionKeys.Prefix</code> (default <code>&quot;porta&quot;</code>) is the prefix applied to every session-storage key the BFF writes - access/refresh/id tokens, expiry, API tokens, the auth context, and a <code>user.*</code> namespace. When two BFF instances share one Redis/Valkey and use the same prefix, their session writes collide. Set per-instance prefixes (e.g., <code>&quot;customer-portal.porta&quot;</code>, <code>&quot;admin-porta&quot;</code>) to namespace them.</p>
+<p>The per-key suffixes (<code>AccessTokenKey</code>, <code>IdTokenKey</code>, <code>RefreshTokenKey</code>, <code>ExpiresAtKey</code>, <code>ApiAccessTokenKey</code>, <code>UserPrefix</code>, <code>AuthContextKey</code>) also have defaults and are rarely worth overriding - change them only if you're migrating from a custom layout.</p>
+</div>
+<div class="section">
+<h3>Backend service credentials - <code>BackendService</code></h3>
+<p><code>BackendServiceOptions</code> (section <code>&quot;BackendService&quot;</code>) configures the built-in <code>BasicAuth</code> and <code>TokenExchange</code> backend-auth handlers without requiring you to write a custom <code>IBackendAuthHandler</code>.</p>
+<p>The <code>&quot;BackendService&quot;</code> section is bound automatically by the <code>AddPortaCore(IConfiguration)</code> overload. If you wire core options imperatively via <code>AddPortaCore(Action&lt;PortaCoreOptions&gt;)</code> instead, bind it yourself: <code>services.Configure&lt;BackendServiceOptions&gt;(builder.Configuration.GetSection(BackendServiceOptions.SectionName))</code>.</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;BackendService&quot;: {
+    &quot;BaseUrl&quot;: &quot;https://api.internal.example.com&quot;,
+    &quot;BasicAuth&quot;: { &quot;Username&quot;: &quot;bff&quot;, &quot;Password&quot;: &quot;...&quot; },
+    &quot;Backends&quot;: {
+      &quot;PartnerApi&quot;: { &quot;Username&quot;: &quot;partner-bff&quot;, &quot;Password&quot;: &quot;...&quot; }
+    },
+    &quot;DefaultTokenExchangeAudience&quot;: &quot;https://api.internal.example.com&quot;,
+    &quot;TokenExchangeAudiences&quot;: {
+      &quot;PartnerApi&quot;: &quot;https://partner.example.com&quot;
+    }
+  }
+}</code></pre>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Key</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>BaseUrl</code></td><td>Optional base URL for backend calls (consumer-facing convenience; not validated at startup).</td><td></td></tr><tr><td></td><td><code>BasicAuth</code></td><td>Default Basic credentials used by <code>BackendAuthPolicies.BasicAuth</code> when no per-backend entry matches.</td><td></td></tr><tr><td></td><td><code>Backends</code></td><td>Per-backend Basic credentials keyed by <code>BackendRequest.BackendName</code>. Case-insensitive.</td><td></td></tr><tr><td></td><td><code>AllowGlobalBasicAuthFallback</code></td><td>Default <code>false</code> (fail closed). When a request names a backend that has no matching <code>Backends</code> entry, the BasicAuth handler sends <strong>no</strong> <code>Authorization</code> header rather than reusing the global <code>BasicAuth</code> default (which could forward credentials meant for a different host). Set <code>true</code> for the legacy behaviour where such backends share the global default. Requests with no backend name always use <code>BasicAuth</code> regardless of this setting.</td><td></td></tr><tr><td></td><td><code>DefaultTokenExchangeAudience</code></td><td>Fallback audience for <code>BackendAuthPolicies.TokenExchange</code> when an endpoint doesn't supply one inline via <code>WithTokenExchange(audience)</code>.</td><td></td></tr><tr><td></td><td><code>TokenExchangeAudiences</code></td><td>Per-backend token-exchange audience override, keyed by <code>BackendRequest.BackendName</code>.</td><td></td></tr></tbody></table></div>
+<p>When <code>BackendAuthPolicies.TokenExchange</code> is selected without an audience source (inline, default, or per-backend), Porta <strong>fails fast at startup</strong> for any endpoint mapped before the host starts. For cases the startup check can't see statically (e.g. a backend name rewritten at request time via <code>ModifyRequest</code>), the runtime backstop surfaces it as a server-side <strong>configuration error (500-class)</strong> - a missing audience is operator misconfiguration, not a user <code>401</code> credential rejection.</p>
+<p><strong>What it registers:</strong></p>
+<ul><li>ASP.NET Core <code>AddCookie()</code> + <code>AddOpenIdConnect()</code> - framework owns state/nonce/PKCE/code-exchange/id_token validation.</li><li><code>DistributedCacheTicketStore</code> as the cookie scheme's <code>SessionStore</code> - tokens live server-side, encrypted via <code>IDataProtector</code>. Cookie carries only an opaque ticket id.</li><li><code>AddDistributedMemoryCache()</code> as a fallback (a registered Redis/Valkey cache wins, whether registered before or after <code>AddPortaAuthentication</code>).</li><li><code>AddDataProtection()</code> with the configured application name and key lifetime.</li><li><code>IAccessTokenRefreshService</code> - auto-refreshes near-expiry access tokens on each request, with per-user locking.</li><li>Token services: <code>ITokenRefreshService</code>, <code>ITokenRevocationService</code>, <code>ITokenExchangeService</code>, <code>IApiTokenService</code>.</li><li><code>ISessionManagementService</code> for admin force-logout and back-channel logout flows.</li><li><code>OnTokenValidated</code> event handler that registers the session metadata + encrypted refresh token after successful sign-in.</li></ul>
+</div>
+<div class="section">
+<h3>Registration Order</h3>
+<p>The recommended registration order is:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// 1. Core services (always required)
+builder.Services.AddPortaCore(options =&gt; { ... });
+
+// 2. OIDC auth (if needed)
+builder.Services.AddPortaAuthentication(builder.Configuration);
+
+// 3. Custom auth handlers (if needed)
+builder.Services.AddPortaAuthHandler&lt;MyCustomHandler&gt;();
+
+// 4. Custom auth provider (if not using OIDC)
+builder.Services.AddPortaAuthProvider&lt;ApiKeyAuthProvider&gt;();</code></pre>
+<h2>Production Configuration</h2>
+<p>Key settings that should be configured before a production deployment. The library only enforces a subset of these at startup (see <a href="#startup-validation">Startup Validation</a> below); the rest are caller responsibilities surfaced here so they aren't missed.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Setting</th><th>Environment Variable</th><th>Enforced?</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>SessionAuthentication:Authority</code> / <code>ClientId</code> / <code>ClientSecret</code></td><td><code>SessionAuthentication__Authority</code>, etc.</td><td><strong>Yes</strong> - <code>IValidateOptions&lt;SessionAuthenticationConfiguration&gt;</code> with <code>ValidateOnStart</code>.</td><td>Required to start the app when <code>AddPortaAuthentication</code> is called. <code>Authority</code> must be an absolute http(s) URL.</td><td></td></tr><tr><td></td><td><code>SessionAuthentication:RequireHttpsMetadata</code></td><td>-</td><td><strong>Yes</strong> outside Development - <code>CookieSecurityStartupCheck</code> throws (event <code>Porta/14703</code>) when set to <code>false</code>; warns (<code>Porta/14702</code>) in Development. Default <code>true</code>.</td><td>Leave <code>true</code> in production. Disabling allows the OIDC handler to fetch metadata over plain HTTP, opening a man-in-the-middle window.</td><td></td></tr><tr><td></td><td><code>SessionAuthentication:Cookie:SecurePolicy</code></td><td>-</td><td><strong>Yes</strong> outside Development - <code>CookieSecurityStartupCheck</code> throws (event <code>Porta/14701</code>) when not <code>Always</code>; warns (<code>Porta/14700</code>) in Development. Default <code>Always</code>.</td><td>Keep <code>Always</code> in production (see <a href="#cookie-security">Cookie Security</a>). Other values can emit the auth cookie without the <code>Secure</code> attribute.</td><td></td></tr><tr><td></td><td><code>PortaCore:TrustedHosts</code> (when any endpoint uses <code>.WithUserToken()</code>)</td><td><code>PortaCore__TrustedHosts__0</code>, etc.</td><td><strong>Yes</strong> - startup throws if a <code>WithUserToken()</code> backend host is not in the list.</td><td>See <a href="authentication.html#trusted-hosts">Trusted Hosts</a>.</td><td></td></tr><tr><td></td><td><code>AllowedRedirectHosts</code> on <code>UseOidcLogin</code> / <code>UseOidcLogout</code></td><td>- (configured in code, not via a config section)</td><td>Enforced at request time, not startup.</td><td>Set via <code>services.Configure&lt;OidcLoginOptions&gt;(...)</code> / <code>Configure&lt;OidcLogoutOptions&gt;(...)</code> or the per-call lambda on <code>UseOidcLogin</code> / <code>UseOidcLogout</code> (the lambda wins on conflicts). When empty, only same-origin redirects are accepted; loopback is only accepted when <code>AllowLocalhost = true</code> (default <code>false</code>). External hosts are rejected with HTTP 400. There is no top-level <code>Logout:AllowedRedirectHosts</code> config section.</td><td></td></tr><tr><td></td><td><code>ConnectionStrings:dataprotection-db</code></td><td><code>ConnectionStrings__dataprotection-db</code></td><td>Indirect - <code>AddPortaDataProtectionWithEntityFrameworkStore</code> resolves the connection string and fails at startup when missing.</td><td>PostgreSQL connection for Data Protection keys. Required for HA - see <a href="ha-deployment.html">HA Deployment</a>.</td><td></td></tr><tr><td></td><td>HA prerequisites (shared <code>IDistributedCache</code>, persistent DP keys)</td><td>-</td><td>Mixed - a shared <code>IDistributedCache</code> (<code>Porta/14500</code>) and persistent DP keys (<code>Porta/14501</code>) being missing are <strong>warnings only</strong>. But unencrypted DP keys, a hollow key-encryption attestation, and an explicit in-process refresh lock alongside a distributed cache <strong>throw outside Development</strong> (events <code>Porta/14503</code>, <code>Porta/14507</code>, <code>Porta/14505</code>); they warn (<code>Porta/14502</code>, <code>Porta/14506</code>, <code>Porta/14504</code>) in Development.</td><td>See <a href="ha-deployment.html">HA Deployment</a>.</td><td></td></tr><tr><td></td><td><code>OTEL_EXPORTER_OTLP_ENDPOINT</code></td><td><code>OTEL_EXPORTER_OTLP_ENDPOINT</code></td><td>No - read by the OTel SDK.</td><td>OpenTelemetry collector endpoint. When set, metrics and traces are exported automatically.</td><td></td></tr><tr><td></td><td><code>SessionAuthentication:SessionKeys:Prefix</code></td><td>-</td><td>No.</td><td>Session key prefix for Redis. Default: <code>porta</code>. Change when sharing Redis with other BFF instances.</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Multi-Replica / HA</h3>
+<p>Running more than one replica behind a load balancer requires a shared <code>IDistributedCache</code> (Redis/Valkey) and shared Data Protection key persistence. The defaults are dev-friendly; the auth pipeline emits a startup warning (event ids <code>14500</code>/<code>14501</code>) when an HA prerequisite is missing. Sticky sessions are <strong>not</strong> required.</p>
+<p>See <a href="ha-deployment.html">HA Deployment</a> for the full setup.</p>
+</div>
+<div class="section">
+<h3>Session timeouts - <code>SessionTimeoutInMin</code> vs <code>Cookie.ExpireTimeSpanMinutes</code></h3>
+<p>The two settings look interchangeable but drive different clocks. Get them both right or one expires while the other thinks the session is still alive.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Setting</th><th>What it controls</th><th>Clock</th><th></th></tr></thead><tbody><tr><td></td><td><code>SessionAuthentication.SessionTimeoutInMin</code></td><td>Server-side: ASP.NET Core <code>IdleTimeout</code> for <code>Session</code> middleware, and a <strong>floor</strong> for the sliding TTL of the session metadata and sub/email revocation indexes (see below). The cookie <em>ticket</em> itself is not bound to this value - it lives until the cookie's stamped expiry.</td><td>Server wall-clock from last activity.</td><td></td></tr><tr><td></td><td><code>SessionAuthentication.Cookie.ExpireTimeSpanMinutes</code></td><td>Client-side <strong>and</strong> server-side: lifetime stamped into the cookie's <code>expires_at</code> token (the cookie auth handler refuses principals whose stamp has passed), and the absolute expiry of the server-side cookie ticket entry.</td><td>Stamped at sign-in, re-stamped on sliding renewal; checked on every request.</td><td></td></tr></tbody></table></div>
+<p>Recommendation: set both to the <strong>same value</strong>. If you want sessions to extend on activity, also set <code>SlidingExpiration = true</code> (default is <code>false</code>); the server-side ticket and the cookie stamp both slide.</p>
+<p>If you set only one:</p>
+<ul><li><code>SessionTimeoutInMin</code> shorter than the cookie lifetime → harmless for</li></ul>
+<p>  revocation (the index TTL is the larger of the two values), but ASP.NET Core   <code>Session</code> state can idle out mid-session.</p>
+<ul><li>Cookie lifetime shorter than <code>SessionTimeoutInMin</code> → the cookie and its</li></ul>
+<p>  server-side ticket expire on the cookie clock; metadata/index entries linger   until their TTL passes and are pruned on the next admin lookup (wasted cache   space, no functional impact).</p>
+<p>The session metadata and the subject/email revocation indexes - what makes back-channel logout by <code>sub</code> and admin terminate-by-email find live sessions - slide on <code>max(SessionTimeoutInMin, Cookie.ExpireTimeSpanMinutes)</code> and are re-slid on every cookie ticket write (sign-in and each sliding renewal), so they cannot expire while the session is still alive. The one way to break that invariant is post-configuring <code>CookieAuthenticationOptions.ExpireTimeSpan</code> directly past that window; the startup check then logs warning <code>Porta/14704</code> - raise <code>SessionTimeoutInMin</code> to match.</p>
+</div>
+<div class="section">
+<h3>Cookie Security</h3>
+<p><code>SessionAuthentication:Cookie:SecurePolicy</code> accepts <code>Always</code> (default), <code>SameAsRequest</code>, or <code>None</code>. <code>SameSite</code> accepts <code>Strict</code> (default), <code>Lax</code>, or <code>None</code>. Unknown values throw at startup - a typo like <code>&quot;Allways&quot;</code> used to silently fall back to a weaker policy; it now fails fast so the misconfiguration surfaces in CI/boot rather than after deploy.</p>
+<p>For local development against HTTP, set <code>SecurePolicy</code> to <code>SameAsRequest</code> explicitly. Don't leave the default <code>Always</code> and run on HTTP - the auth cookie will be dropped by the browser.</p>
+</div>
+<div class="section">
+<h3>Startup Validation</h3>
+<p>The library validates a focused set of configuration values at startup and fails fast if any is wrong. Anything not in this list (e.g., <code>AllowedHosts</code>, a top-level <code>Logout</code> section, <code>BackendService:BaseUrl</code>) is <strong>not</strong> enforced by the BFF - treat those as host-app concerns.</p>
+<p>When <code>AddPortaAuthentication</code> is called, <code>SessionAuthenticationConfigurationValidator</code> (registered with <code>ValidateOnStart</code>) rejects startup if:</p>
+<ul><li><code>SessionAuthentication.Authority</code> is missing or is not an absolute <code>http</code>/<code>https</code> URL</li><li><code>SessionAuthentication.ClientId</code> is missing</li><li><code>SessionAuthentication.ClientSecret</code> is missing</li><li><code>SessionAuthentication.SessionTimeoutInMin</code> is not positive</li><li><code>SessionAuthentication.Cookie.ExpireTimeSpanMinutes</code> is not positive</li><li><code>SessionAuthentication.Cookie.SecurePolicy</code> or <code>Cookie.SameSite</code> is not one of the recognized values (see <a href="#cookie-security">Cookie Security</a>)</li><li><code>SessionAuthentication.DataProtection.KeyLifetimeDays</code> is below 7 (ASP.NET Core Data Protection requires a new-key lifetime of at least one week)</li></ul>
+<p>When <code>AddPortaCore</code> is called, <code>PortaCoreOptionsValidator</code> (registered with <code>ValidateOnStart</code>) rejects startup if:</p>
+<ul><li><code>PortaCore.DefaultTimeout</code> is not positive</li><li><code>PortaCore.TokenRefreshSkew</code> is negative</li><li><code>PortaCore.MaxBodyLogLength</code> is below <code>-1</code> (<code>-1</code> = unlimited, <code>0</code> = no body logs)</li><li><code>PortaCore.IdpErrorBodyMaxBytes</code> is negative or above 1 MiB</li></ul>
+<p><code>PortaCore.MaxRetryAttempts</code> below 1 is <em>not</em> an error - it is the documented way to disable retries app-wide. Likewise, non-positive <code>MaxBackendResponseBytes</code> / <code>MaxRawForwardResponseBytes</code> / <code>RawForwardReadIdleTimeout</code> values disable the respective cap.</p>
+<p>When <code>AddReferenceTokenAuthentication</code> is called, <code>ReferenceTokenAuthOptionsValidator</code> (registered with <code>ValidateOnStart</code>) rejects startup if:</p>
+<ul><li><code>Authority</code> is missing or is not an absolute <code>http</code>/<code>https</code> URL</li><li><code>TokenHeaderName</code> is empty</li><li>exactly one of <code>ClientId</code> / <code>ClientSecret</code> is set (introspection credentials are only sent when both are configured)</li><li><code>DefaultCacheDuration</code> is not positive, or <code>MaxCacheDuration</code> is below <code>DefaultCacheDuration</code></li><li><code>ValidateAudience</code> is <code>true</code> but both <code>ValidAudiences</code> and <code>ValidClientIds</code> are empty (every token would be rejected at request time)</li></ul>
+<p>Reference-token options are re-read on appsettings reload; startup validation covers the initial values only.</p>
+<p>Additional startup failures from other parts of the wiring:</p>
+<ul><li>A transformer endpoint using <code>WithUserToken()</code> references a host outside <code>PortaCore.TrustedHosts</code> (thrown during endpoint mapping; see <a href="authentication.html#trusted-hosts">Trusted Hosts</a>).</li><li><code>UseOidcBackChannelLogout</code> is called with <code>ValidateSignature</code>, <code>ValidateIssuer</code>, or <code>ValidateAudience</code> set to <code>false</code> outside the Development environment (throws <code>OptionsValidationException</code>).</li><li><code>UseOidcLogout(options.PerformGlobalLogout = true)</code> is called against an OIDC handler configured with <code>SaveTokens = false</code> - <code>id_token_hint</code> cannot be attached to the end-session request.</li><li><code>UseSessionAdmin</code> is called without a <code>RequirePolicy</code>, or the named policy is not registered.</li><li><code>AddPortaDataProtectionWithEntityFrameworkStore</code> cannot resolve its connection string.</li><li>Outside Development, <code>CookieSecurityStartupCheck</code> throws when <code>SessionAuthentication.RequireHttpsMetadata</code> is <code>false</code> (event <code>Porta/14703</code>) or <code>Cookie.SecurePolicy</code> is not <code>Always</code> (event <code>Porta/14701</code>). Both warn instead of throwing in Development. It also warns (event <code>Porta/14704</code>, all environments) when the effective cookie <code>ExpireTimeSpan</code> has been post-configured beyond the session revocation-index TTL - see <a href="#session-timeouts---sessiontimeoutinmin-vs-cookieexpiretimespanminutes">Session timeouts</a>.</li><li>Outside Development, <code>HaConfigurationStartupCheck</code> throws when Data Protection key persistence is configured but keys are unencrypted at rest with no acknowledgement (event <code>Porta/14503</code>), a <code>protectKeys</code> action was supplied that registered no <code>IXmlEncryptor</code> (event <code>Porta/14507</code>), or an in-process refresh lock was registered explicitly while a distributed cache is present (event <code>Porta/14505</code>). All three warn instead of throwing in Development. Acknowledge the unencrypted-keys / in-process-lock cases with <code>AcknowledgeUnencryptedDataProtectionKeys(...)</code> / <code>AcknowledgeInProcessRefreshLock(...)</code>. See <a href="ha-deployment.html">HA Deployment</a>.</li></ul>
+</div>
+<div class="section">
+<h3>Logging</h3>
+<p>The library logs through <code>Microsoft.Extensions.Logging</code> under the <code>b17s.Porta.*</code> namespace. Configure log levels per category as you would for any ASP.NET Core app:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;b17s.Porta&quot;: &quot;Information&quot;
+    }
+  }
+}</code></pre>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

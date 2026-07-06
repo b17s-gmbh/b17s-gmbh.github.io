@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Writing Transformers | b17s</title>
+<meta name="description" content="How to write transformers in b17s.Porta: base classes, the transformer hierarchy, and error handling.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.4.0/transformers.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Writing Transformers">
+<meta property="og:description" content="How to write transformers in b17s.Porta: base classes, the transformer hierarchy, and error handling.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.4.0/transformers.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Writing Transformers">
+<meta name="twitter:description" content="How to write transformers in b17s.Porta: base classes, the transformer hierarchy, and error handling.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.4.0/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="transformers" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0" selected>v0.4.0 (latest)</option><option value="v0.3.1-rc6">v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item active"><a href="/docs/porta/v0.4.0/transformers.html" aria-current="page">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/endpoints.html">Endpoints</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/authentication.html">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/health-checks.html">Health Checks</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Writing Transformers</h1>
+                <p class="docs-subtitle">Base classes, error handling, and the transformer hierarchy</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>Transformers handle the transformation between client-facing endpoints and backend service calls. The framework provides several base classes to minimize boilerplate.</p>
+<h2>Transformer Hierarchy</h2>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Base Class</th><th>Use Case</th><th>Lines of Code</th><th></th></tr></thead><tbody><tr><td></td><td><code>MapPassThrough&lt;T&gt;()</code></td><td>Zero-code pass-through endpoint</td><td>0 (config only)</td><td></td></tr><tr><td></td><td><code>PassThroughTransformer&lt;T&gt;</code></td><td>Simple pass-through with optional auth</td><td>1 line</td><td></td></tr><tr><td></td><td><code>AuthenticatedTransformer&lt;T&gt;</code></td><td>Authenticated pass-through (no request body)</td><td>1 line</td><td></td></tr><tr><td></td><td><code>AuthenticatedTransformer&lt;TReq, TRes&gt;</code></td><td>Auth + creates backend request body</td><td>2-3 lines</td><td></td></tr><tr><td></td><td><code>AggregatingTransformer&lt;T&gt;</code></td><td>Multi-backend parallel aggregation with declarative <code>Configure(AggregatorBuilder)</code></td><td>~15 lines</td><td></td></tr><tr><td></td><td><code>MultiBackendTransformer&lt;T&gt;</code> / <code>MultiBackendTransformer&lt;TReq, T&gt;</code></td><td>Manual multi-backend control (parent of <code>AggregatingTransformer</code>). Use when you need explicit <code>CallBackendsInParallelAsync</code> / <code>CallNamedBackendAsync</code> orchestration instead of the aggregator's declarative builder.</td><td>~25 lines</td><td></td></tr><tr><td></td><td><code>TransformerBase&lt;T&gt;</code> / <code>TransformerBase&lt;TReq, T&gt;</code></td><td>Full custom control (root of the hierarchy)</td><td>Varies</td><td></td></tr></tbody></table></div>
+<h2>Level 1: Zero-Code Pass-Through</h2>
+<p>For simple endpoints that just forward to a backend and return the response as-is, use <code>MapPassThrough</code> - no transformer class needed:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// No transformer class required!
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://backend.internal/products&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BasicAuth)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<p><code>MapPassThrough</code> exposes the same fluent vocabulary as <code>MapTransformer</code> - <code>FromGet/Post/Put/Delete/Patch/Head/Options/Any</code>, <code>ToBackend/ToGet/ToPost/ToPut/ToDelete/ToPatch/ToAny/ToGraphQL</code>, <code>.When(...)</code>, <code>RequireAuth</code>, <code>WithTokenExchange</code>, <code>WithRetries</code>, etc. - and inherits telemetry, the <code>[RequiresAuthentication]</code> fold, and the anonymous-smuggling recheck for free. The only thing it doesn't support is <code>ToBackends(...)</code>; if you need to fan out to multiple backends, write an <code>AggregatingTransformer&lt;T&gt;</code> instead.</p>
+<p><code>ToBackend(&quot;GET&quot;, url)</code> also has verb shorthands that mirror the <code>FromGet/FromPost/...</code> incoming sugar, so you don't have to pass the method as a string:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://backend.internal/products&quot;)   // == .ToBackend(&quot;GET&quot;, ...)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<p><code>ToGet</code>, <code>ToPost</code>, <code>ToPut</code>, <code>ToDelete</code>, and <code>ToPatch</code> are available, each taking the URL plus the optional <code>ContentType</code> argument.</p>
+<p>Or inherit from <code>PassThroughTransformer&lt;TResponse&gt;</code> for minimal code:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class ProductsTransformer : PassThroughTransformer&lt;ProductsResponse&gt;;</code></pre>
+<h2>Level 2: Authenticated Endpoints</h2>
+<p>For endpoints that require authentication but don't need to create a request body:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Simple authenticated pass-through - no request body needed
+public class MyDataTransformer : AuthenticatedTransformer&lt;MyData&gt;;</code></pre>
+<p>For endpoints that require authentication and send a request body to the backend (but receive no body from the client):</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class UserInfoTransformer : AuthenticatedTransformer&lt;BackendUserRequest, UserInfo&gt;
+{
+    protected override BackendUserRequest CreateBackendRequest(TransformerContext context)
+        =&gt; new() { UserId = context.UserId! };
+}</code></pre>
+<p>The base class handles:</p>
+<ul><li>Authentication check (returns 401 if <code>UserId</code> is null)</li><li>Backend call execution</li><li>Error handling and response mapping</li></ul>
+<h2>Level 3: Multi-Backend Aggregation</h2>
+<p>For endpoints that call multiple backends in parallel and combine the results:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class EnrichedUserProfileTransformer : AggregatingTransformer&lt;EnrichedUserProfile&gt;
+{
+    protected override void Configure(AggregatorBuilder builder)
+    {
+        builder.Backend&lt;UserInfo&gt;(&quot;UserInfo&quot;)
+            .WithBody(ctx =&gt; new BackendUserRequest { UserId = ctx.UserId! });
+
+        builder.Backend&lt;UserProductInfo&gt;(&quot;ProductInfo&quot;)
+            .WithBody(ctx =&gt; new BackendUserRequest { UserId = ctx.UserId! });
+    }
+
+    protected override EnrichedUserProfile MapResults(AggregatorResults results, TransformerContext context)
+    {
+        return new EnrichedUserProfile
+        {
+            UserInfo = results.Get&lt;UserInfo&gt;(&quot;UserInfo&quot;) ?? new(),
+            ProductInfo = results.Get&lt;UserProductInfo&gt;(&quot;ProductInfo&quot;) ?? new(),
+            IsFullyEnriched = results.AllSucceeded(&quot;UserInfo&quot;, &quot;ProductInfo&quot;)
+        };
+    }
+}</code></pre>
+<div class="section">
+<h3>Minimal API Setup</h3>
+<p>The transformer's <code>Configure(AggregatorBuilder)</code> declares <em>which</em> named backends it consumes; the endpoint registration declares <em>where</em> those names point. Register the transformer, then map the endpoint with <code>ToBackends(...)</code> - the <code>Name</code> of each <code>NamedBackendEndpoint</code> must match the name used in <code>builder.Backend&lt;T&gt;(&quot;...&quot;)</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// 1. Register the transformer (scoped, so it can use scoped dependencies)
+builder.Services.AddTransformer&lt;EnrichedUserProfileTransformer&gt;();
+
+// 2. Map the endpoint and wire each named backend to its URL (fluent configure lambda)
+app.MapTransformer&lt;EnrichedUserProfileTransformer, EnrichedUserProfile&gt;()
+    .FromGet(&quot;/api/profile&quot;)
+    .ToBackends(b =&gt; b
+        .ToGet(&quot;UserInfo&quot;, &quot;https://users.internal/userinfo&quot;)
+        .ToGet(&quot;ProductInfo&quot;, &quot;https://products.internal/products&quot;))
+    .RequireAuth()
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build();</code></pre>
+<p><code>ToBackends(...)</code> is the multi-backend counterpart to <code>ToBackend(...)</code> and is only available on <code>MapTransformer</code> (not <code>MapPassThrough</code>). The backends are called in parallel; the user's access token is forwarded to each when <code>WithBackendAuth(BackendAuthPolicies.BearerToken)</code> is set.</p>
+<h4>Declaring named backends fluently</h4>
+<p>The <code>ToBackends(configure =&gt; ...)</code> overload takes a builder whose <code>ToGet/ToPost/ToPut/ToDelete/ToPatch(name, url)</code> methods add a backend, mirroring the <code>ToGet/FromGet</code> verb sugar. Per-backend overrides chain off each one and apply to the backend they follow, so the configuration reads top-to-bottom without any object initializers:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">.ToBackends(b =&gt; b
+    .ToGet(&quot;UserInfo&quot;, &quot;https://users.internal/userinfo&quot;)
+        .WithAuth(BackendAuthPolicies.BearerToken)
+    .ToPost(&quot;Orders&quot;, &quot;https://orders.internal/orders&quot;)
+        .WithTokenExchange(&quot;order-api&quot;)
+        .WithRetries(3))</code></pre>
+<p>Available per-backend modifiers: <code>.WithAuth(policy)</code>, <code>.WithUserToken()</code>, <code>.WithTokenExchange(audience)</code>, <code>.WithTimeout(...)</code>, <code>.WithRetries(...)</code>. Use <code>.ToBackend(method, name, url)</code> for verbs without a shorthand (e.g. <code>HEAD</code>). <code>.WithRetries(n)</code> is per-backend - each backend retries the count it declares, capped at the app-wide <code>PortaCore:MaxRetryAttempts</code> ceiling (effective count <code>min(n, ceiling)</code>).</p>
+<p><code>ToBackends(...)</code> also accepts <code>NamedBackendEndpoint</code> values directly - the fluent builder above is sugar over this overload. Use it when you build the endpoints yourself, e.g. programmatically from configuration or a loop, via the object initializer or the <code>(name, method, url).WithAuth(...)</code> tuple extensions (see <a href="endpoints.html#multi-backend-endpoints">Endpoints</a>):</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">.ToBackends(
+    (&quot;UserInfo&quot;, &quot;GET&quot;, &quot;https://users.internal/userinfo&quot;).WithAuth(BackendAuthPolicies.BearerToken),
+    new NamedBackendEndpoint { Name = &quot;Orders&quot;, Method = &quot;POST&quot;, UrlTemplate = &quot;https://orders.internal/orders&quot; })</code></pre>
+<h2>Level 4: Custom Logic</h2>
+<p>For complex transformations, extend <code>TransformerBase&lt;TResponse&gt;</code> directly:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class CustomTransformer : TransformerBase&lt;MyResponse&gt;
+{
+    public override async Task&lt;MyResponse&gt; TransformAsync(TransformerContext context)
+    {
+        // Full control over the transformation logic
+        var result = await CallBackendAsync(context);
+        // Custom processing...
+        return transformedResult;
+    }
+}</code></pre>
+<h2>Accessing Request Data</h2>
+<p>Transformers have helper methods to access request data and set response headers:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class MyTransformer : TransformerBase&lt;MyResponse&gt;
+{
+    public override async Task&lt;MyResponse&gt; TransformAsync(TransformerContext context)
+    {
+        // Read single-value query parameter
+        var productId = GetQueryParameter(context, &quot;productId&quot;);
+
+        // Read multi-value query parameters: ?tags=a&amp;tags=b&amp;tags=c
+        var tags = GetQueryValues(context, &quot;tags&quot;).ToList();  // [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+
+        // Read request headers
+        var correlationId = GetRequestHeader(context, &quot;X-Correlation-Id&quot;);
+        var acceptLanguages = GetRequestHeaders(context, &quot;Accept-Language&quot;).ToList();
+
+        // Set response headers
+        SetResponseHeader(context, &quot;X-Request-Id&quot;, Guid.NewGuid().ToString());
+        AddResponseHeader(context, &quot;X-Custom-Header&quot;, &quot;value&quot;);
+        RemoveResponseHeader(context, &quot;X-Internal-Debug&quot;);
+
+        // ... transformation logic
+        return result;
+    }
+}</code></pre>
+</div>
+<div class="section">
+<h3>Helper Methods Reference</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Method</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>GetQueryParameter(context, key)</code></td><td>Get single query parameter value (first if multiple)</td><td></td></tr><tr><td></td><td><code>GetQueryValues(context, key)</code></td><td>Get all values for a multi-value query parameter</td><td></td></tr><tr><td></td><td><code>GetRequestHeader(context, headerName)</code></td><td>Get single request header value</td><td></td></tr><tr><td></td><td><code>GetRequestHeaders(context, headerName)</code></td><td>Get all values for a multi-value header</td><td></td></tr><tr><td></td><td><code>SetResponseHeader(context, name, value)</code></td><td>Set/replace a response header</td><td></td></tr><tr><td></td><td><code>AddResponseHeader(context, name, value)</code></td><td>Append to a response header</td><td></td></tr><tr><td></td><td><code>RemoveResponseHeader(context, name)</code></td><td>Remove a response header</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Direct Context Access</h3>
+<p>For advanced scenarios, you can access the raw data directly:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Query parameters as StringValues (supports multi-value)
+context.QueryParameters[&quot;tags&quot;]  // Returns StringValues
+
+// Request headers as StringValues
+context.RequestHeaders[&quot;X-Custom-Header&quot;]  // Returns StringValues
+
+// Full HttpContext access
+context.HttpContext.Request.Headers
+context.HttpContext.Response.Headers</code></pre>
+<h2>Error Handling</h2>
+</div>
+<div class="section">
+<h3>Writing Error Responses</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Simple error response
+await WriteErrorResponseAsync(context, 400, &quot;Invalid request&quot;);
+
+// Forward backend error
+await WriteBackendErrorResponseAsync(context, backendResult);</code></pre>
+</div>
+<div class="section">
+<h3>Error Mapping</h3>
+<p>Backend 401/403 errors are mapped to 502 Bad Gateway by default. This prevents clients from misinterpreting backend auth failures as user session expiration.</p>
+<p>Implement <code>IBackendErrorMapper</code> to customize:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class MyErrorMapper : IBackendErrorMapper
+{
+    public (int StatusCode, string Message) MapError(
+        int backendStatusCode,
+        string? backendError,
+        BackendRequest request)
+    {
+        // Pass through auth errors for specific backends
+        if (request.Url.Contains(&quot;trusted-internal-api&quot;))
+            return (backendStatusCode, backendError ?? &quot;Request failed&quot;);
+
+        // Default behavior
+        return backendStatusCode switch
+        {
+            401 =&gt; (502, &quot;Backend service authentication failed&quot;),
+            403 =&gt; (502, &quot;Backend service authorization failed&quot;),
+            _ =&gt; (backendStatusCode, backendError ?? &quot;Request failed&quot;)
+        };
+    }
+}
+
+// Registration
+services.AddSingleton&lt;IBackendErrorMapper, MyErrorMapper&gt;();</code></pre>
+<h2>Content Type Serialization</h2>
+<p>The library supports multiple content types for backend communication.</p>
+</div>
+<div class="section">
+<h3>Available Content Types</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Content Type</th><th>Usage</th><th></th></tr></thead><tbody><tr><td></td><td><code>ContentType.Json</code></td><td>Default - <code>application/json</code></td><td></td></tr><tr><td></td><td><code>ContentType.Xml</code></td><td>XML APIs - <code>application/xml</code></td><td></td></tr><tr><td></td><td><code>ContentType.FormUrlEncoded</code></td><td>Form data - <code>application/x-www-form-urlencoded</code></td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Builder Configuration</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Specify request content type for backend (the optional 2nd arg on the verb helpers)
+app.MapTransformer&lt;LegacyTransformer, LegacyRequest, LegacyResponse&gt;()
+    .FromPost(&quot;/api/legacy&quot;)
+    .ToPost(&quot;https://legacy.internal/soap-endpoint&quot;, ContentType.Xml)
+    .Build();</code></pre>
+</div>
+<div class="section">
+<h3>XML Serialization</h3>
+<p>For legacy SOAP/XML backends, use the <code>IContentSerializer</code> service:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class LegacyApiTransformer : TransformerBase&lt;LegacyResponse&gt;
+{
+    private readonly IContentSerializer _serializer;
+
+    public LegacyApiTransformer(IContentSerializer serializer)
+    {
+        _serializer = serializer;
+    }
+
+    public override async Task&lt;LegacyResponse&gt; TransformAsync(TransformerContext context)
+    {
+        // Serialize request to XML
+        var xmlRequest = _serializer.Serialize(requestObj, ContentType.Xml);
+
+        // Deserialize XML response
+        var response = _serializer.Deserialize&lt;LegacyResponse&gt;(xmlContent, ContentType.Xml);
+
+        return response;
+    }
+}</code></pre>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

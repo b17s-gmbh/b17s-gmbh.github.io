@@ -1,0 +1,243 @@
+.constellation.frame {
+    position: relative;
+    border: 1px solid var(--halo-white-a10);
+    border-radius: 16px;
+    box-shadow: var(--halo-glass-pattern);
+    overflow: hidden;
+}
+
+.constellation.frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: radial-gradient(ellipse 250% 100% at 50% 0%, var(--halo-white-a04) 0%, var(--halo-white-a02) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.constellation.frame hr {
+    margin: 0;
+}
+
+.constellation .constellation-container {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.constellation .node-btn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.constellation .node-btn.central {
+    z-index: 3;
+}
+
+.constellation .node-btn .core {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg,
+        var(--halo-primary-a15) 0%,
+        var(--halo-primary-a05) 100%);
+    border: 2px solid var(--halo-primary-a30);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 8px 32px var(--halo-primary-a20),
+        inset 0 1px 0 var(--halo-white-a10);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.constellation .node-btn.central .core {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg,
+        var(--halo-primary-a25) 0%,
+        var(--halo-primary-a10) 100%);
+    border-color: var(--halo-primary-a50);
+    box-shadow:
+        0 12px 40px var(--halo-primary-a30),
+        inset 0 1px 0 var(--halo-white-a15);
+}
+
+.constellation .node-btn .core::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 30%,
+        var(--halo-white-a10) 0%,
+        transparent 70%);
+    border-radius: 50%;
+}
+
+.constellation .node-btn .core svg {
+    color: var(--halo-primary-text);
+    z-index: 1;
+    transition: all 0.3s ease;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.constellation .node-btn:hover .core {
+    transform: scale(1.1);
+    border-color: var(--halo-primary-a60);
+    box-shadow:
+        0 12px 40px var(--halo-primary-a40),
+        inset 0 1px 0 var(--halo-white-a20);
+}
+
+.constellation .node-btn:hover .core svg {
+    color: var(--halo-primary-text);
+    filter: var(--halo-drop-glow-sm);
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.constellation .node-btn.selected .core {
+    border-color: var(--halo-primary-a80);
+    background: linear-gradient(135deg,
+        var(--halo-primary-a30) 0%,
+        var(--halo-primary-a15) 100%);
+    box-shadow:
+        0 12px 40px var(--halo-primary-a50),
+        inset 0 1px 0 var(--halo-white-a20);
+}
+
+.constellation .node-btn.selected .core svg {
+    color: var(--halo-primary-text);
+    filter: var(--halo-drop-glow-md);
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.constellation .node-btn .label {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    background: linear-gradient(135deg,
+        var(--halo-primary) 0%,
+        var(--halo-primary-a80) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    z-index: 10;
+    padding: 2px;
+}
+
+.constellation .tools-header-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.constellation .tools-header-icon svg {
+    color: var(--halo-primary-text);
+    filter: var(--halo-drop-glow-lg);
+}
+
+/* Tool Details Panel */
+.constellation .constellation-details {
+    padding: 24px;
+    transition: all 0.3s ease;
+    min-height: 120px;
+    overflow: hidden;    
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.025) 30%, var(--halo-white-a05) 70%, var(--halo-black-a02) 100%);
+}
+
+.constellation .constellation-details .content {
+    position: relative;
+    width: 100%;
+    position: relative;
+    min-height: 120px;
+}
+
+.constellation .constellation-details .panel-icon {
+    position: absolute;
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.25;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.constellation .constellation-details .panel-icon svg {
+    width: 180px;
+    height: 180px;
+    color: var(--halo-primary-a40);
+}
+
+.constellation .constellation-details .panel-icon img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.constellation .constellation-details .panel-text {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-left: 75px;
+}
+
+.constellation .constellation-details .panel-text h4 {
+    margin: 0 0 12px 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--halo-primary-text);
+    background: linear-gradient(135deg,
+        var(--halo-primary-text) 0%,
+        oklch(from var(--halo-primary-text) l c h / 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.constellation .constellation-details .panel-text p {
+    margin: 0 0 16px 0;
+    color: var(--halo-white-a80);
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.constellation .constellation-details .stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.constellation .constellation-details .stats .stat-item {
+    padding: 6px 12px;
+    background: var(--halo-primary-a10);
+    border: 1px solid var(--halo-primary-a20);
+    border-radius: 8px;
+    font-size: 0.85em;
+    color: var(--halo-primary-text);
+}

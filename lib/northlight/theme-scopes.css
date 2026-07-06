@@ -1,0 +1,145 @@
+/* ========================================
+   THEME SCOPES
+   Per-element palette overrides. Apply any
+   .theme-* class to a container to re-theme
+   that element and everything inside it.
+
+   The BASE colors are set per scope below.
+   The --primary-a##/--accent-a##/--accent-warm-a##
+   ramps must be re-declared ON the scope (see the
+   shared rule at the bottom): a var() inside a
+   custom property resolves where the property is
+   DECLARED, so the :root ramps from theme-*.css
+   inherit down as already-resolved root-theme
+   colors and would ignore the scoped base values.
+   ======================================== */
+
+.theme-arctic {
+    --bg-dark: oklch(18% 0.02 230);
+    --bg-elevated: oklch(22% 0.02 230);
+    --primary: oklch(55% 0.08 220);
+    --accent: oklch(72% 0.14 200);
+    --accent-warm: oklch(68% 0.16 45);
+    --text: oklch(94% 0.01 220);
+    --text-secondary: oklch(68% 0.02 220);
+}
+
+.theme-slate {
+    --bg-dark: oklch(15% 0.01 240);
+    --bg-elevated: oklch(19% 0.01 240);
+    --primary: oklch(68% 0.04 240);
+    --accent: oklch(70% 0.15 230);
+    --accent-warm: oklch(68% 0.12 250);
+    --text: oklch(92% 0.01 240);
+    --text-secondary: oklch(65% 0.01 240);
+}
+
+.theme-forest {
+    --bg-dark: oklch(16% 0.03 160);
+    --bg-elevated: oklch(20% 0.03 160);
+    --primary: oklch(50% 0.12 160);
+    --accent: oklch(68% 0.16 150);
+    --accent-warm: oklch(72% 0.14 180);
+    --text: oklch(94% 0.01 160);
+    --text-secondary: oklch(68% 0.02 160);
+}
+
+.theme-emerald {
+    --bg-dark: oklch(17% 0.05 152);
+    --bg-elevated: oklch(21% 0.055 152);
+    --primary: oklch(46% 0.15 152);
+    --accent: oklch(62% 0.2 152);
+    --accent-warm: oklch(70% 0.16 130);
+    --text: oklch(95% 0.015 152);
+    --text-secondary: oklch(70% 0.04 152);
+}
+
+.theme-sunset {
+    --bg-dark: oklch(16% 0.02 30);
+    --bg-elevated: oklch(20% 0.02 30);
+    --primary: oklch(55% 0.15 30);
+    --accent: oklch(70% 0.18 45);
+    --accent-warm: oklch(68% 0.16 60);
+    --text: oklch(94% 0.01 30);
+    --text-secondary: oklch(68% 0.02 30);
+}
+
+.theme-ruby {
+    --bg-dark: oklch(15% 0.03 20);
+    --bg-elevated: oklch(19% 0.035 20);
+    --primary: oklch(50% 0.18 20);
+    --accent: oklch(64% 0.22 15);
+    --accent-warm: oklch(70% 0.17 35);
+    --text: oklch(94% 0.01 20);
+    --text-secondary: oklch(68% 0.03 20);
+}
+
+/* Re-derive the transparency ramps from the scoped base colors.
+   Declared on the scope element itself so the inner var() picks up
+   the scope's --primary/--accent/--accent-warm instead of :root's. */
+.theme-arctic,
+.theme-slate,
+.theme-forest,
+.theme-emerald,
+.theme-sunset,
+.theme-ruby {
+    --primary-a05: oklch(from var(--primary) l c h / 0.05);
+    --primary-a10: oklch(from var(--primary) l c h / 0.10);
+    --primary-a15: oklch(from var(--primary) l c h / 0.15);
+    --primary-a20: oklch(from var(--primary) l c h / 0.20);
+    --primary-a25: oklch(from var(--primary) l c h / 0.25);
+    --primary-a30: oklch(from var(--primary) l c h / 0.30);
+    --primary-a35: oklch(from var(--primary) l c h / 0.35);
+    --primary-a40: oklch(from var(--primary) l c h / 0.40);
+    --primary-a45: oklch(from var(--primary) l c h / 0.45);
+    --primary-a50: oklch(from var(--primary) l c h / 0.50);
+    --primary-a55: oklch(from var(--primary) l c h / 0.55);
+    --primary-a60: oklch(from var(--primary) l c h / 0.60);
+    --primary-a65: oklch(from var(--primary) l c h / 0.65);
+    --primary-a70: oklch(from var(--primary) l c h / 0.70);
+    --primary-a75: oklch(from var(--primary) l c h / 0.75);
+    --primary-a80: oklch(from var(--primary) l c h / 0.80);
+    --primary-a85: oklch(from var(--primary) l c h / 0.85);
+    --primary-a90: oklch(from var(--primary) l c h / 0.90);
+    --primary-a95: oklch(from var(--primary) l c h / 0.95);
+
+    --accent-a05: oklch(from var(--accent) l c h / 0.05);
+    --accent-a10: oklch(from var(--accent) l c h / 0.10);
+    --accent-a15: oklch(from var(--accent) l c h / 0.15);
+    --accent-a20: oklch(from var(--accent) l c h / 0.20);
+    --accent-a25: oklch(from var(--accent) l c h / 0.25);
+    --accent-a30: oklch(from var(--accent) l c h / 0.30);
+    --accent-a35: oklch(from var(--accent) l c h / 0.35);
+    --accent-a40: oklch(from var(--accent) l c h / 0.40);
+    --accent-a45: oklch(from var(--accent) l c h / 0.45);
+    --accent-a50: oklch(from var(--accent) l c h / 0.50);
+    --accent-a55: oklch(from var(--accent) l c h / 0.55);
+    --accent-a60: oklch(from var(--accent) l c h / 0.60);
+    --accent-a65: oklch(from var(--accent) l c h / 0.65);
+    --accent-a70: oklch(from var(--accent) l c h / 0.70);
+    --accent-a75: oklch(from var(--accent) l c h / 0.75);
+    --accent-a80: oklch(from var(--accent) l c h / 0.80);
+    --accent-a85: oklch(from var(--accent) l c h / 0.85);
+    --accent-a90: oklch(from var(--accent) l c h / 0.90);
+    --accent-a95: oklch(from var(--accent) l c h / 0.95);
+
+    --accent-warm-a05: oklch(from var(--accent-warm) l c h / 0.05);
+    --accent-warm-a10: oklch(from var(--accent-warm) l c h / 0.10);
+    --accent-warm-a15: oklch(from var(--accent-warm) l c h / 0.15);
+    --accent-warm-a20: oklch(from var(--accent-warm) l c h / 0.20);
+    --accent-warm-a25: oklch(from var(--accent-warm) l c h / 0.25);
+    --accent-warm-a30: oklch(from var(--accent-warm) l c h / 0.30);
+    --accent-warm-a35: oklch(from var(--accent-warm) l c h / 0.35);
+    --accent-warm-a40: oklch(from var(--accent-warm) l c h / 0.40);
+    --accent-warm-a45: oklch(from var(--accent-warm) l c h / 0.45);
+    --accent-warm-a50: oklch(from var(--accent-warm) l c h / 0.50);
+    --accent-warm-a55: oklch(from var(--accent-warm) l c h / 0.55);
+    --accent-warm-a60: oklch(from var(--accent-warm) l c h / 0.60);
+    --accent-warm-a65: oklch(from var(--accent-warm) l c h / 0.65);
+    --accent-warm-a70: oklch(from var(--accent-warm) l c h / 0.70);
+    --accent-warm-a75: oklch(from var(--accent-warm) l c h / 0.75);
+    --accent-warm-a80: oklch(from var(--accent-warm) l c h / 0.80);
+    --accent-warm-a85: oklch(from var(--accent-warm) l c h / 0.85);
+    --accent-warm-a90: oklch(from var(--accent-warm) l c h / 0.90);
+    --accent-warm-a95: oklch(from var(--accent-warm) l c h / 0.95);
+}

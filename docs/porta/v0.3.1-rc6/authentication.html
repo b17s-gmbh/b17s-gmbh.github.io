@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Authentication | b17s</title>
+<meta name="description" content="User authentication providers and backend authentication handlers in b17s.Porta, including custom backend auth.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/porta/v0.3.1-rc6/authentication.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Authentication">
+<meta property="og:description" content="User authentication providers and backend authentication handlers in b17s.Porta, including custom backend auth.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/porta/v0.3.1-rc6/authentication.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Authentication">
+<meta name="twitter:description" content="User authentication providers and backend authentication handlers in b17s.Porta, including custom backend auth.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/porta/v0.3.1-rc6/" class="docs-nav-title">b17s.Porta</a><p class="docs-nav-description">Backend-for-Frontend library for ASP.NET Core</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/porta/" data-current-slug="authentication" data-pages="{&quot;v0.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;health-checks&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;],&quot;v0.3.1-rc6&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;transformers&quot;,&quot;endpoints&quot;,&quot;authentication&quot;,&quot;oidc&quot;,&quot;raw-forwarding&quot;,&quot;graphql&quot;,&quot;caching&quot;,&quot;telemetry&quot;,&quot;ha-deployment&quot;,&quot;api-gateway&quot;,&quot;advanced&quot;]}"><option value="v0.4.0">v0.4.0 (latest)</option><option value="v0.3.1-rc6" selected>v0.3.1-rc6</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/">Overview</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/transformers.html">Transformers</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/endpoints.html">Endpoints</a></li><li class="docs-nav-item active"><a href="/docs/porta/v0.3.1-rc6/authentication.html" aria-current="page">Authentication</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/oidc.html">OIDC Endpoints</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Forwarding &amp; Integration</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/raw-forwarding.html">Raw Forwarding</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/graphql.html">GraphQL</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/caching.html">Caching</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/telemetry.html">Telemetry</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/api-gateway.html">API Gateway Use</a></li><li class="docs-nav-item"><a href="/docs/porta/v0.3.1-rc6/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">b17s.Porta</div>
+                <h1>Authentication</h1>
+                <p class="docs-subtitle">User auth providers and backend auth handlers</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>The BFF framework supports both user authentication (via <code>IAuthenticationProvider</code>) and backend authentication (via <code>IBackendAuthHandler</code>). For the OIDC pipeline (cookie + framework OIDC handler + server-side ticket store + token revocation + back-channel logout), see <a href="oidc.html">oidc.md</a>.</p>
+<h2>User Authentication Providers</h2>
+<p>The framework uses <code>IAuthenticationProvider</code> to expose user identity to transformers as <code>AuthenticationContext</code>. This is a <em>read</em> concern - the underlying authentication is owned by ASP.NET Core's auth schemes (cookie + OIDC, or JWT bearer, or reference token) configured at registration time.</p>
+<div class="section">
+<h3>Built-in Providers</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Provider</th><th>Use Case</th><th>Token Refresh</th><th></th></tr></thead><tbody><tr><td></td><td><code>SessionAuthProvider</code></td><td>Reads the cookie auth ticket populated by the framework's OIDC handler. Default when you call <code>AddPortaAuthentication</code>.</td><td>Yes (via <code>IAccessTokenRefreshService</code>)</td><td></td></tr><tr><td></td><td><code>ReferenceTokenAuthProvider</code></td><td>Reference token validation via introspection, in-pipeline only (<code>AddReferenceTokenAuthentication</code>) — resolves <code>AuthContext</code> but does <strong>not</strong> set <code>HttpContext.User</code>. Recommended for API-style callers.</td><td>No</td><td></td></tr><tr><td></td><td><code>JwtBearerAuthProvider</code></td><td>Inbound JWT validation via OIDC discovery / JWKS (opt-in fallback)</td><td>No</td><td></td></tr></tbody></table></div>
+<p>For opaque tokens, prefer registering them as a <strong>scheme</strong> rather than provider-only:</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Scheme</th><th>Use Case</th><th>Token Refresh</th><th></th></tr></thead><tbody><tr><td></td><td><code>PortaReferenceToken</code></td><td>The same introspection + binding + cache as <code>ReferenceTokenAuthProvider</code>, but registered as an ASP.NET auth scheme (<code>AddPortaReferenceTokenScheme</code>). It <strong>sets <code>HttpContext.User</code></strong>, so <code>RequireAuth()</code> and the principal gate work for opaque tokens with no extra code. See <a href="#two-auth-layers-the-identity-gate-vs-the-provider">Two auth layers</a>.</td><td>No</td><td></td></tr></tbody></table></div>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Program.cs
+builder.Services.AddPortaCore();
+
+// Introspection results are cached, so an IDistributedCache is required
+// (Redis/Valkey in production; in-memory is fine for local dev).
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddPortaReferenceTokenScheme(options =&gt;
+{
+    options.Authority = &quot;https://idp.example.com&quot;;   // discovers the RFC 7662 introspection endpoint
+    options.ClientId = &quot;my-bff&quot;;                      // credentials used to call /introspect
+    options.ClientSecret = builder.Configuration[&quot;ReferenceToken:ClientSecret&quot;]!;
+    options.ValidAudiences = [&quot;api://my-bff&quot;];        // reject tokens minted for another relying party
+});
+
+var app = builder.Build();
+
+app.UseAuthentication();   // the PortaReferenceToken scheme introspects the token and sets HttpContext.User
+app.UseAuthorization();
+
+// The opaque token now gates endpoints like any other principal - no per-endpoint auth code.
+// RequireAuthorizationByDefault is true, so this 401s without a valid, introspectable token:
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products.internal/products&quot;)
+    .Build();</code></pre>
+<p><code>AddPortaReferenceTokenScheme</code> registers additively and becomes the default scheme <strong>only when no other default is set</strong>, so a reference-token-only BFF needs nothing more. In a multi-frontend BFF it does <strong>not</strong> clobber an existing default (e.g. the cookie default from <code>AddPortaAuthentication</code>, so browser <code>RequireAuthorization</code> still redirects to OIDC login) — register the other schemes too and add a policy scheme (or <code>ForwardDefaultSelector</code>) to pick per request, standard ASP.NET multi-scheme.</p>
+</div>
+<div class="section">
+<h3>SessionAuthProvider</h3>
+<p>After <code>AddPortaAuthentication</code> registers the framework's cookie + OIDC handlers, tokens live on the cookie auth ticket via <code>SaveTokens = true</code>. <code>SessionAuthProvider</code>:</p>
+<ul><li>Calls <code>HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme)</code> to read the ticket.</li><li>Returns <code>access_token</code>, <code>refresh_token</code>, <code>id_token</code>, <code>expires_at</code> plus claims as an <code>AuthenticationContext</code>.</li><li>Delegates near-expiry refresh to <code>IAccessTokenRefreshService</code>, which acquires a per-user lock, calls the IdP's token endpoint, updates the ticket via <code>SignInAsync</code>, and patches the encrypted refresh token on session metadata so <code>TerminateSessionAsync(..., revokeTokens: true)</code> always targets the current token.</li></ul>
+<p>You don't typically construct or interact with <code>SessionAuthProvider</code> directly - it's resolved as <code>IAuthenticationProvider</code> in transformers.</p>
+</div>
+<div class="section">
+<h3>ReferenceTokenAuthOptions</h3>
+<p><code>ReferenceTokenAuthProvider</code> validates inbound bearer tokens against the IdP's RFC 7662 introspection endpoint and caches results in <code>IDistributedCache</code> (typically Redis) to avoid re-introspecting on every request.</p>
+<h4>Inbound token extraction</h4>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>TokenHeaderName</code></td><td><code>Authorization</code></td><td>Header to read the inbound token from.</td><td></td></tr><tr><td></td><td><code>TokenPrefix</code></td><td><code>Bearer </code></td><td>Prefix stripped from the header value before introspection.</td><td></td></tr></tbody></table></div>
+<h4>Introspection endpoint client</h4>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>Authority</code></td><td>-</td><td>OIDC authority URL - used to discover the introspection endpoint.</td><td></td></tr><tr><td></td><td><code>ClientId</code></td><td>-</td><td>Client ID used when authenticating to the introspection endpoint.</td><td></td></tr><tr><td></td><td><code>ClientSecret</code></td><td>-</td><td>Client secret used when authenticating to the introspection endpoint.</td><td></td></tr><tr><td></td><td><code>UseBasicAuthForIntrospection</code></td><td><code>true</code></td><td>Send credentials via HTTP Basic auth. When <code>false</code>, <code>client_id</code> / <code>client_secret</code> are sent in the request body.</td><td></td></tr><tr><td></td><td><code>TokenTypeHint</code></td><td><code>access_token</code></td><td>Optional <code>token_type_hint</code> parameter (RFC 7662 §2.1).</td><td></td></tr></tbody></table></div>
+<p>The introspection <code>HttpClient</code> uses the standard resilience pipeline (retry + circuit breaker + timeouts; attempt timeout 10 s, total request timeout 30 s by default). Override it via the optional <code>configureResilience</code> parameter:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddReferenceTokenAuthentication(
+    options =&gt; { /* ... */ },
+    configureResilience: r =&gt; r.AttemptTimeout.Timeout = TimeSpan.FromSeconds(5));</code></pre>
+<h4>Token binding - audience / issuer / client_id</h4>
+<p>Without these checks, <strong>any active token issued by the same authority for any other relying party</strong> would be accepted by this BFF (RFC 7662 audience-confusion vulnerability). Defaults are strict; loosen only when you fully trust the introspection endpoint and understand the consequences.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>ValidateAudience</code></td><td><code>true</code></td><td>Validate the <code>aud</code> / <code>client_id</code> claim on introspection responses.</td><td></td></tr><tr><td></td><td><code>ValidAudiences</code></td><td><code>[]</code></td><td>Expected audience values. When non-empty and <code>ValidateAudience</code> is <code>true</code>, the introspection response's <code>aud</code> claim must match one of these values.</td><td></td></tr><tr><td></td><td><code>ValidClientIds</code></td><td><code>[]</code></td><td>Allow-list of <code>client_id</code> values that may have minted accepted tokens. Use as an alternative or supplement to <code>ValidAudiences</code> when the IdP returns <code>client_id</code> but no <code>aud</code>.</td><td></td></tr><tr><td></td><td><code>ValidateIssuer</code></td><td><code>true</code></td><td>Validate the <code>iss</code> claim on introspection responses.</td><td></td></tr><tr><td></td><td><code>ValidIssuers</code></td><td><code>[]</code></td><td>Expected issuer values. When empty, defaults to comparing against <code>Authority</code>.</td><td></td></tr></tbody></table></div>
+<h4>Cache</h4>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>DefaultCacheDuration</code></td><td><code>5 minutes</code></td><td>Cache duration when the introspection response has no <code>exp</code> claim.</td><td></td></tr><tr><td></td><td><code>MaxCacheDuration</code></td><td><code>1 hour</code></td><td>Upper bound on cache duration regardless of token lifetime.</td><td></td></tr><tr><td></td><td><code>NegativeCacheDuration</code></td><td><code>30 seconds</code></td><td>How long an <em>inactive</em> introspection result is cached before re-introspecting. Trade-off below.</td><td></td></tr></tbody></table></div>
+<h4><code>NegativeCacheDuration</code> trade-off</h4>
+<p>When the IdP returns <code>active: false</code>, the provider caches that result for <code>NegativeCacheDuration</code> so a stream of requests carrying the same revoked / expired / unknown token doesn't hammer the introspection endpoint. Only that definitive verdict is negative-cached: if introspection <em>fails</em> (IdP error, unreachable endpoint, malformed response), the request is rejected without writing a cache entry, so a valid token authenticates again as soon as the IdP recovers rather than staying locked out for <code>NegativeCacheDuration</code>. This is necessary - without it, an attacker (or a buggy client) replaying one bad token can DoS the IdP - but it has a security cost: a token revoked at the IdP keeps being accepted "as still revoked" for at most this duration before the next live introspection runs. That is <em>not</em> a security issue per se (rejected stays rejected), but for a token that <strong>was active and is then revoked</strong>, the previous <em>positive</em> result remains cached until its own positive TTL expires - so revocation latency is bounded by <code>min(DefaultCacheDuration, MaxCacheDuration, token's own exp)</code>, not by <code>NegativeCacheDuration</code>.</p>
+<p>Set lower (e.g. <code>5 seconds</code>) if you need IdP-side revocation to take effect faster and can absorb the extra introspection traffic. Set higher (<code>60 seconds</code>, <code>120 seconds</code>) if your IdP is rate-limited or expensive (commercial per-call pricing) and you accept that an active token remains usable for up to <code>DefaultCacheDuration</code> after revocation regardless.</p>
+<p>The introspection cache key is always the SHA-256 hash of the access token - keys look like <code>introspection_{SHA256-hex}</code>, never <code>introspection_{raw-token}</code>. This prevents anyone with read access to the cache (co-tenants on a shared Redis instance, operators running <code>KEYS</code>/<code>SCAN</code>/<code>MONITOR</code>, anyone who can read a backup or replica) from enumerating live bearer tokens and replaying them against a resource server. Both reads and invalidations use the same hashed key, so this is transparent to callers and not configurable.</p>
+</div>
+<div class="section">
+<h3>JWT Bearer Authentication (opt-in)</h3>
+<p>Reference tokens are the recommended default in a BFF context. In a BFF, you're already making round-trips to the IdP for token refresh, so JWT's stateless-validation advantage doesn't apply — and reference tokens give you immediate revocation and a smaller payload. Use <code>JwtBearerAuthProvider</code> when one of these doesn't fit:</p>
+<ul><li>Your IdP doesn't expose an introspection endpoint.</li><li>You're integrating with a B2B partner or third-party API that hands callers signed JWTs.</li><li>You need stateless validation at the edge (no introspection round-trip per request).</li></ul>
+<h4>Registration</h4>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaJwtAuthentication(options =&gt;
+{
+    options.Authority = &quot;https://auth.example.com&quot;;
+    options.ValidAudiences = [&quot;my-porta&quot;];
+
+    // Optional overrides
+    // options.ValidIssuers = [&quot;https://auth.example.com&quot;]; // defaults to OIDC metadata issuer
+    // options.ClockSkew = TimeSpan.FromSeconds(30);
+});</code></pre>
+<p><code>AddPortaJwtAuthentication</code> can be combined with <code>AddPortaAuthentication</code> (or its <code>AddPortaOidcAuth</code> alias), <code>AddReferenceTokenAuthentication</code>, and <code>AddPortaAuthProvider&lt;T&gt;</code>. See <a href="#combining-authentication-providers">Combining authentication providers</a> below for resolution semantics.</p>
+<p>The JwtBearer handler binds from the composed options pipeline, so <code>services.Configure&lt;JwtBearerAuthOptions&gt;(...)</code> / <code>PostConfigure&lt;JwtBearerAuthOptions&gt;(...)</code> registered before or after this call (e.g. injecting the authority from a secret store) is honored.</p>
+<h4>How signing keys are managed</h4>
+<p>Signing keys come from the OIDC discovery document at <code>{Authority}/.well-known/openid-configuration</code> and the JWKS endpoint it points to. Validation is handled by ASP.NET Core's <code>AddJwtBearer</code> handler: keys are cached in memory and refreshed on the schedule of its built-in <code>Microsoft.IdentityModel.Protocols.OpenIdConnect.ConfigurationManager</code> (its default cadence; an unknown <code>kid</code> also triggers an out-of-band refresh). Key rotation is handled automatically.</p>
+<h4>Validation defaults</h4>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Option</th><th>Default</th><th>Notes</th><th></th></tr></thead><tbody><tr><td></td><td><code>ValidateIssuer</code></td><td><code>true</code></td><td>Falls back to the issuer in OIDC metadata when <code>ValidIssuers</code> is empty.</td><td></td></tr><tr><td></td><td><code>ValidateAudience</code></td><td><code>true</code></td><td>At least one entry in <code>ValidAudiences</code> must match the token's <code>aud</code>.</td><td></td></tr><tr><td></td><td><code>ValidateLifetime</code></td><td><code>true</code></td><td>Honors <code>exp</code>/<code>nbf</code> plus <code>ClockSkew</code>.</td><td></td></tr><tr><td></td><td><code>RequireHttpsMetadata</code></td><td><code>true</code></td><td>Disable only for local dev against a non-HTTPS IdP.</td><td></td></tr><tr><td></td><td><code>ClockSkew</code></td><td><code>30 seconds</code></td><td>Allowed drift when validating <code>exp</code>/<code>nbf</code>.</td><td></td></tr></tbody></table></div>
+<h4>Backend authentication interplay</h4>
+<p>JWT vs reference tokens is an <em>inbound</em> concern only. Once validated, the token sits on <code>AuthContext.AccessToken</code> and <code>BackendAuthPolicies.BearerToken</code> forwards it downstream unchanged - your backends see the same shape regardless of which inbound provider you use. For backends that need a different token (different audience, different IdP), keep using <code>BackendAuthPolicies.TokenExchange</code>.</p>
+<h4>Limitations</h4>
+<ul><li><code>RefreshAsync</code> is a no-op - JWTs are stateless and can't be refreshed server-side. Clients must obtain new tokens before expiry.</li><li><code>InvalidateAsync</code> is a no-op - JWTs can't be revoked at the BFF. If immediate revocation matters, prefer reference tokens.</li></ul>
+</div>
+<div class="section">
+<h3>Custom Authentication Provider</h3>
+<p>Implement <code>IAuthenticationProvider</code> for custom authentication scenarios (API keys, HMAC, custom JWTs, etc.):</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class ApiKeyAuthProvider : IAuthenticationProvider
+{
+    private readonly IApiKeyValidator _validator;
+
+    public ApiKeyAuthProvider(IApiKeyValidator validator) =&gt; _validator = validator;
+
+    public async Task&lt;AuthenticationContext&gt; GetAuthContextAsync(
+        HttpContext context, CancellationToken cancellationToken = default)
+    {
+        var apiKey = context.Request.Headers[&quot;X-Api-Key&quot;].FirstOrDefault();
+        if (string.IsNullOrEmpty(apiKey))
+            return new AuthenticationContext(); // Not authenticated
+
+        var keyInfo = await _validator.ValidateAsync(apiKey, cancellationToken);
+        if (keyInfo == null)
+            return new AuthenticationContext(); // Invalid key
+
+        return new AuthenticationContext
+        {
+            AccessToken = apiKey,
+            Claims =
+            {
+                [&quot;api_key_id&quot;] = [keyInfo.KeyId],
+                [&quot;tenant_id&quot;] = [keyInfo.TenantId]
+            }
+        };
+    }
+
+    public Task&lt;AuthenticationContext?&gt; RefreshAsync(
+        AuthenticationContext current, CancellationToken cancellationToken = default)
+        =&gt; Task.FromResult&lt;AuthenticationContext?&gt;(null); // API keys don't refresh
+
+    public Task InvalidateAsync(HttpContext context, CancellationToken cancellationToken = default)
+        =&gt; Task.CompletedTask; // Nothing to invalidate for stateless API keys
+}</code></pre>
+<p>Register your custom provider:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Simple registration
+builder.Services.AddPortaAuthProvider&lt;ApiKeyAuthProvider&gt;();
+
+// Or with factory for explicit construction
+builder.Services.AddPortaAuthProvider&lt;ApiKeyAuthProvider&gt;(sp =&gt;
+    new ApiKeyAuthProvider(sp.GetRequiredService&lt;IApiKeyValidator&gt;()));</code></pre>
+<blockquote><p><strong>A custom provider does not satisfy <code>RequireAuthorization</code> by itself — read the next section before shipping it.</strong> Left at the default, an endpoint behind such a provider returns <code>401</code> <em>before your provider ever runs</em>.</p></blockquote>
+</div>
+<div class="section">
+<h3>Two auth layers: the identity gate vs. the provider</h3>
+<p>Porta enforces authentication at <strong>two</strong> distinct points, and conflating them is the most common BFF footgun:</p>
+<ol><li><strong>The ASP.NET identity gate — <code>HttpContext.User</code>.</strong> Every Porta endpoint stamps <code>RequireAuthorization()</code> at <code>.Build()</code> unless told otherwise (<code>RequireAuthorizationByDefault</code> defaults to <code>true</code>; override per endpoint with <code>.RequireAuth(&quot;policy&quot;)</code> / <code>.AllowAnonymous()</code>). That requirement is enforced by ASP.NET's authorization middleware <strong>before</strong> the endpoint runs, and re-checked inside Porta's handler as defense-in-depth. It passes only if <code>HttpContext.User.Identity.IsAuthenticated</code> is <code>true</code> — which is set exclusively by a registered <strong>ASP.NET authentication scheme</strong>.</li><li><strong>The Porta provider — <code>AuthContext</code>.</strong> Your <code>IAuthenticationProvider.GetAuthContextAsync</code> runs <strong>inside</strong> the endpoint handler, <em>after</em> the identity gate, and resolves the access token + claims used for <strong>backend</strong> calls. It does <strong>not</strong> populate <code>HttpContext.User</code>.</li></ol>
+<p>So whether the gate and the provider line up depends on how your auth is registered:</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Auth mechanism</th><th>Registers an ASP.NET scheme?</th><th>Sets <code>HttpContext.User</code>?</th><th>Default <code>RequireAuthorization</code> works?</th><th></th></tr></thead><tbody><tr><td></td><td><code>AddPortaAuthentication</code> (cookie + OIDC)</td><td>✅</td><td>✅</td><td>✅ — no extra action</td><td></td></tr><tr><td></td><td><code>AddPortaJwtAuthentication</code> (JWT bearer)</td><td>✅</td><td>✅</td><td>✅ — no extra action</td><td></td></tr><tr><td></td><td><strong><code>AddPortaReferenceTokenScheme</code></strong> (opaque token)</td><td>✅</td><td>✅</td><td>✅ — no extra action</td><td></td></tr><tr><td></td><td><code>AddReferenceTokenAuthentication</code> (provider only)</td><td>❌</td><td>❌</td><td>❌ — gate 401s first</td><td></td></tr><tr><td></td><td>Custom <code>IAuthenticationProvider</code> (API key, HMAC, …)</td><td>❌</td><td>❌</td><td>❌ — gate 401s first</td><td></td></tr></tbody></table></div>
+<p>For the two ❌ rows the provider authenticates <strong>in-pipeline only</strong>, so the default identity gate short-circuits with <code>401</code> before the provider is consulted — even when the request carries a perfectly valid token. (Porta logs a <code>Critical</code> startup warning when an endpoint requires a principal but no scheme is registered, so this doesn't stay silent.) You have two ways to fix it:</p>
+<p><strong>Option A — drop the gate, authenticate in-pipeline.</strong> Mark the endpoints <code>.AllowAnonymous()</code> (or set <code>RequireAuthorizationByDefault = false</code>) so the request reaches the handler and your provider runs and populates <code>AuthContext</code> for the backend call:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapPassThrough&lt;DataResponse&gt;()
+    .FromGet(&quot;/api/data&quot;)
+    .ToGet(&quot;https://api.internal/data&quot;)
+    .AllowAnonymous()            // skip the ASP.NET identity gate; the provider runs in-pipeline
+    .Build();</code></pre>
+<p><code>.AllowAnonymous()</code> here means "no ASP.NET principal required", <strong>not</strong> "no auth" — the provider still resolves credentials for the backend. If you also need to <em>reject</em> anonymous callers, enforce it in-pipeline: a transformer whose <code>RequiresAuthentication</code> returns <code>true</code> 401s when <code>context.UserId</code> (i.e. the provider's <code>AuthContext</code>) is empty. A zero-code <code>MapPassThrough</code> does <strong>not</strong> do this, so don't rely on <code>.AllowAnonymous()</code> alone to protect a passthrough.</p>
+<p><strong>Option B — register a real scheme (recommended when you want <code>RequireAuthorization</code> to work).</strong> A scheme populates <code>HttpContext.User</code>, so the identity gate passes normally, your <code>IAuthenticationProvider</code> reads the already-validated principal/token for backend forwarding, and <code>.RequireAuth(&quot;policy&quot;)</code>, fallback policies, and group conventions all behave as a vanilla ASP.NET app expects.</p>
+<p>For <strong>opaque / reference tokens</strong>, this is built in — swap <code>AddReferenceTokenAuthentication</code> for <code>AddPortaReferenceTokenScheme</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddPortaReferenceTokenScheme(options =&gt;
+{
+    options.Authority = &quot;https://idp.example.com&quot;;
+    options.ValidAudiences = [&quot;api://my-bff&quot;];
+});
+
+// ...then nothing else changes — the opaque token gates endpoints like any other principal:
+app.MapRawForward()
+    .FromGet(&quot;/api/{**catch-all}&quot;)
+    .ToGet(&quot;https://logic.internal/api/{**catch-all}&quot;)
+    .RequireAuth()          // works: the scheme introspected the token and set HttpContext.User
+    .Build();</code></pre>
+<p>The <code>PortaReferenceToken</code> scheme runs the same introspection, audience/issuer binding, and distributed (positive + negative) cache as the provider — the token is introspected at most once per request — and returns a principal carrying the introspection claims. It composes with cookie/OIDC and JWT bearer via standard multi-scheme selection (a policy scheme or <code>ForwardDefaultSelector</code>); the only thing that changes between credential types is the <code>AddPorta…</code> registration line, so the BFF's forwarding code is identical either way. For credential types Porta doesn't ship (HMAC, mTLS-derived identity, …), implement a standard ASP.NET Core <code>AuthenticationHandler</code> the same way.</p>
+<blockquote><p><strong>Don't put authorization on a <code>MapGroup</code></strong> to cover Porta endpoints — Porta's per-endpoint stamp wins, and an endpoint that resolves to anonymous emits <code>AllowAnonymous()</code> that overrides the group requirement. See <a href="advanced.html#grouping-endpoints-with-mapgroup">Advanced Topics → Grouping endpoints</a>.</p></blockquote>
+</div>
+<div class="section">
+<h3>Combining authentication providers</h3>
+<p>Multiple authentication providers can be registered side-by-side. A typical deployment accepts browser users via a session cookie, mobile/SPA callers via a JWT, and service-to-service traffic via an API key - all on the same endpoints:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services
+    .AddPortaAuthentication(config)                       // session (cookie + OIDC)
+    .AddPortaJwtAuthentication(opt =&gt; { /* ... */ })      // JWT bearer
+    .AddPortaAuthProvider&lt;ApiKeyAuthProvider&gt;();          // custom</code></pre>
+<p>Registered providers are composed at resolution time into a single <code>IAuthenticationProvider</code> with the following semantics:</p>
+<ul><li><strong>Resolution order is registration order.</strong> Each request is offered to providers in the order they were registered. The first provider whose <code>GetAuthContextAsync</code> returns <code>IsAuthenticated = true</code> wins; the rest are not called for that request. Register cheap, header-based providers (JWT, API key) before expensive ones if they're more common on your traffic profile.</li><li><strong>Refresh routes to the originating provider.</strong> The winning provider's <code>Scheme</code> is stamped onto the returned <code>AuthenticationContext</code>. When <code>RefreshAsync</code> is later called on that context, the composite routes it back to the same provider. Providers that don't support refresh (JWT, reference tokens, most API keys) return <code>null</code> as before.</li><li><strong>Logout fans out to every provider.</strong> <code>InvalidateAsync</code> is called on all registered providers so that every credential surface is cleared (session sign-out, reference-token cache eviction, etc.). Each provider's invalidation is independent - a failure in one is logged and does not block the others.</li><li><strong>Mixed-credential requests are logged at Debug.</strong> If a request carries both an <code>Authorization</code> header and a cookie-auth ticket, the composite emits an event-id <code>13610</code> Debug log naming the scheme that matched. Useful for diagnosing "why did this request authenticate as X instead of Y" without runtime cost in production.</li></ul>
+</div>
+<div class="section">
+<h3>AuthenticationContext Properties</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Property</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>AccessToken</code></td><td>Primary access token (determines <code>IsAuthenticated</code>)</td><td></td></tr><tr><td></td><td><code>RefreshToken</code></td><td>Token for refreshing access (OIDC)</td><td></td></tr><tr><td></td><td><code>IdToken</code></td><td>OIDC ID token</td><td></td></tr><tr><td></td><td><code>ExpiresAt</code></td><td>Token expiration time</td><td></td></tr><tr><td></td><td><code>Claims</code></td><td>User claims dictionary</td><td></td></tr><tr><td></td><td><code>Headers</code></td><td>Additional auth headers to forward</td><td></td></tr><tr><td></td><td><code>ServiceTokens</code></td><td>Per-service tokens (for different audiences)</td><td></td></tr><tr><td></td><td><code>IsAuthenticated</code></td><td>True if <code>AccessToken</code> is present</td><td></td></tr><tr><td></td><td><code>IsExpiredWithSkew(skew)</code></td><td>Method (not a property): true if the token is expired or within <code>skew</code> of expiry. Pass <code>PortaCoreOptions.TokenRefreshSkew</code> so all layers agree on staleness. An overload takes an explicit <code>TimeProvider</code> for tests.</td><td></td></tr><tr><td></td><td><code>Scheme</code></td><td>Identifier of the provider that issued this context. Set automatically when multiple providers are registered; used to route <code>RefreshAsync</code> back to the originating provider.</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Accessing Claims in Transformers</h3>
+<p>Inside a transformer, the authenticated user's claims are available through <code>TransformerContext</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public override async Task&lt;MyResponse&gt; TransformAsync(TransformerContext context)
+{
+    var userId = context.UserId;                  // standard OIDC `sub` claim
+    var tenantId = context.GetClaim(&quot;tenant_id&quot;); // first value of any claim by name
+    var roles = context.GetClaims(&quot;role&quot;);        // every value of a repeated claim
+    // ...
+}</code></pre>
+<p><code>UserId</code> is shorthand for <code>GetClaim(&quot;sub&quot;)</code> and is the value the built-in transformer base classes check against when <code>RequireAuth()</code> / <code>RequiresAuthentication</code> is set.</p>
+<p>A single claim type can carry multiple values (for example, several <code>role</code> claims). <code>GetClaim(name)</code> returns the <strong>first</strong> value (or <code>null</code> when absent); <code>GetClaims(name)</code> returns <strong>every</strong> value as an <code>IReadOnlyList&lt;string&gt;</code> (empty when absent). Underlying storage is <code>AuthenticationContext.Claims</code>, a <code>Dictionary&lt;string, string[]&gt;</code>.</p>
+<p>For domain-specific claims that you reach for often, define your own extension methods to keep call sites readable:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public static class MyTransformerContextExtensions
+{
+    public static string? TenantId(this TransformerContext ctx) =&gt; ctx.GetClaim(&quot;tenant_id&quot;);
+    public static string? CustomUserId(this TransformerContext ctx) =&gt; ctx.GetClaim(&quot;custom_id&quot;);
+}
+
+// Usage:
+var tenant = context.TenantId();</code></pre>
+<p>This keeps the library generic while letting any consumer add their own typed accessors without forking or configuration plumbing.</p>
+<h2>Backend Authentication</h2>
+<p>Backend auth handlers apply authentication to outgoing requests to backend services.</p>
+</div>
+<div class="section">
+<h3>Built-in Policies</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Policy</th><th>Description</th><th>Requires User Identity</th><th></th></tr></thead><tbody><tr><td></td><td><code>None</code></td><td>No authentication</td><td>No</td><td></td></tr><tr><td></td><td><code>BasicAuth</code></td><td>HTTP Basic auth with configured credentials</td><td>No</td><td></td></tr><tr><td></td><td><code>BearerToken</code></td><td>Forward user's bearer token</td><td>Yes</td><td></td></tr><tr><td></td><td><code>TokenExchange</code></td><td>Exchange user token for backend-specific token (RFC 8693) - requires an audience</td><td>Yes</td><td></td></tr></tbody></table></div>
+<blockquote><p><strong>TokenExchange requires an audience.</strong> Prefer <code>.WithTokenExchange(audience)</code> on the endpoint builder — this rejects a null/blank audience immediately at configuration time. If you must select it via <code>.WithBackendAuth(BackendAuthPolicies.TokenExchange)</code> (no inline audience), configure a fallback via <code>BackendServiceOptions.DefaultTokenExchangeAudience</code> or per-backend <code>BackendServiceOptions.TokenExchangeAudiences[backendName]</code>. When an endpoint mapped at startup selects the policy with no resolvable audience source, Porta <strong>fails fast at startup</strong>. The runtime guard remains as a backstop for cases the startup check can't see (e.g. a backend name rewritten via <code>ModifyRequest</code>): there a missing audience surfaces as a server-side <strong>configuration error (500-class)</strong>, not a user <code>401</code> — a missing audience is operator misconfiguration, not a credential rejection.</p></blockquote>
+<p>The built-in <code>TokenExchange</code> handler inherits the rest of its wiring from your session configuration: the IdP <strong>token endpoint</strong> is resolved from OIDC discovery on <code>SessionAuthentication.Authority</code>, and the <strong>client credentials</strong> come from <code>SessionAuthentication.ClientId</code>/<code>ClientSecret</code>. You only supply the audience. Exchanged tokens are cached per session by <code>IApiTokenService</code>, which stores them in <code>HttpContext.Session</code> - enable ASP.NET Core session (<code>AddSession()</code> + <code>UseSession()</code>) or every request performs a fresh exchange.</p>
+</div>
+<div class="section">
+<h3>Refreshing the user token on a backend 401</h3>
+<p>When a backend returns <code>401</code> on a user-token policy, Porta treats it as a stale-token signal: it force-refreshes the user's session access token against the IdP and retries the call <strong>once</strong> with the rotated token. This is <strong>on by default</strong> - opt out globally with <code>PortaCore:RefreshBackendTokenOn401 = false</code>.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Nothing to enable - this just works for BearerToken / TokenExchange backends:
+app.MapPassThrough&lt;OrderResponse&gt;()
+    .FromGet(&quot;/api/orders/{id}&quot;)
+    .ToGet(&quot;https://orders.internal/orders/{id}&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .RequireAuth()
+    .Build();
+
+// Opt out globally:
+builder.Services.AddPortaCore(o =&gt; o.RefreshBackendTokenOn401 = false);</code></pre>
+<ul><li><strong>On by default; config opt-out.</strong> Set <code>PortaCoreOptions.RefreshBackendTokenOn401 = false</code> (or <code>PortaCore:RefreshBackendTokenOn401</code> in config) to disable. Opt out if a backend legitimately returns <code>401</code> for reasons unrelated to a stale token.</li><li><strong>Bounded.</strong> Exactly one IdP refresh + one retry per request. A second <code>401</code> is returned as-is - so the caller still sees <code>502</code> under the default mapper, or <code>401</code> if you've registered <code>PassThroughBackendErrorMapper</code>. The retry is skipped entirely when the token doesn't actually rotate (no refreshable session, refresh failed), so it never loops.</li><li><strong>User-token policies only.</strong> Only <code>BearerToken</code>/<code>TokenExchange</code> trigger it; <code>BasicAuth</code>/<code>None</code> are never affected, since refreshing the user token can't fix their credentials.</li><li><strong>Concurrency-safe across aggregation.</strong> When an <code>AggregatingTransformer</code> fans out to several user-token backends in parallel and more than one returns <code>401</code>, the refresh is serialized and deduplicated: <strong>exactly one</strong> IdP refresh and one cookie rewrite, then each failed leg retries with the rotated token.</li><li><strong>Refreshable inbound only.</strong> Meaningful when the request authenticated via a refreshable session (cookie + OIDC). For non-refreshable inbound auth (inbound JWT, reference tokens) there's nothing to refresh, so the <code>401</code> simply propagates.</li></ul>
+</div>
+<div class="section">
+<h3>Custom Backend Auth Handler</h3>
+<p>Implement <code>IBackendAuthHandler</code> to add custom authentication policies. The <code>BackendAuthContext</code> passed to the handler carries the user's access token (<code>AccessToken</code>), the authenticated user's claims (<code>Claims</code>, first value wins for repeated claim types; empty for anonymous requests), the outgoing <code>BackendRequest</code>, and the request's <code>CancellationToken</code>:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class HmacAuthHandler : IBackendAuthHandler
+{
+    public string PolicyName =&gt; &quot;HmacAuth&quot;;
+
+    public Task ApplyAuthAsync(HttpRequestMessage request, BackendAuthContext context)
+    {
+        var signature = ComputeHmacSignature(request);
+        request.Headers.Add(&quot;X-Signature&quot;, signature);
+        request.Headers.Add(&quot;X-Timestamp&quot;, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString());
+        return Task.CompletedTask;
+    }
+}
+
+// Registration
+builder.Services.AddPortaCore();
+builder.Services.AddPortaAuthHandler&lt;HmacAuthHandler&gt;();
+
+// With factory for complex dependencies
+builder.Services.AddPortaAuthHandler&lt;ApiKeyAuthHandler&gt;(sp =&gt;
+    new ApiKeyAuthHandler(sp.GetRequiredService&lt;IConfiguration&gt;()[&quot;ApiKeys:Partner&quot;]));
+
+// Register multiple handlers at once
+builder.Services.AddPortaAuthHandlers(
+    typeof(HmacAuthHandler),
+    typeof(ApiKeyAuthHandler),
+    typeof(ClientCredentialsAuthHandler));</code></pre>
+</div>
+<div class="section">
+<h3>Usage in Endpoints</h3>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;PartnerTransformer, Response&gt;()
+    .FromGet(&quot;/api/partner-data&quot;)
+    .ToGet(&quot;https://partner-api.example.com/data&quot;)
+    .WithBackendAuth(&quot;HmacAuth&quot;)  // Uses custom handler
+    .Build();</code></pre>
+<h2>Per-Backend Authentication</h2>
+<p>Multi-backend transformers support per-backend authentication configuration:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;MyTransformer, MyResponse&gt;()
+    .FromGet(&quot;/api/aggregated&quot;)
+    .ToBackends(b =&gt; b
+        .ToPost(&quot;UserInfo&quot;, &quot;https://users.internal/userinfo&quot;).WithAuth(BackendAuthPolicies.BasicAuth)
+        .ToGet(&quot;Products&quot;, &quot;https://products.internal/products&quot;).WithAuth(BackendAuthPolicies.BearerToken))
+    .Build();</code></pre>
+</div>
+<div class="section">
+<h3>Per-Backend Modifiers</h3>
+<p>These chain off each <code>ToGet/ToPost/...</code> in the <code>ToBackends(configure =&gt; ...)</code> builder and apply to the backend they follow (the same names also work as tuple extensions on the array form of <code>ToBackends</code>):</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Method</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>.WithAuth(policy)</code></td><td>Apply a specific authentication policy</td><td></td></tr><tr><td></td><td><code>.WithUserToken()</code></td><td>Forward user's OAuth token to trusted internal services</td><td></td></tr><tr><td></td><td><code>.WithTokenExchange(audience)</code></td><td>Exchange user token for backend-specific token</td><td></td></tr><tr><td></td><td><code>.WithTimeout(timespan)</code></td><td>Set custom timeout (chainable with above)</td><td></td></tr><tr><td></td><td><code>.WithRetries(maxAttempts)</code></td><td>Enable automatic retries for transient failures</td><td></td></tr></tbody></table></div>
+</div>
+<div class="section">
+<h3>Fallback Authentication</h3>
+<p>Use <code>WithBackendAuth()</code> to set a default auth policy for backends without explicit configuration:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapTransformer&lt;MyTransformer, MyResponse&gt;()
+    .FromGet(&quot;/api/data&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BasicAuth)  // Fallback
+    .ToBackends(b =&gt; b
+        .ToGet(&quot;Backend1&quot;, $&quot;{url1}/data&quot;)                                    // Uses fallback
+        .ToGet(&quot;Backend2&quot;, $&quot;{url2}/data&quot;).WithAuth(BackendAuthPolicies.BearerToken)  // Explicit
+        .ToGet(&quot;Backend3&quot;, $&quot;{url3}/public&quot;))                                 // Uses fallback
+    .Build();</code></pre>
+<h2>Trusted Hosts</h2>
+<p>When using <code>.WithUserToken()</code>, the user's OAuth token is forwarded directly to the backend. This should <strong>only</strong> be used with trusted internal services.</p>
+</div>
+<div class="section">
+<h3>Configuration</h3>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;PortaCore&quot;: {
+    &quot;TrustedHosts&quot;: [
+      &quot;https://api.internal.company.com&quot;,
+      &quot;https://*.internal.company.com&quot;,
+      &quot;https://api.company.com:8443&quot;
+    ]
+  }
+}</code></pre>
+</div>
+<div class="section">
+<h3>Startup Validation</h3>
+<p>If a backend using <code>WithUserToken()</code> is not in the trusted hosts list, the application <strong>fails to start</strong>:</p>
+<pre><code>InvalidOperationException: Backend endpoint 'InternalApi' URL 'https://untrusted.example.com/api'
+is not in the trusted hosts list. WithUserToken() forwards the user's OAuth token and should only
+be used with trusted internal services. Add the host to PortaCore:TrustedHosts or use a
+different auth policy.</code></pre>
+<h2>Token Services</h2>
+<p>The framework provides provider-agnostic token services for token refresh, revocation, exchange, and caching.</p>
+</div>
+<div class="section">
+<h3>Provider-Agnostic Usage</h3>
+<p>All token services support explicit configuration parameters:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">// Token refresh with explicit options
+var refreshOptions = new TokenRefreshOptions
+{
+    TokenEndpoint = &quot;https://auth.example.com/oauth/token&quot;,
+    ClientId = &quot;my-client&quot;,
+    ClientSecret = &quot;my-secret&quot;,
+    Scope = &quot;openid profile&quot;
+};
+var tokens = await tokenRefreshService.RefreshAsync(refreshToken, refreshOptions);
+
+// Token revocation with explicit options
+var revocationOptions = new TokenRevocationOptions
+{
+    RevocationEndpoint = &quot;https://auth.example.com/oauth/revoke&quot;,
+    ClientId = &quot;my-client&quot;,
+    ClientSecret = &quot;my-secret&quot;
+};
+await tokenRevocationService.RevokeTokenAsync(accessToken, revocationOptions, &quot;access_token&quot;);</code></pre>
+</div>
+<div class="section">
+<h3>OIDC-Configured Usage</h3>
+<p>When using OIDC authentication, simpler overloads use injected configuration:</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">var tokens = await tokenRefreshService.RefreshAsync(refreshToken);
+await tokenRevocationService.RevokeTokenAsync(accessToken);</code></pre>
+</div>
+<div class="section">
+<h3>Token Service Interfaces</h3>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Interface</th><th>Purpose</th><th></th></tr></thead><tbody><tr><td></td><td><code>ITokenRefreshService</code></td><td>Refresh OAuth tokens against the IdP's token endpoint</td><td></td></tr><tr><td></td><td><code>IAccessTokenRefreshService</code></td><td>Returns the current access token for the request, transparently refreshing if near expiry. Wraps <code>ITokenRefreshService</code> with per-user locking and ticket-store updates. Use this from inside transformers / backend handlers; use <code>ITokenRefreshService</code> only when you have a refresh token in hand outside the cookie-auth pipeline.</td><td></td></tr><tr><td></td><td><code>ITokenRevocationService</code></td><td>Revoke tokens at the IdP's revocation endpoint (RFC 7009)</td><td></td></tr><tr><td></td><td><code>ITokenExchangeService</code></td><td>Exchange the user's access token for a backend-specific token (RFC 8693)</td><td></td></tr><tr><td></td><td><code>IApiTokenService</code></td><td>Cache and manage API-specific tokens (token-exchange results)</td><td></td></tr></tbody></table></div>
+</div></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

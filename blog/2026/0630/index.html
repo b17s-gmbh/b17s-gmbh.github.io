@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="emerald" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Introducing b17s.Porta | b17s</title>
+<meta name="description" content="b17s.Porta is a customizable, boilerplate-free Backend-for-Frontend (BFF) library for ASP.NET Core, built on minimal APIs with transformer-based API aggregation and multi-frontend/backend authentication.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/blog/2026/0630/">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Introducing b17s.Porta">
+<meta property="og:description" content="b17s.Porta is a customizable, boilerplate-free Backend-for-Frontend (BFF) library for ASP.NET Core, built on minimal APIs with transformer-based API aggregation and multi-frontend/backend authentication.">
+<meta property="og:image" content="https://b17s.net/img/blog/20260703.webp">
+<meta property="og:url" content="https://b17s.net/blog/2026/0630/">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Introducing b17s.Porta">
+<meta name="twitter:description" content="b17s.Porta is a customizable, boilerplate-free Backend-for-Frontend (BFF) library for ASP.NET Core, built on minimal APIs with transformer-based API aggregation and multi-frontend/backend authentication.">
+<meta name="twitter:image" content="https://b17s.net/img/blog/20260703.webp">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-emerald.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+
+    <style>
+        /* Post artwork (front-matter `picture`) dissolving into the page
+           background, same treatment as the About page hero. Emitted only
+           when the markdown defines a picture. */
+        .blog-hero {
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background: url('/img/blog/20260703.webp') center / cover no-repeat;
+            opacity: 0.5;
+            /* Feather every edge so the artwork has no hard borders. */
+            -webkit-mask-image:
+                linear-gradient(to bottom, transparent 0%, #000 28%, #000 70%, transparent 100%),
+                linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-image:
+                linear-gradient(to bottom, transparent 0%, #000 28%, #000 70%, transparent 100%),
+                linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+            mask-composite: intersect;
+        }
+        /* Smooth shadows at top and bottom that bleed the artwork into the
+           page background — long, gentle ramps instead of hard stops. */
+        .blog-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(
+                to bottom,
+                var(--bg-dark) 0%,
+                rgba(0, 0, 0, 0.3) 22%,
+                rgba(0, 0, 0, 0) 42%,
+                rgba(0, 0, 0, 0) 58%,
+                rgba(0, 0, 0, 0.3) 78%,
+                var(--bg-dark) 100%
+            );
+        }
+        .blog-hero .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        /* Over artwork, mid-gray secondary text is unreadable — lift it to
+           near-white with a subtle contact shadow. */
+        .blog-hero h1 {
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        }
+        .blog-hero .hero-description {
+            color: rgba(255, 255, 255, 0.92);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        .blog-hero .meta-info,
+        .blog-hero .meta-info span {
+            color: rgba(255, 255, 255, 0.78);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body data-page="blog">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Hero Section for Blog Post -->
+    <section class="hero blog-hero">
+        <div class="hero-content">
+            <div class="hero-tag">projects</div>
+            <h1 id="blog-title">Introducing b17s.Porta</h1>
+            <p class="hero-description" id="blog-subtitle">A Backend-for-Frontend library for ASP.NET Core</p>
+            <div class="meta-info" id="meta-info">
+                <span class="meta-date">2026-07-03</span>
+                <span class="meta-separator">•</span>
+                <span class="meta-author">Benjamin Belikov</span>
+            </div>
+            <div class="tags-container" id="tags-container"><span class="tag clickable-tag" data-tag="dotnet">dotnet</span><span class="tag clickable-tag" data-tag="porta">porta</span><span class="tag clickable-tag" data-tag="bff">bff</span><span class="tag clickable-tag" data-tag="aspnetcore">aspnetcore</span></div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="article-section">
+        <div class="content-card">
+            <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+            <div id="markdrown-output" class="markdrown-content halo">
+<p><i data-lucide="github"></i> <a href="https://github.com/b17s-gmbh/b17s-Porta">GitHub Repository</a> | <i data-lucide="package"></i> <a href="https://www.nuget.org/packages/b17s.Porta/">NuGet Package</a> | <i data-lucide="book"></i> <a href="/docs/porta/">Documentation</a></p>
+<div class="section">
+<h3>Releasing Porta</h3>
+<p>We are happy to announce the release of <strong>b17s.Porta</strong>: <br> an easy to use, customizable Backend-for-Frontend library for ASP.NET Core.</p>
+<p>Porta is built for teams that want the benefits of a dedicated BFF layer without wiring the same plumbing over and over again. It hooks directly into ASP.NET Core minimal APIs and adds</p>
+<ul><li>declarative endpoint model</li><li>transformer-based response shaping</li><li>multi-backend aggregation</li><li>per-backend authentication</li><li>OIDC integration</li><li>raw forwarding</li><li>backend GraphQL support</li><li>caching, and</li><li>OpenTelemetry tracing.</li></ul>
+<blockquote class="warning"><div class="title">Production</div><p>Porta is not yet battle-hardened. For production scenarios, we currently recommend running it behind a reverse proxy instead of exposing it directly at the edge, or further harden the ASP.NET Core request pipeline.</p></blockquote>
+<hr>
+</div>
+<div class="section">
+<h3>Why Porta exists</h3>
+<p>The Backend-for-Frontend pattern is simple in theory: <br> each frontend gets a backend tailored to its exact needs.</p>
+<p>If you have ever built a BFF that fans out to multiple internal services, reshapes their responses, hides internal fields, forwards user tokens, calls one backend with Basic Auth, another with Bearer tokens, and then glues the result into a frontend-specific contract: <br> Porta is the library that turns that work into a few focused endpoint builders.</p>
+<p>Porta was designed with ease of use in mind to reduce boilerplate code as much as possible while at the same time allowing consumers to modify each component of this library. <br> The goal is not to hide ASP.NET Core. The goal is to make BFF code feel native to ASP.NET Core while removing the repetitive infrastructure code around it.</p>
+<hr>
+</div>
+<div class="section">
+<h3>What Porta gives you</h3>
+<h4>Minimal API</h4>
+<p>We decided to make use of ASP.Net Core's <strong>minimal API</strong> pattern, hook into it, and use build-patterns to define endpoints, wiring and their behavior.</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">var app = builder.Build();
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();
+app.Run();</code></pre>
+<h4>Transformer Pattern</h4>
+<p>If required, backend responses can be processed and transformed inside Porta's <strong>Transformers</strong>. Reshape backend responses into frontend contracts in one focused place. Redact internal fields, rename properties, flatten structures, or build entirely new response models. You simply define the DTOs and transformers and add them to the builder:</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">builder.Services.AddTransformer&lt;ProductsTransformer&gt;();
+app.MapTransformer&lt;ProductsTransformer, ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<pre data-lang="csharp" data-filename="ProductsTransformer.cs"><code data-lang="csharp" data-filename="ProductsTransformer.cs" class="language-csharp">public class ProductsTransformer 
+    : PassThroughTransformer&lt;ProductsResponse&gt;
+{
+    protected override ProductsResponse TransformResponse(
+        ProductsResponse response,
+        TransformerContext context)
+        =&gt; response with
+        {
+            Items = response.Items
+                .Select(i =&gt; i with { CostPrice = null })
+                .ToList()
+        };
+}</code></pre>
+<h4>Multi-Backend Aggregation</h4>
+<p>Combine data from multiple backend services into a single frontend endpoint. Each backend leg can have its own URL, request configuration, authentication policy, and caching behavior.</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">.ToBackends(b =&gt; b
+    .ToGet(&quot;UserInfo&quot;, &quot;https://users.internal/userinfo&quot;)
+        .WithAuth(BackendAuthPolicies.BearerToken)
+    .ToPost(&quot;Orders&quot;, &quot;https://orders.internal/orders&quot;)
+        .WithTokenExchange(&quot;order-api&quot;)
+        .WithRetries(3))</code></pre>
+<h4>Per-Backend Authentication</h4>
+<p>Forward the user's access token, use HTTP Basic credentials from configuration, exchange tokens for backend-specific access, or plug in a custom <code>IBackendAuthHandler</code> for HMAC, API keys, client credentials, legacy systems, or anything else.</p>
+<h4>Startup Validation</h4>
+<p>Porta validates endpoint and backend configuration during application startup, so misconfigured endpoints fail before traffic reaches them.</p>
+<h4>OIDC Endpoints</h4>
+<p>Add login, logout, back-channel logout, and optional REST endpoints for session administration without hand-rolling the full OIDC flow.</p>
+<h4>Raw Forwarding</h4>
+<p>Stream binary content, file downloads, images, and non-JSON APIs directly through the BFF without defining response DTOs.</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">// Zero-code file proxy
+app.MapRawForward()
+    .FromGet(&quot;/api/files/{id}&quot;)
+    .ToGet(&quot;https://files.internal/files/{id}&quot;)
+    .WithBackendAuth(BackendAuthPolicies.BasicAuth)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<h4>GraphQL Support</h4>
+<p>Put clean REST endpoints in front of GraphQL backends while keeping frontend consumers decoupled from backend query details.</p>
+<h4>Output and Distributed Caching</h4>
+<p>Use output caching, distributed caching for HA deployments, and per-backend-leg caching for aggregated endpoints.</p>
+<h4>OpenTelemetry</h4>
+<p>Get distributed tracing around transformers, backend calls, and BFF execution flow without manually instrumenting every endpoint.</p>
+<hr>
+</div>
+<div class="section">
+<h3>Quick start</h3>
+<h4 id="step0">0. Installation</h4>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash">dotnet add package b17s.Porta</code></pre>
+<h4 id="step-1">1. The smallest possible endpoint</h4>
+<p>No authentication, no transformer, no custom code - just a mapped pass-through endpoint.</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPortaCore();
+
+var app = builder.Build();
+
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();
+
+app.Run();</code></pre>
+<p>This is the simplest thing Porta can do: expose a frontend-facing endpoint and forward it to a backend API. </p>
+<blockquote class="tip"><div class="title">Secure by default</div><p>Porta endpoints require authorization by default. You only add <code>.AllowAnonymous()</code> when the endpoint is intentionally public. That means a forgotten authorization annotation fails closed, not open.</p></blockquote>
+<hr>
+<h4 id="step-2">2. Reshape a response with a transformer</h4>
+<p>Here, the backend returns product data that includes <code>CostPrice</code>. The frontend should never see that field, so the transformer removes it.</p>
+<pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public class ProductsTransformer : PassThroughTransformer&lt;ProductsResponse&gt;
+{
+    protected override ProductsResponse TransformResponse(
+        ProductsResponse response,
+        TransformerContext context)
+        =&gt; response with
+        {
+            Items = response.Items
+                .Select(i =&gt; i with { CostPrice = null })
+                .ToList()
+        };
+}</code></pre>
+<p>Register the transformer and map the endpoint:</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">builder.Services.AddTransformer&lt;ProductsTransformer&gt;();
+
+app.MapTransformer&lt;ProductsTransformer, ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .AllowAnonymous()
+    .Build();</code></pre>
+<hr>
+<h4 id="step-3">3. Add authentication</h4>
+<p>Now the same endpoint requires a logged-in user and forwards that user's access token to the backend.</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">builder.Services.AddPortaCore(options =&gt;
+{
+    options.TrustedHosts = [&quot;https://products-api.internal&quot;];
+});
+
+builder.Services.AddPortaAuthentication(builder.Configuration);
+
+var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapPassThrough&lt;ProductsResponse&gt;()
+    .FromGet(&quot;/api/products&quot;)
+    .ToGet(&quot;https://products-api.internal/products&quot;)
+    .RequireAuth()
+    .WithBackendAuth(BackendAuthPolicies.BearerToken)
+    .Build();</code></pre>
+<p>The frontend calls the BFF. The BFF validates the user session. The backend receives the forwarded token. The endpoint contract stays clean.</p>
+<hr>
+</div>
+<div class="section">
+<h3>How Porta handles High Availability</h3>
+<p>Porta is designed to run as <strong>N replicas behind a load balancer without sticky sessions</strong>. Any request - including the OIDC callback - can land on any replica, and rolling deploys with mixed old/new replicas are fine. No replica holds session state of its own. Everything that matters lives in shared infrastructure:</p>
+<ul><li><strong>Sessions and auth tickets</strong> live in <code>IDistributedCache</code> (Redis or Valkey). The auth cookie only carries an opaque ticket id; every replica resolves it against the same store.</li><li><strong>Cookies are encrypted with a shared Data Protection key ring.</strong> A correlation cookie minted by replica A during the OIDC redirect can be decrypted by replica B when the callback lands there. That is the whole reason sticky sessions are unnecessary.</li><li><strong>Token refreshes are coordinated across replicas.</strong> When a distributed cache is registered, Porta automatically installs a distributed refresh lock, so two replicas refreshing the same user's token at the same moment don't trip strict one-time-use rotation on hardened IdPs. Need a true mutex? Register your own <code>IRefreshLock</code> and the auto-pick steps aside.</li></ul>
+<p>Wiring this up is three registrations:</p>
+<pre data-lang="csharp" data-filename="Program.cs"><code data-lang="csharp" data-filename="Program.cs" class="language-csharp">// 1. Shared cache for tickets, sessions, and the refresh lock
+builder.Services.AddStackExchangeRedisCache(opts =&gt;
+{
+    opts.Configuration = builder.Configuration[&quot;Redis:ConnectionString&quot;];
+});
+
+// 2. Shared Data Protection keys, encrypted at rest
+using var cert = new X509Certificate2(
+    builder.Configuration[&quot;DataProtection:CertPath&quot;]!,
+    builder.Configuration[&quot;DataProtection:CertPassword&quot;]);
+
+builder.Services.AddPortaDataProtectionWithEntityFrameworkStore(
+    opts =&gt; opts.UseNpgsql(builder.Configuration.GetConnectionString(&quot;dataprotection-db&quot;)),
+    dp =&gt; dp.ProtectKeysWithCertificate(cert));
+
+builder.Services.AddPortaAuthentication(builder.Configuration);</code></pre>
+<blockquote class="important"><div class="title">IMPORTANT</div><p>Conifg <code>SessionAuthentication:DataProtection:ApplicationName</code> must be identical on every replica, so they can all read the same key ring. Porta actively checks these prerequisites at startup. Missing shared cache or key persistence logs a warning; genuinely dangerous configurations - unencrypted Data Protection keys, an in-process refresh lock next to a distributed cache - <strong>refuse to start</strong> outside Development unless you explicitly acknowledge them in code, with a required <code>reason</code> string that shows up in code review.</p></blockquote>
+<p>The <a href="/docs/porta/v0.3.1-rc6/ha-deployment.html">HA Deployment guide</a> covers the full setup, the failure modes when a piece is missing, and why sticky sessions can still help performance even though correctness never needs them.</p>
+<hr>
+</div>
+<div class="section">
+<h3>What production use requires</h3>
+<p>Porta's security defaults are already locked down - going to production is mostly about replacing the dev-friendly infrastructure fallbacks (in-memory cache, unpersisted keys) with the real thing. Porta is loud about it: everything on this list is either enforced at startup or flagged with a warning event id. Before going to production you should have:</p>
+<ul><li><strong>An IdP wired up</strong>: <code>Authority</code>, <code>ClientId</code>, and <code>ClientSecret</code> are validated at startup; the secret belongs in an environment variable or secret store, not in <code>appsettings.json</code></li><li><strong>HTTPS everywhere</strong>: <code>RequireHttpsMetadata</code> stays <code>true</code> and <code>Cookie:SecurePolicy</code> stays <code>Always</code> (both are the default; changing them throws at startup outside Development)</li><li><strong><code>Cookie:SameSite</code> set to <code>Lax</code> if your IdP is on a different site than the BFF</strong></li><li><strong><code>TrustedHosts</code> listing every backend that receives user tokens</strong> - startup throws if a <code>WithUserToken()</code> backend is not on the list</li><li><strong><code>AllowedRedirectHosts</code> for login/logout redirects</strong> - empty means same-origin only; external hosts are rejected with HTTP 400</li><li><strong>For more than one replica: HA setup</strong> - shared Redis/Valkey, persistent and encrypted Data Protection keys, a stable <code>ApplicationName</code></li><li><strong>A unique <code>SessionKeys:Prefix</code> per BFF</strong> when multiple BFFs share one Redis</li><li><strong>An OTLP endpoint</strong> (<code>OTEL_EXPORTER_OTLP_ENDPOINT</code>) if you want the built-in traces and metrics exported</li><li><strong>A reverse proxy in front of Porta</strong> - as noted above, we don't recommend exposing directly at the edge yet</li></ul>
+<p>The <a href="/docs/porta/v0.3.1-rc6/configuration.html">production configuration reference</a> has the complete table, including which settings are enforced at startup and which are caller responsibilities.</p>
+<hr>
+</div>
+<div class="section">
+<h3>Pick the right level of control</h3>
+<p>Porta is layered deliberately. You should not have to write custom infrastructure code when all you need is a pass-through endpoint. But when an endpoint needs full control, you can go all-in:</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th style="text-align:left">Base Class</th><th style="text-align:left">Use Case</th><th style="text-align:left">Code Required</th><th></th></tr></thead><tbody><tr><td></td><td style="text-align:left"><code>MapPassThrough&lt;T&gt;()</code></td><td style="text-align:left">Zero-code pass-through</td><td style="text-align:left">Config only</td><td></td></tr><tr><td></td><td style="text-align:left"><code>PassThroughTransformer&lt;T&gt;</code></td><td style="text-align:left">Simple response transformation</td><td style="text-align:left">Usually one method</td><td></td></tr><tr><td></td><td style="text-align:left"><code>AuthenticatedTransformer&lt;T&gt;</code></td><td style="text-align:left">Authenticated backend call without request body</td><td style="text-align:left">Usually one method</td><td></td></tr><tr><td></td><td style="text-align:left"><code>AuthenticatedTransformer&lt;TReq, TRes&gt;</code></td><td style="text-align:left">Authenticated call with request body</td><td style="text-align:left">Request and response handling</td><td></td></tr><tr><td></td><td style="text-align:left"><code>AggregatingTransformer&lt;T&gt;</code></td><td style="text-align:left">Multi-backend aggregation</td><td style="text-align:left">Backend leg orchestration</td><td></td></tr><tr><td></td><td style="text-align:left"><code>TransformerBase&lt;T&gt;</code></td><td style="text-align:left">Full custom control</td><td style="text-align:left">As much as needed</td><td></td></tr></tbody></table></div>
+<p>Backend authentication follows the same philosophy.</p>
+<p>The built-in policies cover the common cases:</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th style="text-align:left">Policy</th><th style="text-align:left">Purpose</th><th></th></tr></thead><tbody><tr><td></td><td style="text-align:left"><code>None</code></td><td style="text-align:left">No backend authentication</td><td></td></tr><tr><td></td><td style="text-align:left"><code>BasicAuth</code></td><td style="text-align:left">Static Basic Auth credentials from configuration</td><td></td></tr><tr><td></td><td style="text-align:left"><code>BearerToken</code></td><td style="text-align:left">Forward the current user's access token</td><td></td></tr><tr><td></td><td style="text-align:left"><code>TokenExchange</code></td><td style="text-align:left">Exchange the user token for a backend-specific token</td><td></td></tr></tbody></table></div>
+<p>For everything else, implement <code>IBackendAuthHandler</code>.</p>
+<hr>
+</div>
+<div class="section">
+<h3>Try the demo</h3>
+<p>The repository includes a self-contained demo that brings up a complete BFF topology using .NET Aspire.</p>
+<p>It includes:</p>
+<ul class="task-list"><li class="task-item"><span class="task-checkbox task-checked"></span>a Porta BFF</li><li class="task-item"><span class="task-checkbox task-checked"></span>multiple backend services</li><li class="task-item"><span class="task-checkbox task-checked"></span>Keycloak integration</li><li class="task-item"><span class="task-checkbox task-checked"></span>Zitadel integration</li><li class="task-item"><span class="task-checkbox task-checked"></span>seeded identity provider users</li><li class="task-item"><span class="task-checkbox task-checked"></span>database provisioning</li><li class="task-item"><span class="task-checkbox task-checked"></span>end-to-end login tests</li></ul>
+<p>A container runtime is the only prerequisite. The identity providers, database, and seeded users provision themselves.</p>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash">cd demo
+aspire run</code></pre>
+<p>Alternatively:</p>
+<pre data-lang="bash"><code data-lang="bash" class="language-bash">dotnet run --project Demo.AppHost</code></pre>
+<hr>
+</div>
+<div class="section">
+<h3>Documentation</h3>
+<p>The documentation covers the full public surface of the release candidate:</p>
+<p><a href="/docs/porta">Porta Documentation</a></p>
+<hr>
+</div>
+<div class="section">
+<h3>What comes next</h3>
+<p>The core model is now in place:</p>
+<ul class="task-list"><li class="task-item"><span class="task-checkbox task-checked"></span>minimal API endpoint builders</li><li class="task-item"><span class="task-checkbox task-checked"></span>transformer-based response shaping</li><li class="task-item"><span class="task-checkbox task-checked"></span>pass-through endpoints</li><li class="task-item"><span class="task-checkbox task-checked"></span>multi-backend aggregation</li><li class="task-item"><span class="task-checkbox task-checked"></span>per-backend authentication</li><li class="task-item"><span class="task-checkbox task-checked"></span>OIDC integration</li><li class="task-item"><span class="task-checkbox task-checked"></span>raw forwarding</li><li class="task-item"><span class="task-checkbox task-checked"></span>GraphQL support</li><li class="task-item"><span class="task-checkbox task-checked"></span>caching</li><li class="task-item"><span class="task-checkbox task-checked"></span>telemetry</li><li class="task-item"><span class="task-checkbox task-checked"></span>startup validation</li></ul>
+<p>From here, the focus is on hardening the API surface, improving documentation, expanding examples, and collecting feedback from real projects.</p>
+<p>Install it, run the demo, build a BFF with it, and tell us what breaks.</p>
+<p>Feedback, issues, and real-world use cases are especially valuable while Porta moves from release candidate to battle-hardened <code>1.0</code>.</p>
+</div></div>
+        </div>
+    </section>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

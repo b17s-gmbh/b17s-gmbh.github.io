@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset" class="ci-design">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+
+<title>Policies | b17s</title>
+<meta name="description" content="How IP filter policies work — the three modes, matching individual addresses and CIDR networks, and how the two lists combine.">
+
+    <!-- Canonical URL -->
+<link rel="canonical" href="https://b17s.net/docs/yarp-ipfilters/v1.4.0/policies.html">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/fav/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/fav/favicon-16x16.png">
+<link rel="manifest" href="/img/fav/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Policies">
+<meta property="og:description" content="How IP filter policies work — the three modes, matching individual addresses and CIDR networks, and how the two lists combine.">
+<meta property="og:image" content="https://b17s.net/img/logo.png">
+<meta property="og:url" content="https://b17s.net/docs/yarp-ipfilters/v1.4.0/policies.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Policies">
+<meta name="twitter:description" content="How IP filter policies work — the three modes, matching individual addresses and CIDR networks, and how the two lists combine.">
+<meta name="twitter:image" content="https://b17s.net/img/logo.png">
+
+<!-- Theme Colors (defines --primary, --accent, etc.) -->
+<link rel="stylesheet" href="/lib/northlight/theme-sunset.css" id="theme-stylesheet">
+
+<!-- Per-element theme scopes (.theme-arctic/.theme-slate/.theme-forest/.theme-sunset) -->
+<link rel="stylesheet" href="/lib/northlight/theme-scopes.css">
+
+<!-- Halo Design System (maps theme vars to --halo-* namespace + adds semantic colors) -->
+<link rel="stylesheet" href="/lib/northlight/halo-colors.css">
+
+<!-- Halo Markdown Defaults -->
+<link rel="stylesheet" href="/lib/northlight/halo-defaults.css">
+
+<!-- CI Base Styles (shared components) -->
+<link rel="stylesheet" href="/lib/northlight/ci-base.css">
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="/lib/northlight/animus.css">
+
+<!-- Code Highlighting -->
+<link rel="stylesheet" href="/lib/highlight.min.css">
+<link rel="stylesheet" href="/lib/tomorrow-night.css">
+
+<!-- Site-Specific Overrides -->
+<link rel="stylesheet" href="/lib/northlight/main.css">
+
+<!-- MarkDrown Plugin Styles -->
+<link rel="stylesheet" href="/lib/markdrown/plugins/features.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/constellation.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/workflow-steps.css">
+<link rel="stylesheet" href="/lib/markdrown/plugins/facts.css">
+
+</head>
+<body data-page="docs">
+    <div id="navigation-placeholder"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Docs Sidebar (rendered server-side from docs-nav.yml) -->
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+            <nav class="docs-nav"><div class="docs-nav-header"><a href="/docs/yarp-ipfilters/v1.4.0/" class="docs-nav-title">YARP IP Filters</a><p class="docs-nav-description">IP filtering middleware for Microsoft YARP</p><div class="docs-version"><label class="docs-version-label" for="docs-version-select">Version</label><select id="docs-version-select" class="docs-version-select" onchange="docsSwitchVersion(this)" data-base="/docs/yarp-ipfilters/" data-current-slug="policies" data-pages="{&quot;v1.4.0&quot;:[&quot;&quot;,&quot;configuration&quot;,&quot;policies&quot;,&quot;routes&quot;,&quot;global-policy&quot;,&quot;tracing&quot;,&quot;advanced&quot;]}"><option value="v1.4.0" selected>v1.4.0 (latest)</option></select></div></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Getting Started</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/">Overview</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/configuration.html">Configuration</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Core Concepts</h4><ul class="docs-nav-list"><li class="docs-nav-item active"><a href="/docs/yarp-ipfilters/v1.4.0/policies.html" aria-current="page">Policies</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/routes.html">Route Configuration</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/global-policy.html">Global Policy</a></li></ul></div><div class="docs-nav-section"><h4 class="docs-nav-section-title">Operations</h4><ul class="docs-nav-list"><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/tracing.html">Tracing</a></li><li class="docs-nav-item"><a href="/docs/yarp-ipfilters/v1.4.0/advanced.html">Advanced</a></li></ul></div></nav>
+        </aside>
+
+        <main class="docs-main">
+            <header class="docs-header">
+                <div class="docs-eyebrow">YARP IP Filters</div>
+                <h1>Policies</h1>
+                <p class="docs-subtitle">Policy modes, IP address and CIDR network matching</p>
+            </header>
+
+            <article class="docs-article">
+                <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
+                <div id="markdrown-output" class="markdrown-content halo">
+<p>A <strong>policy</strong> is a named set of matching rules. Each policy has a <code>Mode</code>, a list of individual <code>IPAddresses</code>, and a list of CIDR <code>IPNetworks</code>. Policies are defined once and referenced by name — either from a <a href="routes.html">route's metadata</a> or as the <a href="global-policy.html">global policy</a>.</p>
+<h2>Policy Modes</h2>
+<p>The <code>Mode</code> decides how a match is interpreted.</p>
+<div class="md-table-wrap"><table><thead><tr><th></th><th>Mode</th><th>Behaviour</th><th></th></tr></thead><tbody><tr><td></td><td><code>AllowList</code></td><td><strong>Blocks all requests except</strong> those whose IP matches an entry. Use for "only these clients may reach this route."</td><td></td></tr><tr><td></td><td><code>BlockList</code></td><td><strong>Allows all requests except</strong> those whose IP matches an entry. Use for "everyone except these known-bad clients."</td><td></td></tr><tr><td></td><td><code>Disabled</code></td><td>Filtering is off. Every request passes through. Handy for temporarily switching a policy off without deleting it.</td><td></td></tr></tbody></table></div>
+<p><code>AllowList</code> is the default when <code>Mode</code> is omitted.</p>
+<blockquote><p>A newly constructed <code>IPFilterPolicy</code> with no addresses or networks and the default <code>AllowList</code> mode <strong>blocks everything</strong> — an empty allowlist matches no one. This is a deliberate fail-closed default.</p></blockquote>
+<h2>Matching individual addresses</h2>
+<p>List individual IPv4 or IPv6 addresses under <code>IPAddresses</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;PolicyName&quot;: &quot;Admins&quot;,
+  &quot;Mode&quot;: &quot;AllowList&quot;,
+  &quot;IPAddresses&quot;: [&quot;203.0.113.7&quot;, &quot;203.0.113.8&quot;, &quot;2001:db8::1&quot;]
+}</code></pre>
+<p>Addresses are parsed once and held in a <code>HashSet&lt;IPAddress&gt;</code>, so lookups are O(1) regardless of list size.</p>
+<h2>Matching CIDR networks</h2>
+<p>List CIDR ranges under <code>IPNetworks</code>. Each entry is a prefix and a length separated by <code>/</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;PolicyName&quot;: &quot;Intranet&quot;,
+  &quot;Mode&quot;: &quot;AllowList&quot;,
+  &quot;IPNetworks&quot;: [&quot;192.168.0.0/24&quot;, &quot;10.0.0.0/8&quot;, &quot;2001:db8::/32&quot;]
+}</code></pre>
+<p>Networks are stored in a trie (see <a href="advanced.html#ipnetworkcollection"><code>IPNetworkCollection</code></a>), so a client IP is matched against every configured range in a single bit-wise walk rather than one comparison per range.</p>
+<blockquote><p>Each network string must be exactly <code>prefix/length</code>. A malformed entry (missing or extra <code>/</code>) throws <code>ArgumentException</code> the first time the policy's networks are evaluated.</p></blockquote>
+<h2>Combining addresses and networks</h2>
+<p>A single policy may declare both lists. A request <strong>matches the policy</strong> if its IP is in <code>IPAddresses</code> <strong>or</strong> falls within any entry in <code>IPNetworks</code>:</p>
+<pre data-lang="json"><code data-lang="json" class="language-json">{
+  &quot;PolicyName&quot;: &quot;Trusted&quot;,
+  &quot;Mode&quot;: &quot;AllowList&quot;,
+  &quot;IPAddresses&quot;: [&quot;203.0.113.7&quot;],
+  &quot;IPNetworks&quot;: [&quot;192.168.0.0/24&quot;]
+}</code></pre>
+<p>How that "match" translates to allow/block depends on the mode:</p>
+<ul><li>In <strong><code>AllowList</code></strong> mode, matching → <strong>allowed</strong>, everything else → blocked.</li><li>In <strong><code>BlockList</code></strong> mode, matching → <strong>blocked</strong>, everything else → allowed.</li></ul>
+<h2>IPv4 and IPv6</h2>
+<p>The middleware normalises IPv4-mapped IPv6 addresses (e.g. <code>::ffff:192.168.0.1</code>) back to their IPv4 form before matching, so a policy listing <code>192.168.0.1</code> matches a client that arrives over a dual-stack socket. List genuine IPv6 clients using their IPv6 address or network.</p>
+<h2>Lazy parsing</h2>
+<p>Address and network parsing is deferred until the first request evaluates a policy, and the parsed results are cached for the lifetime of that policy instance. When configuration reloads, the provider builds fresh policy instances, so the next request re-parses the updated values.</p></div>
+            </article>
+        </main>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <a href="/" class="footer-logo">
+                <img src="/img/logo.svg" alt="b17s" class="logo-image">
+                <h3>b17s</h3>
+            </a>
+            <div class="social-links">
+                <a href="https://github.com/b17s-gmbh" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Projects</h4>
+            <ul class="footer-links">
+                <li><a href="/docs/porta/">b17s.Porta</a></li>
+                <li><a href="/docs/yarp-ipfilters/">IPFilters</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul class="footer-links">
+                <li><a href="/about">About us</a></li>
+                <li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;b&#101;likov&#64;b17s&#46;n&#101;t">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+                <li><a href="/imprint">Imprint</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Belikov IT Solutions GmbH. All rights reserved. b17s is a registered trademark.</p>
+    </div>
+</footer>
+
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+<script src="/js/lucide.min.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script type="module" src="/lib/markdrown/markdrown.js"></script>
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>
