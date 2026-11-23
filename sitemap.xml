@@ -31,6 +31,48 @@
   <url><loc>https://b17s.net/docs/porta/v0.4.0/raw-forwarding.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://b17s.net/docs/porta/v0.4.0/telemetry.html</loc><lastmod>2026-07-06</lastmod></url>
   <url><loc>https://b17s.net/docs/porta/v0.4.0/transformers.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/advanced.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/api-gateway.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/authentication.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/caching.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/configuration.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/endpoints.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/graphql.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/ha-deployment.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/health-checks.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/oidc.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/raw-forwarding.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/telemetry.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0-rc.1/transformers.html</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/advanced.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/api-gateway.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/authentication.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/caching.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/configuration.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/endpoints.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/graphql.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/ha-deployment.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/health-checks.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/oidc.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/raw-forwarding.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/telemetry.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.5.0/transformers.html</loc><lastmod>2026-09-02</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/advanced.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/api-gateway.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/authentication.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/caching.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/configuration.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/endpoints.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/graphql.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/ha-deployment.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/health-checks.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/oidc.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/raw-forwarding.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/telemetry.html</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://b17s.net/docs/porta/v0.6.0/transformers.html</loc><lastmod>2026-09-30</lastmod></url>
   <url><loc>https://b17s.net/docs/yarp-ipfilters/v1.4.0/advanced.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://b17s.net/docs/yarp-ipfilters/v1.4.0/configuration.html</loc><lastmod>2026-07-02</lastmod></url>
   <url><loc>https://b17s.net/docs/yarp-ipfilters/v1.4.0/global-policy.html</loc><lastmod>2026-07-02</lastmod></url>

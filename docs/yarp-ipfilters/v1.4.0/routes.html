@@ -88,7 +88,7 @@
                 <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
                 <div id="markdrown-output" class="markdrown-content halo">
 <p>Route-specific filtering is opt-in per YARP route. A route participates by carrying an <code>IPFilterPolicy</code> entry in its <code>Metadata</code> whose value is the name of a <a href="policies.html">policy</a> you defined in <a href="configuration.html#the-ipfilterconfiguration-section"><code>IPFilterConfiguration</code></a>.</p>
-<h2>Attaching a policy</h2>
+<h2 id="attaching-a-policy">Attaching a policy</h2>
 <p>Add the <code>IPFilterPolicy</code> key to the route's <code>Metadata</code>:</p>
 <pre data-lang="json"><code data-lang="json" class="language-json">{
   &quot;ReverseProxy&quot;: {
@@ -108,22 +108,13 @@
   }
 }</code></pre>
 <p>Here the <code>admin</code> route is filtered by the <code>Intranet</code> policy, while <code>public</code> has no <code>IPFilterPolicy</code> metadata and is never filtered by a route-specific policy (the <a href="global-policy.html">global policy</a>, if enabled, still applies to both).</p>
-<h2>How a route is resolved</h2>
+<h2 id="how-a-route-is-resolved">How a route is resolved</h2>
 <p>For each request the middleware reads the current route from YARP's reverse-proxy feature and inspects its metadata:</p>
-<ol><li><strong>No <code>IPFilterPolicy</code> key, or an empty value</strong> → the middleware logs a <code>Debug</code> event (<code>NoIPPolicyFound</code>) and</li></ol>
-<p>   passes the request through untouched.</p>
-<ol><li><strong>A policy name that resolves</strong> → the IP is matched against that policy in its configured mode. Allowed requests</li></ol>
-<p>   continue; blocked requests receive <strong>403 Forbidden</strong>.</p>
-<ol><li><strong>A policy name that does not exist</strong> → this is treated as a configuration error. The middleware logs a</li></ol>
-<p>   <code>Critical</code> event (<code>PolicyIsNull</code>), sets the response to <strong>500 Internal Server Error</strong>, and throws    <code>IPFilterPolicyNotFoundException</code>. Keep route metadata and your policy list in sync so this never fires in    production.</p>
-<ol><li><strong>A policy in <code>Disabled</code> mode</strong> → logs an <code>Information</code> event (<code>PolicyIsDisabled</code>) and passes through.</li></ol>
-<h2>Evaluation order</h2>
+<ol><li><strong>No <code>IPFilterPolicy</code> key, or an empty value</strong> → the middleware logs a <code>Debug</code> event (<code>NoIPPolicyFound</code>) and passes the request through untouched.</li><li><strong>A policy name that resolves</strong> → the IP is matched against that policy in its configured mode. Allowed requests continue; blocked requests receive <strong>403 Forbidden</strong>.</li><li><strong>A policy name that does not exist</strong> → this is treated as a configuration error. The middleware logs a <code>Critical</code> event (<code>PolicyIsNull</code>), sets the response to <strong>500 Internal Server Error</strong>, and throws <code>IPFilterPolicyNotFoundException</code>. Keep route metadata and your policy list in sync so this never fires in production.</li><li><strong>A policy in <code>Disabled</code> mode</strong> → logs an <code>Information</code> event (<code>PolicyIsDisabled</code>) and passes through.</li></ol>
+<h2 id="evaluation-order">Evaluation order</h2>
 <p>When a global policy is enabled, it is checked <strong>first</strong>, for every request. Only if the request survives the global policy does the route-specific policy run. A request must pass <strong>both</strong> to reach the backend. See <a href="global-policy.html">Global Policy</a> for details.</p>
-<h2>Notes</h2>
-<ul><li>The metadata key is case-sensitive and must be exactly <code>IPFilterPolicy</code>.</li><li>One route references at most one policy. To combine rules, put both <code>IPAddresses</code> and <code>IPNetworks</code> in a single</li></ul>
-<p>  policy (see <a href="policies.html#combining-addresses-and-networks">Combining addresses and networks</a>).</p>
-<ul><li>Route metadata is part of your YARP config and reloads with it — changing which policy a route uses does not need</li></ul>
-<p>  a restart.</p></div>
+<h2 id="notes">Notes</h2>
+<ul><li>The metadata key is case-sensitive and must be exactly <code>IPFilterPolicy</code>.</li><li>One route references at most one policy. To combine rules, put both <code>IPAddresses</code> and <code>IPNetworks</code> in a single policy (see <a href="policies.html#combining-addresses-and-networks">Combining addresses and networks</a>).</li><li>Route metadata is part of your YARP config and reloads with it — changing which policy a route uses does not need a restart.</li></ul></div>
             </article>
         </main>
     </div>

@@ -88,12 +88,12 @@
                 <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
                 <div id="markdrown-output" class="markdrown-content halo">
 <p>A <strong>policy</strong> is a named set of matching rules. Each policy has a <code>Mode</code>, a list of individual <code>IPAddresses</code>, and a list of CIDR <code>IPNetworks</code>. Policies are defined once and referenced by name — either from a <a href="routes.html">route's metadata</a> or as the <a href="global-policy.html">global policy</a>.</p>
-<h2>Policy Modes</h2>
+<h2 id="policy-modes">Policy Modes</h2>
 <p>The <code>Mode</code> decides how a match is interpreted.</p>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Mode</th><th>Behaviour</th><th></th></tr></thead><tbody><tr><td></td><td><code>AllowList</code></td><td><strong>Blocks all requests except</strong> those whose IP matches an entry. Use for "only these clients may reach this route."</td><td></td></tr><tr><td></td><td><code>BlockList</code></td><td><strong>Allows all requests except</strong> those whose IP matches an entry. Use for "everyone except these known-bad clients."</td><td></td></tr><tr><td></td><td><code>Disabled</code></td><td>Filtering is off. Every request passes through. Handy for temporarily switching a policy off without deleting it.</td><td></td></tr></tbody></table></div>
 <p><code>AllowList</code> is the default when <code>Mode</code> is omitted.</p>
 <blockquote><p>A newly constructed <code>IPFilterPolicy</code> with no addresses or networks and the default <code>AllowList</code> mode <strong>blocks everything</strong> — an empty allowlist matches no one. This is a deliberate fail-closed default.</p></blockquote>
-<h2>Matching individual addresses</h2>
+<h2 id="matching-individual-addresses">Matching individual addresses</h2>
 <p>List individual IPv4 or IPv6 addresses under <code>IPAddresses</code>:</p>
 <pre data-lang="json"><code data-lang="json" class="language-json">{
   &quot;PolicyName&quot;: &quot;Admins&quot;,
@@ -101,7 +101,7 @@
   &quot;IPAddresses&quot;: [&quot;203.0.113.7&quot;, &quot;203.0.113.8&quot;, &quot;2001:db8::1&quot;]
 }</code></pre>
 <p>Addresses are parsed once and held in a <code>HashSet&lt;IPAddress&gt;</code>, so lookups are O(1) regardless of list size.</p>
-<h2>Matching CIDR networks</h2>
+<h2 id="matching-cidr-networks">Matching CIDR networks</h2>
 <p>List CIDR ranges under <code>IPNetworks</code>. Each entry is a prefix and a length separated by <code>/</code>:</p>
 <pre data-lang="json"><code data-lang="json" class="language-json">{
   &quot;PolicyName&quot;: &quot;Intranet&quot;,
@@ -110,7 +110,7 @@
 }</code></pre>
 <p>Networks are stored in a trie (see <a href="advanced.html#ipnetworkcollection"><code>IPNetworkCollection</code></a>), so a client IP is matched against every configured range in a single bit-wise walk rather than one comparison per range.</p>
 <blockquote><p>Each network string must be exactly <code>prefix/length</code>. A malformed entry (missing or extra <code>/</code>) throws <code>ArgumentException</code> the first time the policy's networks are evaluated.</p></blockquote>
-<h2>Combining addresses and networks</h2>
+<h2 id="combining-addresses-and-networks">Combining addresses and networks</h2>
 <p>A single policy may declare both lists. A request <strong>matches the policy</strong> if its IP is in <code>IPAddresses</code> <strong>or</strong> falls within any entry in <code>IPNetworks</code>:</p>
 <pre data-lang="json"><code data-lang="json" class="language-json">{
   &quot;PolicyName&quot;: &quot;Trusted&quot;,
@@ -120,9 +120,9 @@
 }</code></pre>
 <p>How that "match" translates to allow/block depends on the mode:</p>
 <ul><li>In <strong><code>AllowList</code></strong> mode, matching → <strong>allowed</strong>, everything else → blocked.</li><li>In <strong><code>BlockList</code></strong> mode, matching → <strong>blocked</strong>, everything else → allowed.</li></ul>
-<h2>IPv4 and IPv6</h2>
+<h2 id="ipv4-and-ipv6">IPv4 and IPv6</h2>
 <p>The middleware normalises IPv4-mapped IPv6 addresses (e.g. <code>::ffff:192.168.0.1</code>) back to their IPv4 form before matching, so a policy listing <code>192.168.0.1</code> matches a client that arrives over a dual-stack socket. List genuine IPv6 clients using their IPv6 address or network.</p>
-<h2>Lazy parsing</h2>
+<h2 id="lazy-parsing">Lazy parsing</h2>
 <p>Address and network parsing is deferred until the first request evaluates a policy, and the parsed results are cached for the lifetime of that policy instance. When configuration reloads, the provider builds fresh policy instances, so the next request re-parses the updated values.</p></div>
             </article>
         </main>

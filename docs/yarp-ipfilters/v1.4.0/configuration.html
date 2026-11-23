@@ -87,10 +87,10 @@
             <article class="docs-article">
                 <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
                 <div id="markdrown-output" class="markdrown-content halo">
-<h2>Service Registration</h2>
+<h2 id="service-registration">Service Registration</h2>
 <p>Two things must be wired up: the <strong>policy provider</strong> (a singleton service that holds the parsed policies) and the <strong>middleware</strong> (added to YARP's pipeline).</p>
 <div class="section">
-<h3>AddIPFilterPolicies() — from configuration</h3>
+<h3 id="addipfilterpolicies--from-configuration">AddIPFilterPolicies() — from configuration</h3>
 <p>The common path binds the <code>IPFilterConfiguration</code> section from your <code>IConfiguration</code>:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddIPFilterPolicies(builder.Configuration);</code></pre>
 <p>The section name defaults to <code>&quot;IPFilterConfiguration&quot;</code>. Pass a different name if you keep the policies elsewhere:</p>
@@ -98,7 +98,7 @@
 <p>This registers <code>IIPFilterPolicyProvider</code> (implemented by <code>IPFilterPolicyProvider</code>) as a singleton and binds <code>IPFilterPoliciesConfiguration</code> via the options system, so <a href="advanced.html#dynamic-reload">configuration reloads</a> are picked up at runtime.</p>
 </div>
 <div class="section">
-<h3>AddIPFilterPolicies() — from code</h3>
+<h3 id="addipfilterpolicies--from-code">AddIPFilterPolicies() — from code</h3>
 <p>To build policies imperatively instead of from configuration, pass a configuration action:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddIPFilterPolicies(policies =&gt;
 {
@@ -112,7 +112,7 @@
 <p>See <a href="advanced.html#programmatic-configuration">Advanced</a> for the full programmatic setup, including the global policy.</p>
 </div>
 <div class="section">
-<h3>UseIPFilterPolicies() — the middleware</h3>
+<h3 id="useipfilterpolicies--the-middleware">UseIPFilterPolicies() — the middleware</h3>
 <p>Register the middleware inside <code>MapReverseProxy</code>:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">app.MapReverseProxy(proxyPipeline =&gt;
 {
@@ -120,7 +120,7 @@
     proxyPipeline.UseLoadBalancing();
 });</code></pre>
 <blockquote><p><strong>Important:</strong> <code>UseIPFilterPolicies()</code> extends YARP's <code>IReverseProxyApplicationBuilder</code>. Do <strong>not</strong> add the middleware to the regular ASP.NET Core pipeline (<code>app.UseMiddleware&lt;...&gt;()</code>) — it reads the current route from the YARP reverse-proxy feature, which is only present inside <code>MapReverseProxy</code>. Adding it first means blocked requests are rejected before load balancing, session affinity, or transforms run.</p></blockquote>
-<h2>The IPFilterConfiguration section</h2>
+<h2 id="the-ipfilterconfiguration-section">The IPFilterConfiguration section</h2>
 <pre data-lang="json"><code data-lang="json" class="language-json">{
   &quot;IPFilterConfiguration&quot;: {
     &quot;EnableGlobalPolicy&quot;: true,
@@ -147,15 +147,15 @@
 }</code></pre>
 </div>
 <div class="section">
-<h3>Top-level keys</h3>
+<h3 id="top-level-keys">Top-level keys</h3>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Key</th><th>Type</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>Policies</code></td><td>array</td><td><code>[]</code></td><td>The list of policies. Each <code>PolicyName</code> must be unique — the provider indexes policies by name.</td><td></td></tr><tr><td></td><td><code>EnableGlobalPolicy</code></td><td>bool</td><td><code>false</code></td><td>When <code>true</code>, the policy named by <code>GlobalPolicyName</code> is evaluated for <strong>every</strong> request before route-specific policies. See <a href="global-policy.html">Global Policy</a>.</td><td></td></tr><tr><td></td><td><code>GlobalPolicyName</code></td><td>string</td><td><code>&quot;Global&quot;</code></td><td>The name of the policy used as the global policy when <code>EnableGlobalPolicy</code> is <code>true</code>.</td><td></td></tr></tbody></table></div>
 <blockquote><p>When <code>EnableGlobalPolicy</code> is <code>true</code> but no policy matches <code>GlobalPolicyName</code>, the provider throws at startup (and on every reload). Either add the matching policy or set <code>EnableGlobalPolicy</code> to <code>false</code>.</p></blockquote>
 </div>
 <div class="section">
-<h3>Policy keys</h3>
+<h3 id="policy-keys">Policy keys</h3>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Key</th><th>Type</th><th>Default</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><code>PolicyName</code></td><td>string</td><td><code>&quot;DefaultPolicy&quot;</code></td><td>Unique name used to reference the policy from route metadata or as the global policy.</td><td></td></tr><tr><td></td><td><code>Mode</code></td><td>enum</td><td><code>AllowList</code></td><td><code>Disabled</code>, <code>AllowList</code>, or <code>BlockList</code>. See <a href="policies.html#policy-modes">Policies</a>.</td><td></td></tr><tr><td></td><td><code>IPAddresses</code></td><td>array</td><td><code>[]</code></td><td>Individual IP addresses (IPv4 or IPv6).</td><td></td></tr><tr><td></td><td><code>IPNetworks</code></td><td>array</td><td><code>[]</code></td><td>CIDR networks, e.g. <code>&quot;192.168.0.0/24&quot;</code>.</td><td></td></tr></tbody></table></div>
 <p><code>IPAddresses</code> and <code>IPNetworks</code> may be used together in a single policy — a request matches the policy if it matches <strong>either</strong> list. See <a href="policies.html">Policies</a> for exactly how each mode interprets a match.</p>
-<h2>Logging</h2>
+<h2 id="logging">Logging</h2>
 <p>The middleware logs through <code>Microsoft.Extensions.Logging</code>. It uses the high-performance <code>LoggerMessage</code> pattern on the request-handling path, with these events:</p>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Event ID</th><th>Level</th><th>When</th><th></th></tr></thead><tbody><tr><td></td><td><code>1001</code> <code>RequestBlockedGlobal</code></td><td>Warning</td><td>A request was blocked by the global policy.</td><td></td></tr><tr><td></td><td><code>1002</code> <code>NoIPPolicyFound</code></td><td>Debug</td><td>The route has no <code>IPFilterPolicy</code> metadata; middleware is bypassed.</td><td></td></tr><tr><td></td><td><code>1003</code> <code>PolicyIsNull</code></td><td>Critical</td><td>A route references a policy name that does not exist.</td><td></td></tr><tr><td></td><td><code>1004</code> <code>PolicyIsDisabled</code></td><td>Information</td><td>The referenced policy is in <code>Disabled</code> mode; request passes through.</td><td></td></tr><tr><td></td><td><code>1005</code> <code>RequestBlocked</code></td><td>Warning</td><td>A request was blocked by a route-specific policy.</td><td></td></tr><tr><td></td><td><code>1006</code> <code>RequestAllowed</code></td><td>Information</td><td>A request was allowed by a route-specific policy.</td><td></td></tr></tbody></table></div>
 <p>Configure levels per category as you would for any ASP.NET Core app:</p>

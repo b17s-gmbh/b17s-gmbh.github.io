@@ -87,7 +87,7 @@
             <article class="docs-article">
                 <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
                 <div id="markdrown-output" class="markdrown-content halo">
-<h2>Programmatic configuration</h2>
+<h2 id="programmatic-configuration">Programmatic configuration</h2>
 <p>Instead of binding from <code>appsettings.json</code>, you can build policies in code by passing an <code>Action&lt;List&lt;IPFilterPolicy&gt;&gt;</code> to <code>AddIPFilterPolicies</code>:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddIPFilterPolicies(policies =&gt;
 {
@@ -112,21 +112,18 @@
     config.GlobalPolicyName = &quot;Global&quot;;
 });</code></pre>
 <p><code>IPFilterPolicy</code> properties are init-only, so construct each policy with an object initialiser as shown. <code>Mode</code> defaults to <code>AllowList</code> and both list properties default to empty.</p>
-<h2>Dynamic reload</h2>
+<h2 id="dynamic-reload">Dynamic reload</h2>
 <p><code>IPFilterPolicyProvider</code> subscribes to <code>IOptionsMonitor&lt;IPFilterPoliciesConfiguration&gt;.OnChange</code>. When the bound configuration changes — for example the configuration provider detects an edited <code>appsettings.json</code> with <code>reloadOnChange</code> enabled — the provider rebuilds its policy dictionary and re-evaluates the global policy, without a restart.</p>
 <p>Two things to know:</p>
-<ul><li>The provider indexes policies by <code>PolicyName</code>. Duplicate names in a reloaded configuration will throw while</li></ul>
-<p>  building the dictionary — keep names unique.</p>
-<ul><li>If a reload enables the global policy but the named global policy is missing, the provider throws during the</li></ul>
-<p>  reload callback. Validate configuration before shipping it to avoid a broken reload.</p>
+<ul><li>The provider indexes policies by <code>PolicyName</code>. Duplicate names in a reloaded configuration will throw while building the dictionary — keep names unique.</li><li>If a reload enables the global policy but the named global policy is missing, the provider throws during the reload callback. Validate configuration before shipping it to avoid a broken reload.</li></ul>
 <p>Because parsing of addresses and networks is lazy and cached per policy instance, a reload transparently picks up new values: the next request evaluates freshly built policy objects.</p>
-<h2>IPNetworkCollection</h2>
+<h2 id="ipnetworkcollection">IPNetworkCollection</h2>
 <p>CIDR matching is backed by <code>IPNetworkCollection</code>, a binary trie keyed on the bits of each network prefix. Rather than testing a client IP against every configured range one by one, <code>Contains</code> walks the trie bit by bit and returns as soon as it reaches a terminal node (a configured prefix). This keeps per-request cost proportional to the prefix length, not to the number of networks, which matters when a policy lists many ranges on a hot path.</p>
 <p>The collection is built once per policy instance (lazily, on first use) from the policy's <code>IPNetworks</code> strings and reused for the lifetime of that instance.</p>
-<h2>Exceptions</h2>
+<h2 id="exceptions">Exceptions</h2>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Exception</th><th>Thrown when</th><th></th></tr></thead><tbody><tr><td></td><td><code>IPFilterPolicyException</code></td><td>Base type for the library's exceptions.</td><td></td></tr><tr><td></td><td><code>IPFilterPolicyNotFoundException</code></td><td>A route's <code>IPFilterPolicy</code> metadata names a policy that does not exist. The middleware sets <strong>500 Internal Server Error</strong> and throws this. Its message includes the policy name and the YARP route id.</td><td></td></tr></tbody></table></div>
 <p>A missing <strong>global</strong> policy (when enabled) surfaces as a plain exception thrown by the provider at load/reload time, not as <code>IPFilterPolicyNotFoundException</code>.</p>
-<h2>Replacing the policy provider</h2>
+<h2 id="replacing-the-policy-provider">Replacing the policy provider</h2>
 <p>The middleware depends on the <code>IIPFilterPolicyProvider</code> abstraction:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">public interface IIPFilterPolicyProvider
 {
@@ -136,7 +133,7 @@
 <p>To source policies from somewhere other than configuration — a database, a feature-flag service, a remote API — implement this interface and register your implementation as a singleton <strong>instead of</strong> calling <code>AddIPFilterPolicies</code>:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddSingleton&lt;IIPFilterPolicyProvider, MyCustomPolicyProvider&gt;();</code></pre>
 <p><code>GetGlobalPolicy()</code> should return the active global policy or <code>null</code> when none applies; <code>GetPolicy(name)</code> should return the named policy or <code>null</code> when it is not found (which the middleware treats as a configuration error). Still register the middleware with <a href="configuration.html#useipfilterpolicies--the-middleware"><code>UseIPFilterPolicies()</code></a>.</p>
-<h2>Performance notes</h2>
+<h2 id="performance-notes">Performance notes</h2>
 <p>The critical path is deliberately lean: individual addresses are matched via <code>HashSet&lt;IPAddress&gt;.Contains</code>, networks via the trie described above, and every log call uses the compiled <code>LoggerMessage</code> pattern to avoid allocations and boxing. As of v1.4.0 most types are <code>sealed</code>, and the middleware wraps each evaluation in a single lightweight <a href="tracing.html">activity</a>.</p></div>
             </article>
         </main>

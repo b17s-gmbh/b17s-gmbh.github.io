@@ -9,9 +9,15 @@
 # update each page's content, set `base: /docs/porta/<id>/` in its docs-nav.yml,
 # add an entry here, and (when ready) point `latest` at it.
 library: b17s.Porta
-latest: v0.4.0
+latest: v0.6.0
 versions:
+  - id: v0.6.0
+    label: "v0.6.0 (latest)"
+  - id: v0.5.0
+    label: "v0.5.0"
+  - id: v0.5.0-rc.1
+    label: "v0.5.0-rc.1"
   - id: v0.4.0
-    label: "v0.4.0 (latest)"
+    label: "v0.4.0"
   - id: v0.3.1-rc6
     label: "v0.3.1-rc6"

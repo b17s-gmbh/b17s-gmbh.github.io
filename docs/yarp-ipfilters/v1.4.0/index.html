@@ -89,13 +89,13 @@
                 <div id="markdrown-output" class="markdrown-content halo">
 <p><a href="https://www.nuget.org/packages/BBelius.Yarp.ReverseProxy.IPFilters/"><figure><img src="https://img.shields.io/nuget/v/BBelius.Yarp.ReverseProxy.IPFilters.svg" alt="NuGet"></figure></a> <a href="https://github.com/bbelius/YARP.ReverseProxy.IPFilters/blob/main/LICENSE.md"><figure><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></figure></a></p>
 <p>A customizable IP filtering middleware for Microsoft's <a href="https://microsoft.github.io/reverse-proxy/">YARP (Yet Another Reverse Proxy)</a> that provides fine-grained control over allowed or blocked IP addresses globally and per-route, ensuring secure and flexible access management.</p>
-<h2>Features</h2>
+<h2 id="features">Features</h2>
 <ul><li><strong>Global IP filtering</strong> — a single policy evaluated for every proxied request before route-specific rules</li><li><strong>Route-specific policies</strong> — attach a named policy to any YARP route via route metadata</li><li><strong>Allowlist and blocklist modes</strong> — allow only known IPs, or block known-bad IPs</li><li><strong>IP address and CIDR network matching</strong> — mix individual addresses and network ranges in one policy</li><li><strong>Dynamic reload</strong> — configuration changes are picked up at runtime without a restart</li><li><strong>Fast lookups</strong> — <code>HashSet</code> for addresses and a trie-based collection for networks on the critical path</li><li><strong>Built-in tracing</strong> — an <code>ActivitySource</code> emits a span per evaluation</li></ul>
-<h2>Installation</h2>
+<h2 id="installation">Installation</h2>
 <p>Install the package via <a href="https://www.nuget.org/packages/BBelius.Yarp.ReverseProxy.IPFilters/">NuGet</a>:</p>
 <pre data-lang="bash"><code data-lang="bash" class="language-bash">dotnet add package BBelius.Yarp.ReverseProxy.IPFilters</code></pre>
 <p>The package targets <strong>.NET 8</strong> and <strong>.NET 9</strong> and depends on <code>Yarp.ReverseProxy</code> 2.x.</p>
-<h2>Quick Start</h2>
+<h2 id="quick-start">Quick Start</h2>
 <div class="section">
 <h3>1. Register the policy provider</h3>
 <p>Add the IP filter policy provider to your DI container, binding it from configuration:</p>
@@ -159,19 +159,13 @@ app.Run();</code></pre>
     ]
   }
 }</code></pre>
-<h2>Documentation</h2>
+<h2 id="documentation">Documentation</h2>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Topic</th><th>Description</th><th></th></tr></thead><tbody><tr><td></td><td><a href="configuration.html">Configuration</a></td><td>Service registration and the <code>IPFilterConfiguration</code> section</td><td></td></tr><tr><td></td><td><a href="policies.html">Policies</a></td><td>Policy modes, IP address and CIDR network matching</td><td></td></tr><tr><td></td><td><a href="routes.html">Route Configuration</a></td><td>Attaching policies to YARP routes via metadata</td><td></td></tr><tr><td></td><td><a href="global-policy.html">Global Policy</a></td><td>The global policy evaluated for every request</td><td></td></tr><tr><td></td><td><a href="tracing.html">Tracing</a></td><td>The <code>ActivitySource</code> and emitted span tags</td><td></td></tr><tr><td></td><td><a href="advanced.html">Advanced</a></td><td>Programmatic configuration, dynamic reload, custom providers</td><td></td></tr></tbody></table></div>
-<h2>How it works</h2>
+<h2 id="how-it-works">How it works</h2>
 <p>For each proxied request the middleware:</p>
-<ol><li>Resolves the client IP from <code>HttpContext.Connection.RemoteIpAddress</code> (IPv4-mapped IPv6 addresses are</li></ol>
-<p>   normalised back to IPv4).</p>
-<ol><li>If a <a href="global-policy.html">global policy</a> is enabled and the IP is not allowed by it, responds <strong>403 Forbidden</strong></li></ol>
-<p>   and stops.</p>
-<ol><li>Reads the <code>IPFilterPolicy</code> key from the current route's metadata. If absent, the request passes straight through.</li><li>Looks up the named <a href="policies.html">policy</a>. A <code>Disabled</code> policy passes through; otherwise the IP is matched</li></ol>
-<p>   against the policy's addresses and networks in the configured mode.</p>
-<ol><li>Allowed requests continue down the pipeline; blocked requests get <strong>403 Forbidden</strong>.</li></ol>
+<ol><li>Resolves the client IP from <code>HttpContext.Connection.RemoteIpAddress</code> (IPv4-mapped IPv6 addresses are normalised back to IPv4).</li><li>If a <a href="global-policy.html">global policy</a> is enabled and the IP is not allowed by it, responds <strong>403 Forbidden</strong> and stops.</li><li>Reads the <code>IPFilterPolicy</code> key from the current route's metadata. If absent, the request passes straight through.</li><li>Looks up the named <a href="policies.html">policy</a>. A <code>Disabled</code> policy passes through; otherwise the IP is matched against the policy's addresses and networks in the configured mode.</li><li>Allowed requests continue down the pipeline; blocked requests get <strong>403 Forbidden</strong>.</li></ol>
 <p>A referenced-but-missing policy is a configuration error: the middleware logs a critical event, responds <strong>500 Internal Server Error</strong>, and throws <code>IPFilterPolicyNotFoundException</code>.</p>
-<h2>License</h2>
+<h2 id="license">License</h2>
 <p>Licensed under the <a href="https://github.com/bbelius/YARP.ReverseProxy.IPFilters/blob/main/LICENSE.md">MIT License</a>. Contributions are welcome — open an issue or submit a pull request on <a href="https://github.com/bbelius/YARP.ReverseProxy.IPFilters">GitHub</a>.</p>
 </div></div>
             </article>

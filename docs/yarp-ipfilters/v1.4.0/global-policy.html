@@ -88,7 +88,7 @@
                 <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
                 <div id="markdrown-output" class="markdrown-content halo">
 <p>The <strong>global policy</strong> is a single <a href="policies.html">policy</a> evaluated for <strong>every</strong> proxied request, before any route-specific policy. It is the place to enforce infrastructure-wide rules — for example, blocking a set of abusive IPs across the whole proxy, or restricting the entire surface to a corporate network.</p>
-<h2>Enabling it</h2>
+<h2 id="enabling-it">Enabling it</h2>
 <p>The global policy is opt-in. Set <code>EnableGlobalPolicy</code> to <code>true</code> and make sure a policy exists whose <code>PolicyName</code> matches <code>GlobalPolicyName</code> (default <code>&quot;Global&quot;</code>):</p>
 <pre data-lang="json"><code data-lang="json" class="language-json">{
   &quot;IPFilterConfiguration&quot;: {
@@ -105,21 +105,13 @@
 }</code></pre>
 <p>The example above blocks two specific IPs from reaching <strong>any</strong> route, while letting everything else through.</p>
 <blockquote><p>If <code>EnableGlobalPolicy</code> is <code>true</code> but no policy matches <code>GlobalPolicyName</code>, the provider throws when it loads (at startup and on every configuration reload): <em>&quot;Could not find Global Policy. Double check configuration or disable the global policy feature.&quot;</em> Either add the matching policy or set <code>EnableGlobalPolicy</code> back to <code>false</code>.</p></blockquote>
-<h2>Evaluation order</h2>
+<h2 id="evaluation-order">Evaluation order</h2>
 <p>The middleware evaluates policies in this order:</p>
-<ol><li><strong>Global policy</strong> — if enabled and the client IP is not allowed by it, the request is blocked with</li></ol>
-<p>   <strong>403 Forbidden</strong> immediately (event <code>RequestBlockedGlobal</code>). No route-specific policy runs.</p>
-<ol><li><strong>Route-specific policy</strong> — if the request survives the global policy, the route's</li></ol>
-<p>   <a href="routes.html"><code>IPFilterPolicy</code> metadata</a> is resolved and evaluated.</p>
+<ol><li><strong>Global policy</strong> — if enabled and the client IP is not allowed by it, the request is blocked with <strong>403 Forbidden</strong> immediately (event <code>RequestBlockedGlobal</code>). No route-specific policy runs.</li><li><strong>Route-specific policy</strong> — if the request survives the global policy, the route's <a href="routes.html"><code>IPFilterPolicy</code> metadata</a> is resolved and evaluated.</li></ol>
 <p>A request must satisfy <strong>both</strong> the global policy and the route policy (if any) to reach the backend. The two are independent policies with independent modes — a common pattern is a <code>BlockList</code> global policy (a deny list applied everywhere) combined with <code>AllowList</code> route policies (tight allowlists on sensitive routes).</p>
-<h2>Choosing a mode</h2>
-<ul><li><strong><code>BlockList</code> global policy</strong> — the usual choice. Block known-bad IPs everywhere; everything else falls through to</li></ul>
-<p>  per-route rules.</p>
-<ul><li><strong><code>AllowList</code> global policy</strong> — locks the entire proxy down to a known set of clients (e.g. an office network).</li></ul>
-<p>  Remember an allowlist blocks everyone not listed, so make sure every legitimate source is covered.</p>
-<ul><li><strong><code>Disabled</code></strong> — leaves the global policy defined but inert; equivalent to <code>EnableGlobalPolicy: false</code> for that</li></ul>
-<p>  policy, but keeps it available to switch on quickly.</p>
-<h2>Turning it off</h2>
+<h2 id="choosing-a-mode">Choosing a mode</h2>
+<ul><li><strong><code>BlockList</code> global policy</strong> — the usual choice. Block known-bad IPs everywhere; everything else falls through to per-route rules.</li><li><strong><code>AllowList</code> global policy</strong> — locks the entire proxy down to a known set of clients (e.g. an office network). Remember an allowlist blocks everyone not listed, so make sure every legitimate source is covered.</li><li><strong><code>Disabled</code></strong> — leaves the global policy defined but inert; equivalent to <code>EnableGlobalPolicy: false</code> for that policy, but keeps it available to switch on quickly.</li></ul>
+<h2 id="turning-it-off">Turning it off</h2>
 <p>Set <code>EnableGlobalPolicy</code> to <code>false</code> (the default). The provider clears the global policy and only route-specific policies apply. This can be toggled at runtime via <a href="advanced.html#dynamic-reload">configuration reload</a>.</p></div>
             </article>
         </main>

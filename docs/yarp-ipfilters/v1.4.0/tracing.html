@@ -88,15 +88,15 @@
                 <!-- Body is pre-rendered to HTML at build time (see RenderMarkdrown in site-core.csx). -->
                 <div id="markdrown-output" class="markdrown-content halo">
 <p>The middleware emits a <code>System.Diagnostics.Activity</code> for each evaluation, so IP filtering shows up in your traces alongside the rest of the request. This uses the standard .NET diagnostics primitives and is picked up by OpenTelemetry with no extra code in the library.</p>
-<h2>Activity source</h2>
+<h2 id="activity-source">Activity source</h2>
 <p>The <code>ActivitySource</code> name is:</p>
 <pre><code>BBelius.Yarp.ReverseProxy.IPFilters</code></pre>
 <p>Each request that reaches the middleware starts an activity named <strong><code>IPFilterEvaluation</code></strong>.</p>
-<h2>Span tags</h2>
+<h2 id="span-tags">Span tags</h2>
 <p>Tags are set depending on the outcome:</p>
 <div class="md-table-wrap"><table><thead><tr><th></th><th>Tag</th><th>Value</th><th>When</th><th></th></tr></thead><tbody><tr><td></td><td><code>blocked</code></td><td><code>true</code></td><td>The request was blocked by the global or a route-specific policy.</td><td></td></tr><tr><td></td><td><code>policy</code></td><td><code>&quot;global&quot;</code> or the policy name</td><td>Identifies which policy blocked the request.</td><td></td></tr><tr><td></td><td><code>ip</code></td><td>the client IP</td><td>The remote IP that was evaluated, on a block.</td><td></td></tr><tr><td></td><td><code>error</code></td><td><code>&quot;policy_not_found&quot;</code></td><td>A route referenced a policy name that does not exist. The activity status is also set to <code>Error</code>.</td><td></td></tr></tbody></table></div>
 <p>Allowed requests start and complete the activity without the block/error tags.</p>
-<h2>Subscribing with OpenTelemetry</h2>
+<h2 id="subscribing-with-opentelemetry">Subscribing with OpenTelemetry</h2>
 <p>Register the source with the OpenTelemetry .NET SDK:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">builder.Services.AddOpenTelemetry()
     .WithTracing(tracing =&gt; tracing
@@ -104,7 +104,7 @@
         .AddSource(&quot;BBelius.Yarp.ReverseProxy.IPFilters&quot;)
         .AddOtlpExporter());</code></pre>
 <p>Once the source is added, <code>IPFilterEvaluation</code> spans are exported to your collector with the tags above, letting you see how often — and by which policy — requests are being blocked.</p>
-<h2>Subscribing without OpenTelemetry</h2>
+<h2 id="subscribing-without-opentelemetry">Subscribing without OpenTelemetry</h2>
 <p>You can also consume the activities directly with an <code>ActivityListener</code>:</p>
 <pre data-lang="csharp"><code data-lang="csharp" class="language-csharp">using var listener = new ActivityListener
 {
